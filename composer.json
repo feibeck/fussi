@@ -1,0 +1,8 @@
+{
+    "minimum-stability": "alpha",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+        "doctrine/doctrine-orm-module": "dev-master"
+    }
+}

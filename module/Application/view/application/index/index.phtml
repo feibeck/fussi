@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="span12">
+        <h1>Monat <?php echo $date->format('Y/m'); ?></h1>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+
+    <div class="span4">
+
+        <h2>Ranking</h2>
+
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Matches</th>
+            </tr>
+            <?php foreach ($playersRanking as $ranking): ?>
+                <tr>
+                    <td><span class="badge badge-success"><?= ++$i; ?></span></td>
+                    <td><?= $ranking->getPlayer()->getName(); ?></td>
+                    <td><span class="badge badge-warning"><?= $ranking->getScore(); ?></span></td>
+                    <td><span class="badge"><?= $ranking->getMatchCount(); ?></span></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+    </div>
+
+    <div class="span8">
+
+        <h2>Matches</h2>
+
+        <table class="table">
+
+            <tr>
+
+                 <td></td>
+
+            <?php for ($i = 0; $i < count($players) - 1; $i++): $player1 = $players[$i]; ?>
+
+                 <th class="matchscore"><?php echo $player1->getName(); ?></th>
+
+            <?php endfor; ?>
+
+            </tr>
+
+            <?php for ($row = 1; $row < count($players); $row++): $player1 = $players[$row]; ?>
+
+                <tr>
+                    <th><?php echo $player1->getName(); ?></th>
+
+                    <?php for ($column = 0; $column < count($players) - 1; $column++): $player2 = $players[$column]; ?>
+
+
+                        <?php if ($column > $row - 1): ?>
+                            <td></td>
+                        <?php else: ?>
+                            <td class="matchscore"><?php echo $this->match($date, $matches, $player1, $player2); ?></td>
+                        <?php endif; ?>
+
+                    <?php endfor; ?>
+
+                </tr>
+
+            <?php endfor; ?>
+
+        </table>
+
+    </div>
+
+</div>
+
+<?php
+    $prev = clone($date);
+    $prev->modify("-1 month");
+    $prev = $this->url('home', array('year' => $prev->format('Y'), 'month' => $prev->format('m')));
+    $next = clone($date);
+    $next->modify("+1 month");
+    $next = $this->url('home', array('year' => $next->format('Y'), 'month' => $next->format('m')));
+?>
+
+<ul class="pager">
+    <li class="previous">
+        <a href="<?= $prev ?>">&larr; Older</a>
+    </li>
+    <li class="next">
+        <a href="<?= $next ?>">Newer &rarr;</a>
+    </li>
+</ul>

@@ -1,0 +1,34 @@
+<h1>Enter Matchresult</h1>
+
+<div class="row">
+    <div class="span5">
+
+        <?php echo $this->form()->openTag($form); ?>
+
+        <table class="table" id="matchform">
+            <tr>
+                <th></th>
+                <th><?php echo $player1->getName(); ?></th>
+                <th>vs.</th>
+                <th><?php echo $player2->getName(); ?></th>
+            </tr>
+            <tr>
+                <th>Game 1</th>
+                <td><?php echo $this->formElement($form->get('p1g1')); ?></td>
+                <td>:</td>
+                <td><?php echo $this->formElement($form->get('p2g1')); ?></td>
+            </tr>
+            <tr>
+                <th>Game 2</th>
+                <td><?php echo $this->formElement($form->get('p1g2')); ?></td>
+                <td>:</td>
+                <td><?php echo $this->formElement($form->get('p2g2')); ?></td>
+            </tr>
+        </table>
+
+        <input type="submit" class="btn btn-big btn-primary" value="Speichern" />
+
+        <?php echo $this->form()->closeTag(); ?>
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+#matchform input {
+    width: 30px;
+}
+
+td.matchscore {
+    background-color: #FCF8E3;
+    text-align: center;
+}
+
+th.matchscore {
+    text-align: center;
+}
