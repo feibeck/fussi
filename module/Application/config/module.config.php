@@ -24,6 +24,26 @@ return array(
                     ),
                 ),
             ),
+	    'player' => array(
+		'type' => 'Segment',
+		'options' => array(
+		    'route' => '/player',
+		    'defaults' => array(
+			'controller' => 'Application\Controller\Player',
+		    ),
+		),
+		'child_routes' => array(
+		    'add' => array(
+			'type'    => 'Segment',
+			'options' => array(
+			    'route'    => '/add',
+			    'defaults' => array(
+				'action' => 'add'
+			    ),
+			),
+		    )
+		)
+	    )
         ),
     ),
     'controllers' => array(
@@ -33,6 +53,12 @@ return array(
                 return new \Application\Controller\IndexController(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
+	    },
+	    'Application\Controller\Player' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+		$sm = $cm->getServiceLocator();
+		return new \Application\Controller\PlayerController(
+		    $sm->get("doctrine.entitymanager.orm_default")
+		);
             }
         )
     ),

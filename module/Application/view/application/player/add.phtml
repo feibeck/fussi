@@ -1,0 +1,8 @@
+<h1>Add player</h1>
+
+<?php
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('name'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+?>
