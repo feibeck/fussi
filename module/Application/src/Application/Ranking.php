@@ -3,6 +3,7 @@
 namespace Application;
 
 use \Application\PlayerRanking;
+use \Application\Entity\Match;
 
 class Ranking
 {
@@ -31,6 +32,9 @@ class Ranking
         }
     }
 
+    /**
+     * @return \Application\PlayerRanking[]
+     */
     public function getRanking()
     {
         uasort($this->playerRankings, function($a, $b) {
@@ -52,8 +56,12 @@ class Ranking
         return $this->playerRankings[$player->getId()];
     }
 
-
-    protected function getPointsPlayer1($match)
+    /**
+     * @param Match $match
+     * 
+     * @return int
+     */
+    protected function getPointsPlayer1(Match $match)
     {
         $won1 = $match->getGoalsGame1Player1() > $match->getGoalsGame1Player2();
         $won2 = $match->getGoalsGame2Player1() > $match->getGoalsGame2Player2();
@@ -66,7 +74,12 @@ class Ranking
         return 0;
     }
 
-    protected function getPointsPlayer2($match)
+    /**
+     * @param Match $match
+     *
+     * @return int
+     */
+    protected function getPointsPlayer2(Match $match)
     {
         $won1 = $match->getGoalsGame1Player2() > $match->getGoalsGame1Player1();
         $won2 = $match->getGoalsGame2Player2() > $match->getGoalsGame2Player1();
