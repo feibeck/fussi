@@ -13,17 +13,17 @@ class PlayerRanking
     protected $player;
 
     /**
-     * @var Score
+     * @var int
      */
     protected $score = 0;
 
     /**
-     * @var Goals
+     * @var int
      */
     protected $goals = 0;
 
     /**
-     * @var Matches
+     * @var int
      */
     protected $matches = 0;
 
