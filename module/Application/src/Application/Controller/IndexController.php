@@ -7,6 +7,11 @@ use Zend\View\Model\ViewModel;
 
 use \Doctrine\ORM\EntityManager;
 
+use \Application\Ranking;
+use \Application\Form\Match as MatchForm;
+use \Application\Entity\Match as MatchEntity;
+use \Datetime;
+
 class IndexController extends AbstractActionController
 {
 
@@ -28,7 +33,7 @@ class IndexController extends AbstractActionController
         $year  = $this->params()->fromRoute('year');
         $month = $this->params()->fromRoute('month');
 
-        $date = new \DateTime();
+        $date = new DateTime();
         $date->setDate($year, $month, 1);
 
         $repository = $this->em->getRepository('Application\Entity\Player');
@@ -37,7 +42,7 @@ class IndexController extends AbstractActionController
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($year, $month);
 
-        $ranking = new \Application\Ranking($matches);
+        $ranking = new Ranking($matches);
         $playersRanking = $ranking->getRanking();
 
         return array(
@@ -61,13 +66,13 @@ class IndexController extends AbstractActionController
         $player1 = $playerRepository->find($idPlayer1);
         $player2 = $playerRepository->find($idPlayer2);
 
-        $form = new \Application\Form\Match();
+        $form = new MatchForm();
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
 
-                $match = new \Application\Entity\Match();
+                $match = new MatchEntity();
                 $match->setPlayer1($player1);
                 $match->setPlayer2($player2);
 
@@ -78,7 +83,7 @@ class IndexController extends AbstractActionController
                 $match->setGoalsGame2Player1($data['p1g2']);
                 $match->setGoalsGame2Player2($data['p2g2']);
 
-                $date = new \DateTime();
+                $date = new DateTime();
                 $date->setDate($year, $month, 1);
                 $match->setDate($date);
 
