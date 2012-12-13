@@ -20,12 +20,19 @@ class IndexController extends AbstractActionController
      */
     private $em;
 
+    protected $startDate;
+
     /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    public function setStartDate(\DateTime $date)
+    {
+        $this->startDate = $date;
     }
 
     public function indexAction()
@@ -35,6 +42,17 @@ class IndexController extends AbstractActionController
 
         $date = new DateTime();
         $date->setDate($year, $month, 1);
+
+        $date->setTime(0, 0, 0);
+
+        $now = new DateTime();
+        $now->setTime(0, 0, 0);
+        $now->modify('first day of');
+
+        if ($date > $now || $date < $this->startDate) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
 
         $repository = $this->em->getRepository('Application\Entity\Player');
         $players = $repository->findAll();
@@ -49,7 +67,8 @@ class IndexController extends AbstractActionController
             'date'    => $date,
             'players' => $players,
             'matches' => $matches,
-            'playersRanking' => $playersRanking
+            'playersRanking' => $playersRanking,
+            'startDate' => $this->startDate
         );
 
     }
@@ -61,6 +80,15 @@ class IndexController extends AbstractActionController
 
         $year  = $this->params()->fromRoute('year');
         $month = $this->params()->fromRoute('month');
+
+        $date = new DateTime();
+        $date->setDate($year, $month, 1);
+
+        $now = new Datetime();
+        if ($now->format('Ym') != $date->format('Ym')) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
 
         $playerRepository = $this->em->getRepository('Application\Entity\Player');
         $player1 = $playerRepository->find($idPlayer1);
@@ -103,4 +131,5 @@ class IndexController extends AbstractActionController
             'player2' => $player2
         );
     }
+
 }

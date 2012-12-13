@@ -78,17 +78,24 @@
 <?php
     $prev = clone($date);
     $prev->modify("-1 month");
+
+    $disablePrev = $prev < $startDate;
+
     $prev = $this->url('home', array('year' => $prev->format('Y'), 'month' => $prev->format('m')));
+
     $next = clone($date);
     $next->modify("+1 month");
     $next = $this->url('home', array('year' => $next->format('Y'), 'month' => $next->format('m')));
+
+    $now = new \DateTime();
+    $disableNext = $now->format('Ym') == $date->format('Ym');
 ?>
 
 <ul class="pager">
-    <li class="previous">
-        <a href="<?= $prev ?>">&larr; Older</a>
+    <li class="previous <?php echo $disablePrev ? 'disabled' : ''; ?>">
+        <a href="<?php echo $disablePrev ? '#' : $prev; ?>">&larr; Older</a>
     </li>
-    <li class="next">
-        <a href="<?= $next ?>">Newer &rarr;</a>
+    <li class="next <?php echo $disableNext ? 'disabled' : ''; ?>">
+        <a href="<?php echo $disableNext ? '#' : $next; ?>">Newer &rarr;</a>
     </li>
 </ul>

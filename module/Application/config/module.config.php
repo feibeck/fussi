@@ -50,10 +50,15 @@ return array(
         'factories' => array(
             'Application\Controller\Index' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 $sm = $cm->getServiceLocator();
-                return new \Application\Controller\IndexController(
+                $controller = new \Application\Controller\IndexController(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
-	    },
+                $startDate = new \DateTime();
+                $startDate->setDate(2012, 12, 01);
+                $startDate->setTime(0, 0, 0);
+                $controller->setStartDate($startDate);
+                return $controller;
+	        },
 	    'Application\Controller\Player' => function(Zend\Mvc\Controller\ControllerManager $cm) {
 		$sm = $cm->getServiceLocator();
 		return new \Application\Controller\PlayerController(
