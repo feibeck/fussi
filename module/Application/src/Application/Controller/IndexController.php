@@ -84,36 +84,36 @@ class IndexController extends AbstractActionController
         $date = new DateTime();
         $date->setDate($year, $month, 1);
 
+        /** @var $matchRepository \Application\Entity\PlayerRepository */
+        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $player1 = $playerRepository->find($idPlayer1);
+        $player2 = $playerRepository->find($idPlayer2);
+
+        /** @var $matchRepository \Application\Entity\MatchRepository */
+        $matchRepository = $this->em->getRepository('Application\Entity\Match');
+        $match = $matchRepository->getMatch($year, $month, $player1, $player2);
+
+        if ($match == null) {
+            $match = new MatchEntity();
+            $match->setPlayer1($player1);
+            $match->setPlayer2($player2);
+            $date = new DateTime();
+            $date->setDate($year, $month, 1);
+            $match->setDate($date);
+        }
+
         $now = new Datetime();
         if ($now->format('Ym') != $date->format('Ym')) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
-        $playerRepository = $this->em->getRepository('Application\Entity\Player');
-        $player1 = $playerRepository->find($idPlayer1);
-        $player2 = $playerRepository->find($idPlayer2);
-
         $form = new MatchForm();
+        $form->bind($match);
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-
-                $match = new MatchEntity();
-                $match->setPlayer1($player1);
-                $match->setPlayer2($player2);
-
-                $data = $form->getData();
-
-                $match->setGoalsGame1Player1($data['p1g1']);
-                $match->setGoalsGame1Player2($data['p2g1']);
-                $match->setGoalsGame2Player1($data['p1g2']);
-                $match->setGoalsGame2Player2($data['p2g2']);
-
-                $date = new DateTime();
-                $date->setDate($year, $month, 1);
-                $match->setDate($date);
 
                 $this->em->persist($match);
                 $this->em->flush();

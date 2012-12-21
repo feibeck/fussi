@@ -54,7 +54,7 @@ return array(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
                 $startDate = new \DateTime();
-                $startDate->setDate(2012, 12, 01);
+                $startDate->setDate(2012, 11, 01);
                 $startDate->setTime(0, 0, 0);
                 $controller->setStartDate($startDate);
                 return $controller;

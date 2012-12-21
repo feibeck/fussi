@@ -99,3 +99,9 @@
         <a href="<?php echo $disableNext ? '#' : $next; ?>">Newer &rarr;</a>
     </li>
 </ul>
+
+<script>
+    $(document).ready(function() {
+        $('.match').popover({html: true});
+    });
+</script>
