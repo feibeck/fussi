@@ -36,7 +36,7 @@ class Tournament
      *
      * @ORM\Column(type="integer")
      */
-    protected $teamType;
+    protected $teamType = self::TYPE_SINGLE;
 
     /**
      * @ORM\ManyToMany(targetEntity="Application\Entity\Player")
@@ -49,7 +49,7 @@ class Tournament
 
     public function __construct()
     {
-	$this->players = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
     public function setId($id)
@@ -93,7 +93,29 @@ class Tournament
      */
     public function getPlayers()
     {
-	return $this->players;
+        return $this->players;
+    }
+
+    /**
+     * @param $data
+     */
+    public function exchangeArray($data)
+    {
+        $this->id       = (isset($data['id'])) ? $data['id'] : null;
+        $this->name     = (isset($data['name'])) ? $data['name'] : null;
+        $this->teamType = (isset($data['teamType'])) ? $data['teamType'] : self::TYPE_SINGLE;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return array(
+            'id'       => $this->id,
+            'name'     => $this->name,
+            'teamType' => $this->teamType
+        );
     }
 
 }

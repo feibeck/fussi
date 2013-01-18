@@ -15,27 +15,35 @@ return array(
             'tournament' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/:id',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                    ),
+                    'route'    => '/',
                 ),
                 'child_routes' => array(
                     'show' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => '/[:year/:month]',
+                            'route' => ':id/[:year/:month]',
                             'defaults' => array(
+                                'controller' => 'Application\Controller\Index',
                                 'action'     => 'index',
                                 'year'       => date('Y'),
                                 'month'      => date('m')
                             )
                         )
                     ),
+                    'add' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/add',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Tournament',
+                                'action'     => 'add',
+                            )
+                        )
+                    ),
                     'players' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => '/players',
+                            'route' => 'tournament/:id/players',
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Tournament',
                                 'action' => 'players'

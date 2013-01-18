@@ -1,5 +1,9 @@
 <h1>List of tournaments</h1>
 
+<div class="btn-group" style="margin-bottom: 10px;">
+    <a href="<?= $this->url('tournament/add'); ?>" class="btn">Add tournament</a>
+</div>
+
 <ul class="thumbnails">
 
     <?php foreach ($tournaments as $tournament): ?>
@@ -7,8 +11,8 @@
     <li class="span4">
         <div class="thumbnail">
             <h3><?= $tournament->getName(); ?></h3>
-	    <p><a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-primary">Show</a></p>
-	    <p><a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn">Players</a></p>
+            <p><a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-primary">Show</a></p>
+            <p><a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn">Players</a></p>
         </div>
     </li>
 
