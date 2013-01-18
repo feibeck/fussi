@@ -102,6 +102,36 @@
 
 <script>
     $(document).ready(function() {
-        $('.match').popover({html: true});
+        //$('.match').popover({html: true});
+
+        $('.match').click( function() {
+            if( $('.popover').length > 0 ) {
+                $('.popover').remove();
+            }
+            else {
+                showResultPopover($(this));
+                $('.popover').mouseleave( function() {
+                    $(this).remove();
+                });
+            }
+        });
+
+        $('.match').hover(
+            function() {
+                var nextElClassName = $(this).next().attr('class');
+
+                // only add element if not already added
+                if( typeof  nextElClassName == 'undefined' || nextElClassName.indexOf('popover') < 0 ) {
+                    showResultPopover($(this));
+                }
+            },
+            function( event) {
+                // just hide popover when mouse hits the underlaying td again
+                if( event.relatedTarget.attributes[0].nodeValue != undefined &&
+                    event.relatedTarget.attributes[0].nodeValue == 'matchscore' ) {
+                    $('.popover').remove();
+                }
+            }
+        );
     });
 </script>
