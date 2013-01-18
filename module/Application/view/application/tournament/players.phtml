@@ -1,0 +1,17 @@
+<h1>Playing in <?= $tournament->getName(); ?></h1>
+
+<table class="table table-striped">
+
+    <tr>
+	<th>Name</th>
+    </tr>
+
+    <?php foreach ($tournament->getPlayers() as $player): ?>
+
+	<tr>
+	    <td><?= $player->getName(); ?></td>
+	</tr>
+
+    <?php endforeach; ?>
+
+</table>

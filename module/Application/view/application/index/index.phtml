@@ -81,11 +81,11 @@
 
     $disablePrev = $prev < $startDate;
 
-    $prev = $this->url('tournament', array('id' => $tournament->getId(), 'year' => $prev->format('Y'), 'month' => $prev->format('m')));
+    $prev = $this->url('tournament/show', array('id' => $tournament->getId(), 'year' => $prev->format('Y'), 'month' => $prev->format('m')));
 
     $next = clone($date);
     $next->modify("+1 month");
-    $next = $this->url('tournament', array('id' => $tournament->getId(), 'year' => $next->format('Y'), 'month' => $next->format('m')));
+    $next = $this->url('tournament/show', array('id' => $tournament->getId(), 'year' => $next->format('Y'), 'month' => $next->format('m')));
 
     $now = new \DateTime();
     $disableNext = $now->format('Ym') == $date->format('Ym');

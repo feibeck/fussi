@@ -128,7 +128,7 @@ class IndexController extends AbstractActionController
                 $this->em->flush();
 
                 return $this->redirect()->toRoute(
-                    'tournament',
+		    'tournament/show',
                     array('id' => $tournament->getId(), 'year' => $year, 'month', $month)
                 );
             }

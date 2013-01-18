@@ -44,7 +44,7 @@ class Tournament
      *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
      *      )
-     **/
+     */
     protected $players;
 
     public function __construct()
