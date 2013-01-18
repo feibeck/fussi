@@ -3,6 +3,8 @@
  * @param el HTML-Element/Button, that is clicked/hovered to show this popover
  */
 function showResultPopover(el) {
+    $('.popover').remove();
+
     // determine position for popover
     var position = $(el).offset();
     var top = position.top + ($(el).height() / 2) - 67;
@@ -19,6 +21,29 @@ function showResultPopover(el) {
     // add mouseleave-listener to popover
     $('.popover').mouseleave( function() {
         $(this).remove();
+    });
+
+    // load match-form to popover
+    $('.popover .btn-small').click( function() {
+        $('.popover').unbind('mouseleave');
+        $('.match').unbind('mouseout, mouseleave');
+
+        $('.popover .popover-content').html('<img src="/img/throbber.gif" />');
+
+        var url = $(this).attr('href');
+        console.log(url);
+        $.ajax({
+            url: url,
+            success: function(data) {
+                $('.popover').width(500);
+                $('.popover .popover-content').html(data);
+
+                $('#cancelEditMatchResult').click( function() {
+                    $('.popover').remove();
+                });
+            }
+        })
+        return false;
     });
 }
 
