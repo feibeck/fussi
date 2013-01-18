@@ -57,7 +57,7 @@ class IndexController extends AbstractActionController
 
         $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
         $tournament = $tournamentRepository->find($id);
-	$players = $tournament->getPlayers();
+    $players = $tournament->getPlayers();
 
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
@@ -118,6 +118,15 @@ class IndexController extends AbstractActionController
         }
 
         $form = new MatchForm();
+        $actionParams = array(
+            'id' => $id,
+            'year' => $year,
+            'month' => $month,
+            'player1' => $idPlayer1,
+            'player2' => $idPlayer2
+        );
+        $actionUrl = $this->url()->fromRoute('matchresult', $actionParams);
+        $form->setAttribute('action', $actionUrl);
         $form->bind($match);
 
         if ($this->request->isPost()) {
@@ -128,17 +137,29 @@ class IndexController extends AbstractActionController
                 $this->em->flush();
 
                 return $this->redirect()->toRoute(
-		    'tournament/show',
+                    'tournament/show',
                     array('id' => $tournament->getId(), 'year' => $year, 'month', $month)
                 );
             }
         }
 
-        return array(
+        $view = new ViewModel();
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $view->setTerminal(true);
+        }
+        $view->setVariables( array(
             'form' => $form,
             'player1' => $player1,
             'player2' => $player2
-        );
+        ));
+
+        return $view;
+
+        /*return array(
+            'form' => $form,
+            'player1' => $player1,
+            'player2' => $player2
+        );*/
     }
 
 }

@@ -19,3 +19,7 @@ th.matchscore {
 table.matches:last-child {
     border-bottom: 1px #DDD solid;
 }
+
+span.result {
+    white-space: nowrap;
+}

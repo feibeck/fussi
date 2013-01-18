@@ -118,4 +118,9 @@ class Tournament
         );
     }
 
+    public function addPlayer(Player $player)
+    {
+	$this->players->add($player);
+    }
+
 }

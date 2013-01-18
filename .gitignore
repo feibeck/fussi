@@ -6,6 +6,7 @@
 .settings
 
 composer.lock
+composer.phar
 error.log
 
 vendor/composer
@@ -16,3 +17,5 @@ vendor/bin
 vendor/doctrine
 vendor/symfony
 vendor/zf-commons
+
+data/DoctrineORMModule/
