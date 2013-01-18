@@ -55,11 +55,9 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $repository = $this->em->getRepository('Application\Entity\Player');
-        $players = $repository->findAll();
-
         $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
         $tournament = $tournamentRepository->find($id);
+	$players = $tournament->getPlayers();
 
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
