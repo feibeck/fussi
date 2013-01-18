@@ -43,7 +43,7 @@ class PlayerController extends AbstractActionController
 	    if ($form->isValid()) {
 		$this->em->persist($player);
 		$this->em->flush();
-		return $this->redirect()->toRoute('home');
+		return $this->redirect()->toRoute('tournaments');
 	    }
 	}
 

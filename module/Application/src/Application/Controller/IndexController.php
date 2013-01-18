@@ -39,6 +39,7 @@ class IndexController extends AbstractActionController
     {
         $year  = $this->params()->fromRoute('year');
         $month = $this->params()->fromRoute('month');
+        $id    = $this->params()->fromRoute('id');
 
         $date = new DateTime();
         $date->setDate($year, $month, 1);
@@ -57,8 +58,11 @@ class IndexController extends AbstractActionController
         $repository = $this->em->getRepository('Application\Entity\Player');
         $players = $repository->findAll();
 
+        $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
+        $tournament = $tournamentRepository->find($id);
+
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
-        $matches = $matchRepository->findForMonth($year, $month);
+        $matches = $matchRepository->findForMonth($tournament, $year, $month);
 
         $ranking = new Ranking($matches);
         $playersRanking = $ranking->getRanking();
@@ -68,13 +72,16 @@ class IndexController extends AbstractActionController
             'players' => $players,
             'matches' => $matches,
             'playersRanking' => $playersRanking,
-            'startDate' => $this->startDate
+            'startDate' => $this->startDate,
+            'tournament' => $tournament
         );
 
     }
 
     public function matchresultAction()
     {
+        $id = $this->params()->fromRoute('id');
+
         $idPlayer1 = $this->params()->fromRoute('player1');
         $idPlayer2 = $this->params()->fromRoute('player2');
 
@@ -89,12 +96,16 @@ class IndexController extends AbstractActionController
         $player1 = $playerRepository->find($idPlayer1);
         $player2 = $playerRepository->find($idPlayer2);
 
+        $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
+        $tournament = $tournamentRepository->find($id);
+
         /** @var $matchRepository \Application\Entity\MatchRepository */
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
-        $match = $matchRepository->getMatch($year, $month, $player1, $player2);
+        $match = $matchRepository->getMatch($tournament, $year, $month, $player1, $player2);
 
         if ($match == null) {
             $match = new MatchEntity();
+            $match->setTournament($tournament);
             $match->setPlayer1($player1);
             $match->setPlayer2($player2);
             $date = new DateTime();
@@ -119,8 +130,8 @@ class IndexController extends AbstractActionController
                 $this->em->flush();
 
                 return $this->redirect()->toRoute(
-                    'home',
-                    array('year' => $year, 'month', $month)
+                    'tournament',
+                    array('id' => $tournament->getId(), 'year' => $year, 'month', $month)
                 );
             }
         }

@@ -60,7 +60,7 @@
                         <?php if ($column > $row - 1): ?>
                             <td></td>
                         <?php else: ?>
-                            <td class="matchscore"><?php echo $this->match($date, $matches, $player1, $player2); ?></td>
+                            <td class="matchscore"><?php echo $this->match($date, $tournament, $matches, $player1, $player2); ?></td>
                         <?php endif; ?>
 
                     <?php endfor; ?>
@@ -81,11 +81,11 @@
 
     $disablePrev = $prev < $startDate;
 
-    $prev = $this->url('home', array('year' => $prev->format('Y'), 'month' => $prev->format('m')));
+    $prev = $this->url('tournament', array('id' => $tournament->getId(), 'year' => $prev->format('Y'), 'month' => $prev->format('m')));
 
     $next = clone($date);
     $next->modify("+1 month");
-    $next = $this->url('home', array('year' => $next->format('Y'), 'month' => $next->format('m')));
+    $next = $this->url('tournament', array('id' => $tournament->getId(), 'year' => $next->format('Y'), 'month' => $next->format('m')));
 
     $now = new \DateTime();
     $disableNext = $now->format('Ym') == $date->format('Ym');
