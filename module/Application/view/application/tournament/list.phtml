@@ -1,0 +1,17 @@
+<h1>List of tournaments</h1>
+
+<ul class="thumbnails">
+
+    <?php foreach ($tournaments as $tournament): ?>
+
+    <li class="span4">
+        <div class="thumbnail">
+            <h3><?= $tournament->getName(); ?></h3>
+	    <p><a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-primary">Show</a></p>
+	    <p><a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn">Players</a></p>
+        </div>
+    </li>
+
+    <?php endforeach; ?>
+
+</ul>
