@@ -65,13 +65,23 @@ class IndexController extends AbstractActionController
         $ranking = new Ranking($matches);
         $playersRanking = $ranking->getRanking();
 
+        $potential = 0;
+        foreach($playersRanking as $playerid =>  $rank) {
+            $playerPotential = $rank->getScore() + (count($matches) - $rank->getMatchCount()) * 2;
+            $playersRanking[$playerid]->potential = $playerPotential;
+            if ($playerPotential > $potential) {
+                $potential = $playerPotential;
+            }
+        }
+
         return array(
-            'date'    => $date,
-            'players' => $players,
-            'matches' => $matches,
+            'date'           => $date,
+            'players'        => $players,
+            'matches'        => $matches,
             'playersRanking' => $playersRanking,
-            'startDate' => $this->startDate,
-            'tournament' => $tournament
+            'startDate'      => $this->startDate,
+            'tournament'     => $tournament,
+            'potential'      => $potential,
         );
 
     }
