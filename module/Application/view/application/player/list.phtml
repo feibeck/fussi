@@ -1,0 +1,21 @@
+<h1>Player list</h1>
+
+<div class="btn-group" style="margin-bottom: 10px;">
+    <a href="<?= $this->url('player/add'); ?>" class="btn">Add player</a>
+</div>
+
+<table class="table table-striped">
+
+    <tr>
+	<th>Name</th>
+    </tr>
+
+    <?php foreach ($players as $player): ?>
+
+	<tr>
+	    <td><?= $player->getName(); ?></td>
+	</tr>
+
+    <?php endforeach; ?>
+
+</table>

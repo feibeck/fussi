@@ -15,14 +15,34 @@ return array(
             'tournament' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/:id/[:year/:month]',
+                    'route'    => '/:id',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
-                        'year'       => date('Y'),
-                        'month'      => date('m')
                     ),
                 ),
+                'child_routes' => array(
+                    'show' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/[:year/:month]',
+                            'defaults' => array(
+                                'action'     => 'index',
+                                'year'       => date('Y'),
+                                'month'      => date('m')
+                            )
+                        )
+                    ),
+                    'players' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/players',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Tournament',
+                                'action' => 'players'
+                            )
+                        )
+                    )
+                )
             ),
             'tournaments' => array(
                 'type' => 'Segment',
@@ -43,6 +63,16 @@ return array(
                         'action'     => 'matchresult',
                     ),
                 ),
+            ),
+            'players' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/players',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Player',
+                        'action' => 'list'
+                    )
+                )
             ),
             'player' => array(
                 'type' => 'Segment',

@@ -25,6 +25,15 @@ class PlayerController extends AbstractActionController
 	$this->em = $em;
     }
 
+    public function listAction()
+    {
+	$playerRepository = $this->em->getRepository('Application\Entity\Player');
+	$players = $playerRepository->findAll();
+	return array(
+	    'players' => $players
+	);
+    }
+
     public function addAction()
     {
 	$form = new PlayerForm();
@@ -43,7 +52,7 @@ class PlayerController extends AbstractActionController
 	    if ($form->isValid()) {
 		$this->em->persist($player);
 		$this->em->flush();
-		return $this->redirect()->toRoute('tournaments');
+		return $this->redirect()->toRoute('players');
 	    }
 	}
 

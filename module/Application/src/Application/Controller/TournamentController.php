@@ -32,4 +32,14 @@ class TournamentController extends AbstractActionController
         );
     }
 
+    public function playersAction()
+    {
+	$id = $this->params()->fromRoute('id');
+	$repository = $this->em->getRepository('Application\Entity\Tournament');
+	$tournament = $repository->find($id);
+	return array(
+	    'tournament' => $tournament
+	);
+    }
+
 }

@@ -38,6 +38,20 @@ class Tournament
      */
     protected $teamType;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Application\Entity\Player")
+     * @ORM\JoinTable(name="tournament_players",
+     *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $players;
+
+    public function __construct()
+    {
+	$this->players = new ArrayCollection();
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -72,6 +86,14 @@ class Tournament
     public function getTeamType()
     {
         return $this->teamType;
+    }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayers()
+    {
+	return $this->players;
     }
 
 }
