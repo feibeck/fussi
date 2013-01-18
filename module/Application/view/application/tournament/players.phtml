@@ -8,10 +8,17 @@
 
     <?php foreach ($tournament->getPlayers() as $player): ?>
 
-	<tr>
-	    <td><?= $player->getName(); ?></td>
-	</tr>
+    <tr>
+	<td><?= $player->getName(); ?></td>
+    </tr>
 
     <?php endforeach; ?>
 
 </table>
+
+<?php
+echo $this->form()->openTag($addPlayerForm);
+echo $this->formRow($addPlayerForm->get('player'));
+echo $this->formSubmit($addPlayerForm->get('submit'));
+echo $this->form()->closeTag();
+?>

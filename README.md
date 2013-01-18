@@ -22,7 +22,10 @@ Setup
 5. Set up a webserver (e.g. php -S localhost:8080 -t public from project root)
 6. Make sure php.ini has short_open_tags set to On
 7. Open Fußi in your browser (http://localhost:8080)
-8. Add players and enter some match data
+8. Add some players
+9. Add a tournament
+10. Add players to the tournament
+11. Play and enter data
 
 Hacking
 =======

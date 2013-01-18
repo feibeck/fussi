@@ -62,7 +62,7 @@
 
         <h2>Matches</h2>
 
-        <table class="table">
+        <table class="table matches">
 
             <tr>
 
@@ -76,7 +76,7 @@
 
             </tr>
 
-            <?php for ($row = 1; $row < count($players); $row++): $player1 = $players[$row]; ?>
+            <?php for ($row = count($players) -1; $row > 0; $row--): $player1 = $players[$row]; ?>
 
                 <tr>
                     <th><?php echo $player1->getName(); ?></th>

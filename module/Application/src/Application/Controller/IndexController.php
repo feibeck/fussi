@@ -128,6 +128,15 @@ class IndexController extends AbstractActionController
         }
 
         $form = new MatchForm();
+        $actionParams = array(
+            'id' => $id,
+            'year' => $year,
+            'month' => $month,
+            'player1' => $idPlayer1,
+            'player2' => $idPlayer2
+        );
+        $actionUrl = $this->url()->fromRoute('matchresult', $actionParams);
+        $form->setAttribute('action', $actionUrl);
         $form->bind($match);
 
         if ($this->request->isPost()) {
