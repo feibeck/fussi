@@ -15,3 +15,7 @@ td.matchscore {
 th.matchscore {
     text-align: center;
 }
+
+table.matches:last-child {
+    border-bottom: 1px #DDD solid;
+}
