@@ -103,5 +103,47 @@
 <script>
     $(document).ready(function() {
         $('.match').popover({html: true});
+
+        $('.match').mousedown( function() {
+            $('.popover').remove();
+        });
+
+        $('.match').mouseup( function() {
+            $('.popover').mouseleave( function() {
+                $(this).remove();
+            });
+        });
+
+        $('.match').hover(
+            function() {
+                var nextElClassName = $(this).next().attr('class');
+
+                // only add element if not already added
+                if( nextElClassName == undefined || nextElClassName.indexOf('popover') < 0 ) {
+                    // determine position for popover
+                    var position = $(this).offset();
+                    var top = position.top + ($(this).height() / 2) - 67;
+                    var left = position.left  + ($(this).width() / 2) + 40;
+
+                    // build popover-html
+                    var titleData = $(this).attr('data-original-title');
+                    var contentData = $(this).attr('data-content');
+                    var html  = buildPopoverHtml(titleData, contentData, top, left);
+                    // append popover
+                    $(this).after(html);
+                    // add mouseleave-listener to popover
+                    $('.popover').mouseleave( function() {
+                        $(this).remove();
+                    });
+                }
+            },
+            function( event) {
+                // just hide popover when mouse hits the underlaying td again
+                if( event.relatedTarget.attributes[0].nodeValue != undefined &&
+                    event.relatedTarget.attributes[0].nodeValue == 'matchscore' ) {
+                    $('.popover').remove();
+                }
+            }
+        );
     });
 </script>
