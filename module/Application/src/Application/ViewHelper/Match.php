@@ -41,7 +41,7 @@ class Match extends AbstractHelper
                         $content .= "<br><br><a href='" . $url . "' class='btn btn-small'>Edit</a>";
                     }
 
-                    $out .= '<span title="' . $title . '" data-content="' . $content . '" class="match btn">';
+                    $out .= '<span title="' . $title . '" data-content="' . $content . '" class="match btn result">';
                     $out .= $match->getScore();
                     $out .= '</span>';
                     $ok = true;

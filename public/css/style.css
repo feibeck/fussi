@@ -15,3 +15,7 @@ td.matchscore {
 th.matchscore {
     text-align: center;
 }
+
+span.result {
+    white-space: nowrap;
+}
