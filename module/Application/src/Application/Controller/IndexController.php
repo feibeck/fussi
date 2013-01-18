@@ -136,11 +136,23 @@ class IndexController extends AbstractActionController
             }
         }
 
-        return array(
+        $view = new ViewModel();
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $view->setTerminal(true);
+        }
+        $view->setVariables( array(
             'form' => $form,
             'player1' => $player1,
             'player2' => $player2
-        );
+        ));
+
+        return $view;
+
+        /*return array(
+            'form' => $form,
+            'player1' => $player1,
+            'player2' => $player2
+        );*/
     }
 
 }
