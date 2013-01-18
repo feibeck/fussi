@@ -19,3 +19,14 @@ th.matchscore {
 span.result {
     white-space: nowrap;
 }
+
+td.playerName.bold {
+    color: #f89406;
+    font-weight: bold;
+}
+
+#infoBox th,
+#infoBox td{
+    padding: 5px;
+    text-align: right;
+}
