@@ -20,7 +20,7 @@ class Match
     /**
      * @var Tournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Tournament", inversedBy="matches")
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     private $tournament;
