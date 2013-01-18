@@ -7,7 +7,7 @@ use Zend\View\Helper\AbstractHelper;
 class Match extends AbstractHelper
 {
 
-    public function __invoke($date, $matches, $player1, $player2)
+    public function __invoke($date, $tournament, $matches, $player1, $player2)
     {
 
         $now = new \DateTime();
@@ -16,6 +16,7 @@ class Match extends AbstractHelper
         $out = '';
 
         $url = $this->getView()->url('matchresult', array(
+            'id'   => $tournament->getId(),
             'year' => $date->format('Y'),
             'month' => $date->format('m'),
             'player1' => $player1->getId(),

@@ -18,6 +18,14 @@ class Match
     private $id;
 
     /**
+     * @var Tournament
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Entity\Tournament", inversedBy="matches")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     */
+    private $tournament;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime",nullable=false)
@@ -259,6 +267,22 @@ class Match
             'goalsGame2Player2' => $this->goalsGame2Player2,
             'date'              => $this->date
         );
+    }
+
+    /**
+     * @param \Application\Entity\Tournament $tournament
+     */
+    public function setTournament($tournament)
+    {
+        $this->tournament = $tournament;
+    }
+
+    /**
+     * @return \Application\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
     }
 
 }

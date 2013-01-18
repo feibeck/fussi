@@ -1,0 +1,18 @@
+<h1>List of tournaments</h1>
+
+<ul class="thumbnails">
+
+    <?php foreach ($tournaments as $tournament): ?>
+
+    <?php $url = $this->url('tournament', array('id' => $tournament->getId())); ?>
+
+    <li class="span4">
+        <div class="thumbnail">
+            <h3><?= $tournament->getName(); ?></h3>
+            <p><a href="<?= $url; ?>" class="btn btn-primary">Show</a></p>
+        </div>
+    </li>
+
+    <?php endforeach; ?>
+
+</ul>

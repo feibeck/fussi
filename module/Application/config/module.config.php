@@ -2,10 +2,20 @@
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
+            'dashboard' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/[:year/:month]',
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Dashboard',
+                        'action'     => 'dashboard'
+                    ),
+                ),
+            ),
+            'tournament' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/:id/[:year/:month]',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
@@ -14,36 +24,46 @@ return array(
                     ),
                 ),
             ),
+            'tournaments' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/tournaments',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Tournament',
+                        'action' => 'list'
+                    )
+                )
+            ),
             'matchresult' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/matchresult/:year/:month/:player1/:player2',
+                    'route'    => '/matchresult/:id/:year/:month/:player1/:player2',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'matchresult',
                     ),
                 ),
             ),
-	    'player' => array(
-		'type' => 'Segment',
-		'options' => array(
-		    'route' => '/player',
-		    'defaults' => array(
-			'controller' => 'Application\Controller\Player',
-		    ),
-		),
-		'child_routes' => array(
-		    'add' => array(
-			'type'    => 'Segment',
-			'options' => array(
-			    'route'    => '/add',
-			    'defaults' => array(
-				'action' => 'add'
-			    ),
-			),
-		    )
-		)
-	    )
+            'player' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/player',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Player',
+                    ),
+                ),
+                'child_routes' => array(
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/add',
+                            'defaults' => array(
+                                'action' => 'add'
+                            ),
+                        ),
+                    )
+                )
+            )
         ),
     ),
     'controllers' => array(
@@ -58,13 +78,22 @@ return array(
                 $startDate->setTime(0, 0, 0);
                 $controller->setStartDate($startDate);
                 return $controller;
-	        },
-	    'Application\Controller\Player' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-		$sm = $cm->getServiceLocator();
-		return new \Application\Controller\PlayerController(
-		    $sm->get("doctrine.entitymanager.orm_default")
-		);
-            }
+            },
+            'Application\Controller\Player' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \Application\Controller\PlayerController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            },
+            'Application\Controller\Tournament' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \Application\Controller\TournamentController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            },
+            'Application\Controller\Dashboard' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                return new \Application\Controller\DashboardController();
+            },
         )
     ),
     'doctrine' => array(
