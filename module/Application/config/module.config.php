@@ -49,6 +49,16 @@ return array(
                                 'action' => 'players'
                             )
                         )
+		    ),
+		    'addplayer' => array(
+			'type' => 'Zend\Mvc\Router\Http\Segment',
+			'options' => array(
+			    'route' => 'tournament/:id/addplayer',
+			    'defaults' => array(
+				'controller' => 'Application\Controller\Tournament',
+				'action' => 'addplayer'
+			    )
+			)
                     )
                 )
             ),

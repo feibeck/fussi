@@ -18,4 +18,9 @@ class PlayerRepository extends EntityRepository
         return $count == 0;
     }
 
+    public function getPlayersNotInTournament()
+    {
+	return $this->findAll();
+    }
+
 }
