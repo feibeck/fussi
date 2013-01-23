@@ -7,15 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Application\Entity\MatchRepository")
  * @ORM\Table(name="match")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"single" = "Application\Entity\SingleMatch", "double" = "Application\Entity\DoubleMatch"})
  */
-class Match
+abstract class Match
 {
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Tournament
@@ -23,58 +27,42 @@ class Match
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
-    private $tournament;
+    protected $tournament;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime",nullable=false)
      */
-    private $date;
-
-    /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
-     * @ORM\JoinColumn(name="player1_id", referencedColumnName="id")
-     */
-    private $player1;
-
-    /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
-     * @ORM\JoinColumn(name="player2_id", referencedColumnName="id")
-     */
-    private $player2;
+    protected $date;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $goalsGame1Player1;
+    protected $goalsGame1Player1;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $goalsGame1Player2;
+    protected $goalsGame1Player2;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $goalsGame2Player1;
+    protected $goalsGame2Player1;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $goalsGame2Player2;
+    protected $goalsGame2Player2;
 
     /**
      * @param \DateTime $date
@@ -166,38 +154,6 @@ class Match
         return $this->id;
     }
 
-    /**
-     * @param \Application\Entity\Player $player1
-     */
-    public function setPlayer1($player1)
-    {
-        $this->player1 = $player1;
-    }
-
-    /**
-     * @return \Application\Entity\Player
-     */
-    public function getPlayer1()
-    {
-        return $this->player1;
-    }
-
-    /**
-     * @param \Application\Entity\Player $player2
-     */
-    public function setPlayer2($player2)
-    {
-        $this->player2 = $player2;
-    }
-
-    /**
-     * @return \Application\Entity\Player
-     */
-    public function getPlayer2()
-    {
-        return $this->player2;
-    }
-
     public function getScore()
     {
         $win1 = 0;
@@ -217,56 +173,6 @@ class Match
 
         return $win1 . " / " . $win2;
 
-    }
-
-    public function isPlayedBy($player1, $player2)
-    {
-
-        return ($this->player1 == $player1 && $this->player2 == $player2)
-            || ($this->player2 == $player1 && $this->player1 == $player2);
-
-    }
-
-    public function exchangeArray($data)
-    {
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['player1'])) {
-            $this->player1 = $data['player1'];
-        }
-        if (isset($data['player2'])) {
-            $this->player2 = $data['player2'];
-        }
-        if (isset($data['goalsGame1Player1'])) {
-            $this->goalsGame1Player1 = $data['goalsGame1Player1'];
-        }
-        if (isset($data['goalsGame1Player2'])) {
-            $this->goalsGame1Player2 = $data['goalsGame1Player2'];
-        }
-        if (isset($data['goalsGame2Player1'])) {
-            $this->goalsGame2Player1 = $data['goalsGame2Player1'];
-        }
-        if (isset($data['goalsGame2Player2'])) {
-            $this->goalsGame2Player2 = $data['goalsGame2Player2'];
-        }
-        if (isset($data['date'])) {
-            $this->date = $data['date'];
-        }
-    }
-
-    public function getArrayCopy()
-    {
-        return array(
-            'id'                => $this->id,
-            'player1'           => $this->player1,
-            'player2'           => $this->player2,
-            'goalsGame1Player1' => $this->goalsGame1Player1,
-            'goalsGame1Player2' => $this->goalsGame1Player2,
-            'goalsGame2Player1' => $this->goalsGame2Player1,
-            'goalsGame2Player2' => $this->goalsGame2Player2,
-            'date'              => $this->date
-        );
     }
 
     /**

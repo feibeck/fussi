@@ -49,16 +49,16 @@ return array(
                                 'action' => 'players'
                             )
                         )
-		    ),
-		    'addplayer' => array(
-			'type' => 'Zend\Mvc\Router\Http\Segment',
-			'options' => array(
-			    'route' => 'tournament/:id/addplayer',
-			    'defaults' => array(
-				'controller' => 'Application\Controller\Tournament',
-				'action' => 'addplayer'
-			    )
-			)
+		            ),
+                    'addplayer' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/:id/addplayer',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Tournament',
+                                'action' => 'addplayer'
+                            )
+                        )
                     )
                 )
             ),
@@ -111,7 +111,25 @@ return array(
                         ),
                     )
                 )
-            )
+            ),
+            'match' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/match',
+                ),
+                'child_routes' => array(
+                    'add' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/add-team/:tid',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Match',
+                                'action'     => 'add',
+                            )
+                        )
+                    ),
+                )
+            ),
         ),
     ),
     'controllers' => array(
@@ -141,6 +159,12 @@ return array(
             },
             'Application\Controller\Dashboard' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 return new \Application\Controller\DashboardController();
+            },
+            'Application\Controller\Match' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \Application\Controller\MatchController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
             },
         )
     ),

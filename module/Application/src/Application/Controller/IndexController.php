@@ -9,7 +9,7 @@ use \Doctrine\ORM\EntityManager;
 
 use \Application\Ranking;
 use \Application\Form\Match as MatchForm;
-use \Application\Entity\Match as MatchEntity;
+use \Application\Entity\SingleMatch as MatchEntity;
 use \Datetime;
 
 class IndexController extends AbstractActionController
@@ -57,31 +57,20 @@ class IndexController extends AbstractActionController
 
         $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
         $tournament = $tournamentRepository->find($id);
-    $players = $tournament->getPlayers();
+        $players = $tournament->getPlayers();
 
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
 
         $ranking = new Ranking($matches);
-        $playersRanking = $ranking->getRanking();
-
-        $potential = 0;
-        foreach($playersRanking as $playerid =>  $rank) {
-            $playerPotential = $rank->getScore() + (count($matches) - $rank->getMatchCount()) * 2;
-            $playersRanking[$playerid]->potential = $playerPotential;
-            if ($playerPotential > $potential) {
-                $potential = $playerPotential;
-            }
-        }
 
         return array(
             'date'           => $date,
             'players'        => $players,
             'matches'        => $matches,
-            'playersRanking' => $playersRanking,
+            'ranking'        => $ranking,
             'startDate'      => $this->startDate,
             'tournament'     => $tournament,
-            'potential'      => $potential,
         );
 
     }

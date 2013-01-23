@@ -88,6 +88,16 @@ class Tournament
         return $this->teamType;
     }
 
+    public function isSinglePlayer()
+    {
+        return $this->teamType == self::TYPE_SINGLE;
+    }
+
+    public function isTeams()
+    {
+        return $this->teamType == self::TYPE_TEAM;
+    }
+
     /**
      * @return Player[]
      */

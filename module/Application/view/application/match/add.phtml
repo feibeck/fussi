@@ -1,0 +1,79 @@
+<h1><?php echo $tournament->getName(); ?> - Add a match result</h1>
+
+<?php echo $this->form()->openTag($form); ?>
+
+<?php echo $this->formElementErrors($form); ?>
+
+<div class="container">
+
+    <div class="span5">
+        <h2>Team 1</h2>
+
+        <label>Attack</label> <?php echo $this->formElement($form->get('t1a')); ?>
+        <label>Defence</label> <?php echo $this->formElement($form->get('t1d')); ?>
+    </div>
+
+    <div class="span5">
+        <h2>Team 2</h2>
+
+        <label>Attack</label> <?php echo $this->formElement($form->get('t2a')); ?>
+        <label>Defence</label> <?php echo $this->formElement($form->get('t2d')); ?>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="span10">
+
+<h2>Result</h2>
+
+<?php echo $this->headScript()->prependFile($this->basePath() . '/js/fussiform.js'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var FuFo = new FussiForm();
+        FuFo.connectFields(
+            '<?php echo $form->get('goalsGame1Team1')->getAttribute('id'); ?>',
+            '<?php echo $form->get('goalsGame1Team2')->getAttribute('id'); ?>'
+        );
+        FuFo.connectFields(
+            '<?php echo $form->get('goalsGame2Team1')->getAttribute('id'); ?>',
+            '<?php echo $form->get('goalsGame2Team2')->getAttribute('id'); ?>'
+        );
+    });
+</script>
+
+<div class="row">
+    <div class="span5">
+
+        <table class="table" id="matchform">
+            <tr>
+                <th></th>
+                <th>Team 1</th>
+                <th>vs.</th>
+                <th>Team 2</th>
+            </tr>
+            <tr>
+                <th>Game 1</th>
+                <td><?php echo $this->formElement($form->get('goalsGame1Team1')); ?></td>
+                <td>:</td>
+                <td><?php echo $this->formElement($form->get('goalsGame1Team2')); ?></td>
+            </tr>
+            <tr>
+                <th>Game 2</th>
+                <td><?php echo $this->formElement($form->get('goalsGame2Team1')); ?></td>
+                <td>:</td>
+                <td><?php echo $this->formElement($form->get('goalsGame2Team2')); ?></td>
+            </tr>
+        </table>
+
+        <input type="submit" class="btn btn-big btn-primary" value="Speichern" />
+        <input type="reset" id="cancelEditMatchResult" class="btn btn-big" value="Abbrechen" />
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>
