@@ -2,14 +2,20 @@
 
 namespace Application;
 
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature;
 use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
 
-class Module
+class Module implements Feature\ControllerProviderInterface,
+                        Feature\ConfigProviderInterface,
+                        Feature\AutoloaderProviderInterface,
+                        Feature\ViewHelperProviderInterface,
+                        Feature\BootstrapListenerInterface
 {
-    public function onBootstrap(MvcEvent $e)
+
+    public function onBootstrap(EventInterface $event)
     {
-        $eventManager = $e->getApplication()->getEventManager();
+        $eventManager = $event->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
@@ -17,6 +23,16 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getControllerConfig()
+    {
+        return include __DIR__ . '/config/controller.config.php';
+    }
+
+    public function getViewHelperConfig()
+    {
+        return include __DIR__ . '/config/view-helper.config.php';
     }
 
     public function getAutoloaderConfig()
@@ -29,4 +45,5 @@ class Module
             ),
         );
     }
+
 }

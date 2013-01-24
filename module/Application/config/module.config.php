@@ -132,42 +132,6 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
-        'factories' => array(
-            'Application\Controller\Index' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-                $sm = $cm->getServiceLocator();
-                $controller = new \Application\Controller\IndexController(
-                    $sm->get("doctrine.entitymanager.orm_default")
-                );
-                $startDate = new \DateTime();
-                $startDate->setDate(2012, 11, 01);
-                $startDate->setTime(0, 0, 0);
-                $controller->setStartDate($startDate);
-                return $controller;
-            },
-            'Application\Controller\Player' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-                $sm = $cm->getServiceLocator();
-                return new \Application\Controller\PlayerController(
-                    $sm->get("doctrine.entitymanager.orm_default")
-                );
-            },
-            'Application\Controller\Tournament' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-                $sm = $cm->getServiceLocator();
-                return new \Application\Controller\TournamentController(
-                    $sm->get("doctrine.entitymanager.orm_default")
-                );
-            },
-            'Application\Controller\Dashboard' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-                return new \Application\Controller\DashboardController();
-            },
-            'Application\Controller\Match' => function(Zend\Mvc\Controller\ControllerManager $cm) {
-                $sm = $cm->getServiceLocator();
-                return new \Application\Controller\MatchController(
-                    $sm->get("doctrine.entitymanager.orm_default")
-                );
-            },
-        )
-    ),
     'doctrine' => array(
         'driver' => array(
             'Application_driver' => array(
@@ -198,10 +162,5 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
-    ),
-    'view_helpers' => array(
-       'invokables' => array(
-          'match' => 'Application\ViewHelper\Match',
-       ),
-    ),
+    )
 );
