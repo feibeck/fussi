@@ -37,9 +37,6 @@ class MatchController extends AbstractActionController
                 $match->setTournament($tournament);
 
                 $now = new \DateTime();
-                $now->setTime(0, 0, 0);
-                $now->modify('first day of');
-
                 $match->setDate($now);
 
                 /** @var $matchRepository \Application\Entity\PlayerRepository */

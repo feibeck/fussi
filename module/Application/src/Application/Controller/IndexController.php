@@ -106,7 +106,6 @@ class IndexController extends AbstractActionController
             $match->setPlayer1($player1);
             $match->setPlayer2($player2);
             $date = new DateTime();
-            $date->setDate($year, $month, 1);
             $match->setDate($date);
         }
 
