@@ -1,0 +1,29 @@
+<?php
+    /** @var $matches \Application\Entity\DoubleMatch[] */
+?>
+<table class="table">
+
+    <tr>
+        <th>Date</th>
+        <th>Team 1</th>
+        <th>Team 2</th>
+        <th>Score</th>
+    </tr>
+
+    <?php foreach ($matches as $match): ?>
+
+        <tr>
+
+            <td><?php echo $match->getDate()->format('d. - H:i'); ?></td>
+            <td><?php echo $match->getTeamOne()->getName(); ?></td>
+            <td><?php echo $match->getTeamTwo()->getName(); ?></td>
+            <td>
+                <?php echo $match->getGoalsGame1Player1(); ?>/<?php echo $match->getGoalsGame1Player2(); ?> and
+                <?php echo $match->getGoalsGame2Player1(); ?>/<?php echo $match->getGoalsGame2Player2(); ?>
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+
+</table>

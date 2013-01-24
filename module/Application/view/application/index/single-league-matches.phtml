@@ -1,0 +1,35 @@
+<table class="table matches">
+
+    <tr>
+
+         <td></td>
+
+    <?php for ($i = 0; $i < count($players) - 1; $i++): $player1 = $players[$i]; ?>
+
+         <th class="matchscore"><?php echo $player1->getName(); ?></th>
+
+    <?php endfor; ?>
+
+    </tr>
+
+    <?php for ($row = count($players) -1; $row > 0; $row--): $player1 = $players[$row]; ?>
+
+        <tr>
+            <th><?php echo $player1->getName(); ?></th>
+
+            <?php for ($column = 0; $column < count($players) - 1; $column++): $player2 = $players[$column]; ?>
+
+
+                <?php if ($column > $row - 1): ?>
+                    <td></td>
+                <?php else: ?>
+                    <td class="matchscore"><?php echo $this->match($date, $tournament, $matches, $player1, $player2); ?></td>
+                <?php endif; ?>
+
+            <?php endfor; ?>
+
+        </tr>
+
+    <?php endfor; ?>
+
+</table>

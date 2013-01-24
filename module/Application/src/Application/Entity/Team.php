@@ -41,4 +41,13 @@ class Team
         return $this->defence;
     }
 
+    public function getName()
+    {
+        return sprintf(
+            "%s / %s",
+            $this->getAttackingPlayer()->getName(),
+            $this->getDefendingPlayer()->getName()
+        );
+    }
+
 }
