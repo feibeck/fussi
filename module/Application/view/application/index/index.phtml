@@ -39,22 +39,8 @@
             </tr>
 
         </table>
-        <table class="table">
-            <tr>
-                <th></th>
-                <th>Player</th>
-                <th>Points</th>
-                <th>Matches</th>
-            </tr>
-            <?php foreach ($ranking->getRanking() as $ranking): ?>
-                <tr>
-                    <td><span class="badge badge-success"><?= ++$i; ?></span></td>
-                    <td class="playerName"><?= $ranking->getPlayer()->getName(); ?></td>
-                    <td><span class="badge badge-warning"><?= $ranking->getScore(); ?></span></td>
-                    <td><span class="badge"><?= $ranking->getMatchCount(); ?></span></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
+
+        <?php echo $this->ranking($tournament, $date->format("Y"), $date->format("m")); ?>
 
     </div>
 

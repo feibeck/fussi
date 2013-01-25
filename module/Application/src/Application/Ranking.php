@@ -67,12 +67,17 @@ class Ranking
     /**
      * @return \Application\PlayerRanking[]
      */
-    public function getRanking()
+    public function getRanking($count = 0)
     {
         uasort($this->playerRankings, function($a, $b) {
             return $b->getScore() - $a->getScore();
         });
-        return array_values($this->playerRankings);
+        $ranking = array_values($this->playerRankings);
+        if ($count != 0) {
+            $ranking = array_slice($ranking, 0, $count);
+        }
+
+        return $ranking;
     }
 
     public function getPotential()

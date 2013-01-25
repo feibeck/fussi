@@ -156,6 +156,12 @@ abstract class Match
 
     public function getScore()
     {
+        $score = $this->getRawScore();
+        return $score[0] . " / " . $score[1];
+    }
+
+    protected function getRawScore()
+    {
         $win1 = 0;
         $win2 = 0;
 
@@ -171,8 +177,7 @@ abstract class Match
             $win2++;
         }
 
-        return $win1 . " / " . $win2;
-
+        return array($win1, $win2);
     }
 
     /**
@@ -189,6 +194,28 @@ abstract class Match
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    public function getWinner()
+    {
+        $score = $this->getRawScore();
+        if ($score[0] > $score[1]) {
+            return 1;
+        }
+        if ($score[0] < $score[1]) {
+            return 2;
+        }
+        return 0;
+    }
+
+    public function isTeamOneWinner()
+    {
+        return $this->getWinner() == 1;
+    }
+
+    public function isTeamTwoWinner()
+    {
+        return $this->getWinner() == 2;
     }
 
 }

@@ -8,6 +8,21 @@ class MatchRepository extends EntityRepository
 {
 
     /**
+     * @return Match[]
+     */
+    public function getLastMatches()
+    {
+        $query = $this->_em->createQuery(
+            'SELECT m FROM Application\Entity\Match m
+            ORDER BY m.date DESC'
+        );
+
+        $query->setMaxResults(5);
+
+        return $query->getResult();
+    }
+
+    /**
      * @param Tournament $tournament
      * @param int        $year
      * @param int        $month

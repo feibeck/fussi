@@ -29,7 +29,12 @@ return array(
             );
         },
         'Application\Controller\Dashboard' => function(ControllerManager $cm) {
-            return new Controller\DashboardController();
+            $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
+            return new Controller\DashboardController(
+                $em->getRepository('Application\Entity\Match'),
+                $em->getRepository('Application\Entity\Tournament')
+            );
         },
         'Application\Controller\Match' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();

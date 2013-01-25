@@ -1,10 +1,81 @@
-<div class="hero-unit">
-    <h1>Welcome to Fußi</h1>
-    <p>Table Football Manager</p>
-    <?php $url = $this->url('tournaments'); ?>
-    <p>
-        <a href="<?= $url; ?>" class="btn btn-primary btn-large">
-            Show tournaments
-        </a>
-    </p>
+<div class="row">
+
+    <div class="span5">
+
+        <h2>Recent Matches</h2>
+
+        <table class="table table-striped">
+
+        <?php foreach ($matches as $match): ?>
+            <tr>
+                <td><?php echo $match->getDate()->format("d.m."); ?></td>
+                <td>
+
+                    <?php if ($match instanceof \Application\Entity\SingleMatch): ?>
+
+                        <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
+                            <?php echo $match->getPlayer1()->getName(); ?>
+                        </span>
+                        <span class="muted">vs.</span>
+                        <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
+                            <?php echo $match->getPlayer2()->getName(); ?>
+                        </span>
+
+                    <?php elseif ($match instanceof \Application\Entity\DoubleMatch): ?>
+
+                        <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
+                            <?php echo $match->getTeamOne()->getName(); ?>
+                        </span>
+                        <span class="muted">vs.</span>
+                        <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
+                            <?php echo $match->getTeamTwo()->getName(); ?>
+                        </span>
+
+                    <?php endif; ?>
+
+                    <br>
+
+                    <small><span class="muted">Tournament:</span> <a href="<?php echo $this->url('tournament/show', array('id' => $match->getTournament()->getId())); ?>"><?php echo $match->getTournament()->getName(); ?></a></small>
+
+                </td>
+                <td>
+
+                    <?php echo $match->getGoalsGame1Player1(); ?>-<?php echo $match->getGoalsGame1Player2(); ?>
+                    /
+                    <?php echo $match->getGoalsGame2Player1(); ?>-<?php echo $match->getGoalsGame2Player2(); ?>
+
+                </td>
+            </tr>
+        <?php endforeach; ?>
+
+        </table>
+
+    </div>
+
+    <div class="span6 offset1">
+
+        <h1>Tournaments</h1>
+
+        <div class="row">
+
+            <?php foreach ($tournaments as $tournament): ?>
+
+                <div class="span3">
+                    <h4><?php echo $tournament->getName(); ?></h4>
+
+                    <?php echo $this->ranking($tournament, date('Y'), date('m'), 3); ?>
+
+                    <p>
+                        <a href="<?php echo $this->url("tournament/show", array('id' => $tournament->getId())); ?>" class="btn btn-small">
+                            Show
+                        </a>
+                    </p>
+                </div>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    </div>
+
 </div>
