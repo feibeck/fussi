@@ -73,14 +73,14 @@ class FormGame extends AbstractHelper
 
         } else if ($element instanceof Game) {
 
-            $markup .= '<tr>'
+            $markup .= '<tr class="game">'
                     . '<td>Game&nbsp;' . $index . '</td>'
                     . '<td>'
                     . $this->renderField($element->get('goalsTeamOne'))
                     . '</td>'
                     . '<td>:</td>'
                     . '<td>'
-                    . $this->renderField($element->get('goalsTeamTwo'))
+                    . $this->renderField($element->get('goalsTeamTwo'), 1)
                     . '</td>'
                     . '</tr>';
 
@@ -111,18 +111,11 @@ class FormGame extends AbstractHelper
         }
     }
 
-    protected function renderField($element)
+    protected function renderField($element, $game = 0)
     {
         $helper = $this->view->plugin('formElement');
-        $element->setAttribute('class', "span2");
-        $element->setAttribute('maxlength', "2");
-        $markup = ''
-                . '<div class="input-prepend input-append">'
-                . '<a class="btn" id=""><i class="icon-arrow-left"></i></a>'
-                . $helper->render($element)
-                . '<a class="btn" id=""><i class="icon-arrow-right"></i></a>'
-                . '</div>';
-        return $markup;
+        $element->setAttribute('class', "goals".$game);
+        return $helper->render($element);
     }
 
     /**
