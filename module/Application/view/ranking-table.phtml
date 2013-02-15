@@ -5,12 +5,17 @@
         <th><small>Points</small></th>
         <th><small>Matches</small></th>
     </tr>
-    <?php foreach ($ranking->getRanking($count) as $ranking): ?>
+    <?php
+    $i = 0;
+    foreach ($ranking->getRanking($count) as $rank): ?>
         <tr>
             <td><span class="badge badge-success"><?= ++$i; ?></span></td>
-            <td class="playerName"><?= $ranking->getPlayer()->getName(); ?></td>
-            <td><span class="badge badge-warning"><?= $ranking->getScore(); ?></span></td>
-            <td><span class="badge"><?= $ranking->getMatchCount(); ?></span></td>
+            <td class="playerName <?php
+                if ($rank->potential >= $tournamentPotential) {
+                    echo "eligible";
+                }?>"><?= $rank->getPlayer()->getName()?></td>
+            <td><span class="badge badge-warning"><?= $rank->getScore(); ?></span></td>
+            <td><span class="badge"><?= $rank->getMatchCount(); ?></span></td>
         </tr>
     <?php endforeach; ?>
 </table>

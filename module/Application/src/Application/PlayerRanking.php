@@ -28,6 +28,11 @@ class PlayerRanking
     protected $matches = 0;
 
     /**
+     * @var int
+     */
+    public $potential = 0;
+
+    /**
      * @param  Player $player
      * 
      * @return void

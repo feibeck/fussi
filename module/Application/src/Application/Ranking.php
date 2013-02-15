@@ -80,16 +80,19 @@ class Ranking
         return $ranking;
     }
 
-    public function getPotential()
+    public function getPotential($maxMatchesPerPlayer)
     {
         $playersRanking = $this->getRanking();
         $potential = 0;
-        foreach($playersRanking as $playerid =>  $rank) {
-            $playerPotential = $rank->getScore() + (count($this->matches) - $rank->getMatchCount()) * 2;
-            $playersRanking[$playerid]->potential = $playerPotential;
+        foreach($playersRanking as $playerid => $rank) {
+            $playerPotential = $rank->getScore() + ($maxMatchesPerPlayer - $rank->getMatchCount()) * 2;
+            $this->playerRankings[$playerid]->potential = $playerPotential;
             if ($playerPotential > $potential) {
                 $potential = $playerPotential;
             }
+        }
+        if ($maxMatchesPerPlayer > count($playersRanking)+1) {
+            // when not everyone has a match already
         }
         return $potential;
     }
