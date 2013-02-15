@@ -3,6 +3,8 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 class MatchRepository extends EntityRepository
 {
@@ -118,16 +120,18 @@ class MatchRepository extends EntityRepository
             )
         );
 
+
         $participants = array();
 
         /** @var $results \Application\Entity\SingleMatch[] */
         $results = $query->getResult();
 
         foreach($results as $result) {
-            $participants[$result->getPlayer1()->getId()] = true;
-            $participants[$result->getPlayer2()->getId()] = true;
+            $participants[$result->getPlayer1()->getId()] = $result->getPlayer1();
+            $participants[$result->getPlayer2()->getId()] = $result->getPlayer2();
         }
+        $participantCollection = new ArrayCollection(array_values($participants));
 
-        return array_keys($participants);
+        return $participantCollection;
     }
 }
