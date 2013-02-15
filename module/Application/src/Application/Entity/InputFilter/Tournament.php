@@ -3,11 +3,12 @@
 namespace Application\Entity\InputFilter;
 
 use Zend\InputFilter\InputFilter;
+use \Application\Entity\TournamentRepository;
 
 class Tournament extends InputFilter
 {
 
-    public function __construct()
+    public function __construct(TournamentRepository $repository)
     {
         $this->add(
             array(
@@ -26,6 +27,7 @@ class Tournament extends InputFilter
                             'encoding' => 'UTF-8'
                         )
                     ),
+		    new \Application\Validator\UniqueName($repository)
                 ),
             )
         );

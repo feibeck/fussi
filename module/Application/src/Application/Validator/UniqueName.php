@@ -2,11 +2,10 @@
 
 namespace Application\Validator;
 
+use Application\Entity\UniqueNameInterface;
 use Zend\Validator\AbstractValidator;
 
-use Application\Entity\PlayerRepository;
-
-class UniquePlayerName extends AbstractValidator
+class UniqueName extends AbstractValidator
 {
 
     const NOT_UNIQUE   = 'notunique';
@@ -20,17 +19,17 @@ class UniquePlayerName extends AbstractValidator
 
 
     /**
-     * @var PlayerRepository
+     * @var UniqueNameInterface
      */
-    protected $userRepository;
+    protected $repository;
 
     /**
-     * @param PlayerRepository $userRepository
+     * @param UniqueNameInterface $repository
      */
-    public function __construct(PlayerRepository $userRepository)
+    public function __construct(UniqueNameInterface $repository)
     {
 	parent::__construct();
-	$this->userRepository = $userRepository;
+	$this->repository = $repository;
     }
 
     /**
@@ -45,7 +44,7 @@ class UniquePlayerName extends AbstractValidator
      */
     public function isValid($value)
     {
-	$valid = $this->userRepository->isUniqueName($value);
+	$valid = $this->repository->isUniqueName($value);
 	if (!$valid) {
 	    $this->error(self::NOT_UNIQUE);
 	}

@@ -24,7 +24,7 @@ class Player extends InputFilter
                                                            'max'      => 100,
                                                            'encoding' => 'UTF-8'
                                                       )),
-                     new \Application\Validator\UniquePlayerName($repository)
+		     new \Application\Validator\UniqueName($repository)
                  ),
             )
         );
