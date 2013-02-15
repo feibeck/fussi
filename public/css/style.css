@@ -37,3 +37,7 @@ td.playerName.bold {
 table.matches.table th.inactive {
     color: #ddd;
 }
+
+table td.right {
+    text-align: right;
+}
