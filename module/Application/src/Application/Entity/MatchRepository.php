@@ -128,7 +128,6 @@ class MatchRepository extends EntityRepository
             $participants[$result->getPlayer2()->getId()] = true;
         }
 
-        error_log("actives ".var_export($participants, true));
         return array_keys($participants);
     }
 }
