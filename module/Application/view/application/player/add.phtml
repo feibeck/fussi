@@ -1,8 +1,31 @@
-<h1>Add player</h1>
+<div class="page-header">
+    <h1>Add player</h1>
+</div>
 
-<?php
-echo $this->form()->openTag($form);
-echo $this->formRow($form->get('name'));
-echo $this->formSubmit($form->get('submit'));
-echo $this->form()->closeTag();
-?>
+<?php echo $this->form()->openTag($form->setAttribute('class', 'form-horizontal')); ?>
+
+<?php if ($form->hasValidated() && !$form->isValid()): ?>
+<div class="alert alert-error">
+    <strong>Validation problems:</strong> Please check your form input
+</div>
+<?php endif; ?>
+
+<?php $messages = $form->get('name')->getMessages(); ?>
+<div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
+    <?php $form->get('name')->setLabelAttributes(array('class' => 'control-label')); ?>
+    <?php echo $this->formLabel($form->get('name')); ?>
+    <div class="controls">
+	<?php echo $this->formElement($form->get('name')); ?>
+	<?php echo $this->formElementErrors()
+			->setMessageOpenFormat('<div class="help-inline">')
+			->setMessageSeparatorString('. ')
+			->setMessageCloseString('.</div>')
+			->render($form->get('name')); ?>
+    </div>
+</div>
+
+<div class="form-actions">
+    <?php echo $this->formSubmit($form->get('submit')->setAttribute('class', 'btn btn-primary')); ?>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>
