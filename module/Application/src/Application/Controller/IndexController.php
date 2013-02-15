@@ -53,12 +53,15 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        $players = $tournament->getPlayers();
-
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
 
+        $players = $tournament->getPlayers();
         $activePlayers = $matchRepository->getActivePlayers($tournament, $year, $month);
+
+        if ($now->format('Ym') != $date->format('Ym')) {
+            $players = $activePlayers;
+        }
 
         $ranking = new Ranking($matches);
 
