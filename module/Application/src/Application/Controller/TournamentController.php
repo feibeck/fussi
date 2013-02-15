@@ -102,6 +102,8 @@ class TournamentController extends AbstractActionController
         $form = new TournamentForm();
 
         $tournament = new Tournament();
+        $tournament->setStart(new \DateTime());
+
         $form->bind($tournament);
 
         $form->setInputFilter(

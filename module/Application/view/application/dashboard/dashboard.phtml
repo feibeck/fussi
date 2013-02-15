@@ -8,7 +8,7 @@
 
         <?php foreach ($matches as $match): ?>
             <tr>
-                <td><?php echo $match->getDate()->format("d.m."); ?></td>
+                <td><?php echo $match->getDate()->format("d.m. H:i"); ?></td>
                 <td>
 
                     <?php if ($match instanceof \Application\Entity\SingleMatch): ?>
@@ -39,11 +39,7 @@
 
                 </td>
                 <td>
-
-                    <?php echo $match->getGoalsGame1Player1(); ?>-<?php echo $match->getGoalsGame1Player2(); ?>
-                    /
-                    <?php echo $match->getGoalsGame2Player1(); ?>-<?php echo $match->getGoalsGame2Player2(); ?>
-
+                    <?php echo implode(", ", $match->getGameResults()); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,32 +38,16 @@ abstract class Match
     protected $date;
 
     /**
-     * @var int
+     * @var Game[]
      *
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="Application\Entity\Game", mappedBy="match", cascade={"persist"})
      */
-    protected $goalsGame1Player1;
+    protected $games;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $goalsGame1Player2;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $goalsGame2Player1;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $goalsGame2Player2;
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
 
     /**
      * @param \DateTime $date
@@ -85,7 +70,11 @@ abstract class Match
      */
     public function setGoalsGame1Player1($goalsGame1Player1)
     {
-        $this->goalsGame1Player1 = $goalsGame1Player1;
+        if (!isset($this->games[0])) {
+            $this->games[0] = new Game();
+            $this->games[0]->setMatch($this);
+        }
+        $this->games[0]->setGoalsTeamOne($goalsGame1Player1);
     }
 
     /**
@@ -93,7 +82,10 @@ abstract class Match
      */
     public function getGoalsGame1Player1()
     {
-        return $this->goalsGame1Player1;
+        if (!isset($this->games[0])) {
+            return 0;
+        }
+        return $this->games[0]->getGoalsTeamOne();
     }
 
     /**
@@ -101,7 +93,11 @@ abstract class Match
      */
     public function setGoalsGame1Player2($goalsGame1Player2)
     {
-        $this->goalsGame1Player2 = $goalsGame1Player2;
+        if (!isset($this->games[0])) {
+            $this->games[0] = new Game();
+            $this->games[0]->setMatch($this);
+        }
+        $this->games[0]->setGoalsTeamTwo($goalsGame1Player2);
     }
 
     /**
@@ -109,7 +105,10 @@ abstract class Match
      */
     public function getGoalsGame1Player2()
     {
-        return $this->goalsGame1Player2;
+        if (!isset($this->games[0])) {
+            return 0;
+        }
+        return $this->games[0]->getGoalsTeamTwo();
     }
 
     /**
@@ -117,7 +116,11 @@ abstract class Match
      */
     public function setGoalsGame2Player1($goalsGame2Player1)
     {
-        $this->goalsGame2Player1 = $goalsGame2Player1;
+        if (!isset($this->games[1])) {
+            $this->games[1] = new Game();
+            $this->games[1]->setMatch($this);
+        }
+        $this->games[1]->setGoalsTeamOne($goalsGame2Player1);
     }
 
     /**
@@ -125,7 +128,10 @@ abstract class Match
      */
     public function getGoalsGame2Player1()
     {
-        return $this->goalsGame2Player1;
+        if (!isset($this->games[1])) {
+            return 0;
+        }
+        return $this->games[1]->getGoalsTeamOne();
     }
 
     /**
@@ -133,7 +139,11 @@ abstract class Match
      */
     public function setGoalsGame2Player2($goalsGame2Player2)
     {
-        $this->goalsGame2Player2 = $goalsGame2Player2;
+        if (!isset($this->games[1])) {
+            $this->games[1] = new Game();
+            $this->games[1]->setMatch($this);
+        }
+        $this->games[1]->setGoalsTeamTwo($goalsGame2Player2);
     }
 
     /**
@@ -141,7 +151,10 @@ abstract class Match
      */
     public function getGoalsGame2Player2()
     {
-        return $this->goalsGame2Player2;
+        if (!isset($this->games[1])) {
+            return 0;
+        }
+        return $this->games[1]->getGoalsTeamTwo();
     }
 
     public function setId($id)
@@ -165,16 +178,14 @@ abstract class Match
         $win1 = 0;
         $win2 = 0;
 
-        if ($this->goalsGame1Player1 > $this->goalsGame1Player2) {
-            $win1++;
-        } else {
-            $win2++;
-        }
+        foreach ($this->games as $game) {
 
-        if ($this->goalsGame2Player1 > $this->goalsGame2Player2) {
-            $win1++;
-        } else {
-            $win2++;
+            if ($game->getGoalsTeamOne() > $game->getGoalsTeamTwo()) {
+                $win1++;
+            } elseif ($game->getGoalsTeamTwo() > $game->getGoalsTeamOne()) {
+                $win2++;
+            }
+
         }
 
         return array($win1, $win2);
@@ -216,6 +227,40 @@ abstract class Match
     public function isTeamTwoWinner()
     {
         return $this->getWinner() == 2;
+    }
+
+    /**
+     * @param Game $game
+     */
+    public function addGame(Game $game)
+    {
+        $game->setMatch($this);
+        $this->games[] = $game;
+    }
+
+    public function setGames($games)
+    {
+        $this->games = new ArrayCollection($games);
+        foreach ($this->games as $game) {
+            $game->setMatch($this);
+        }
+    }
+
+    /**
+     * @return Game[]
+     */
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    public function getGameResults()
+    {
+        $results = array();
+        foreach ($this->games as $game) {
+            $results[] = $game->getGoalsTeamOne() . ':' . $game->getGoalsTeamTwo();
+        }
+        return $results;
     }
 
 }

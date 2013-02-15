@@ -78,16 +78,16 @@ class SingleMatch extends Match
             $this->player2 = $data['player2'];
         }
         if (isset($data['goalsGame1Player1'])) {
-            $this->goalsGame1Player1 = $data['goalsGame1Player1'];
+            $this->setGoalsGame1Player1($data['goalsGame1Player1']);
         }
         if (isset($data['goalsGame1Player2'])) {
-            $this->goalsGame1Player2 = $data['goalsGame1Player2'];
+            $this->setGoalsGame1Player2($data['goalsGame1Player2']);
         }
         if (isset($data['goalsGame2Player1'])) {
-            $this->goalsGame2Player1 = $data['goalsGame2Player1'];
+            $this->setGoalsGame2Player1($data['goalsGame2Player1']);
         }
         if (isset($data['goalsGame2Player2'])) {
-            $this->goalsGame2Player2 = $data['goalsGame2Player2'];
+            $this->setGoalsGame2Player2($data['goalsGame2Player2']);
         }
         if (isset($data['date'])) {
             $this->date = $data['date'];
@@ -100,10 +100,10 @@ class SingleMatch extends Match
             'id'                => $this->id,
             'player1'           => $this->player1,
             'player2'           => $this->player2,
-            'goalsGame1Player1' => $this->goalsGame1Player1,
-            'goalsGame1Player2' => $this->goalsGame1Player2,
-            'goalsGame2Player1' => $this->goalsGame2Player1,
-            'goalsGame2Player2' => $this->goalsGame2Player2,
+            'goalsGame1Player1' => $this->getGoalsGame1Player1(),
+            'goalsGame1Player2' => $this->getGoalsGame1Player2(),
+            'goalsGame2Player1' => $this->getGoalsGame2Player1(),
+            'goalsGame2Player2' => $this->getGoalsGame2Player2(),
             'date'              => $this->date
         );
     }

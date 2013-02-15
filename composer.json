@@ -1,8 +1,14 @@
 {
     "minimum-stability": "alpha",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/feibeck/zf2"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*",
+        "zendframework/zendframework": "dev-develop",
         "doctrine/doctrine-orm-module": "dev-master"
     }
 }

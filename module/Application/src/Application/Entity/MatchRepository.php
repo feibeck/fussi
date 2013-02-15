@@ -2,7 +2,7 @@
 
 namespace Application\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use \Doctrine\ORM\EntityRepository;
 
 class MatchRepository extends EntityRepository
 {
@@ -130,4 +130,37 @@ class MatchRepository extends EntityRepository
 
         return array_keys($participants);
     }
+
+    /**
+     * @param Tournament $tournament
+     * @param Player     $player1
+     * @param Player     $player2
+     *
+     * @return Match
+     */
+    public function getNew(Tournament $tournament, $player1 = null, $player2 = null)
+    {
+        if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
+
+            $match = new SingleMatch();
+
+            $match->setPlayer1($player1);
+            $match->setPlayer2($player2);
+
+        } else {
+
+            $match = new DoubleMatch();
+
+        }
+
+        for ($i = 0; $i < $tournament->getGamesPerMatch(); $i++) {
+            $match->addGame(new Game());
+        }
+
+        $match->setDate(new \DateTime());
+        $match->setTournament($tournament);
+
+        return $match;
+    }
+
 }

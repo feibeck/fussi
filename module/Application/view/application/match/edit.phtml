@@ -1,0 +1,34 @@
+<?php
+    $form->prepare();
+    echo $this->formElementErrors($form);
+    echo $this->form()->openTag($form);
+?>
+
+<?php if ($form instanceof Application\Form\MatchFormDouble):?>
+
+    <div class="row">
+
+         <div class="span3">
+             <h2>Team 1</h2>
+
+             <label>Attack</label> <?php echo $this->formElement($form->get('teamOneAttack')); ?>
+             <label>Defence</label> <?php echo $this->formElement($form->get('teamOneDefence')); ?>
+         </div>
+
+         <div class="span3">
+             <h2>Team 2</h2>
+
+             <label>Attack</label> <?php echo $this->formElement($form->get('teamTwoAttack')); ?>
+             <label>Defence</label> <?php echo $this->formElement($form->get('teamTwoDefence')); ?>
+         </div>
+
+    </div>
+
+<?php endif; ?>
+
+<?php
+    echo $this->formGame($form->get('games'));
+    echo $this->formHidden($form->get('csrf'));
+    echo $this->formElement($form->get('submit'));
+
+    echo $this->form()->closeTag();
