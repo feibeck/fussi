@@ -42,59 +42,59 @@ class TournamentController extends AbstractActionController
         $repository = $this->em->getRepository('Application\Entity\Tournament');
         $tournament = $repository->find($id);
 
-	$addForm = $this->getAddPlayerForm($tournament);
-	$action = $this->url()->fromRoute('tournament/addplayer', array('id' => $id));
-	$addForm->setAttribute('action', $action);
+        $addForm = $this->getAddPlayerForm($tournament);
+        $action = $this->url()->fromRoute('tournament/addplayer', array('id' => $id));
+        $addForm->setAttribute('action', $action);
 
         return array(
-	    'tournament' => $tournament,
-	    'addPlayerForm' => $addForm
+            'tournament'    => $tournament,
+            'addPlayerForm' => $addForm
         );
     }
 
     public function addPlayerAction()
     {
-	$id = $this->params()->fromRoute('id');
+        $id = $this->params()->fromRoute('id');
 
-	$tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
-	$tournament = $tournamentRepository->find($id);
+        $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
+        $tournament = $tournamentRepository->find($id);
 
-	$playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $playerRepository = $this->em->getRepository('Application\Entity\Player');
 
-	$form = $this->getAddPlayerForm($tournament);
+        $form = $this->getAddPlayerForm($tournament);
 
-	if ($this->request->isPost()) {
-	    $form->setData($this->request->getPost());
-	    if ($form->isValid()) {
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
 
-		$playerId = $form->get('player')->getValue();
-		$player = $playerRepository->find($playerId);
+                $playerId = $form->get('player')->getValue();
+                $player = $playerRepository->find($playerId);
 
-		$tournament->addPlayer($player);
+                $tournament->addPlayer($player);
 
-		$this->em->persist($tournament);
-		$this->em->flush();
+                $this->em->persist($tournament);
+                $this->em->flush();
 
-		return $this->redirect()->toRoute(
-		    'tournament/players',
-		    array(
-			 'id' => $tournament->getId()
-		    )
-		);
-	    }
-	}
+                return $this->redirect()->toRoute(
+                    'tournament/players',
+                    array(
+                         'id' => $tournament->getId()
+                    )
+                );
+            }
+        }
 
-	throw new \Exception();
+        throw new \Exception();
 
     }
 
     protected function getAddPlayerForm($tournament)
     {
-	$playerRepository = $this->em->getRepository('Application\Entity\Player');
-	$players = $playerRepository->getPlayersNotInTournament($tournament);
+        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $players = $playerRepository->getPlayersNotInTournament($tournament);
 
-	$addForm = new AddPlayerForm($players);
-	return $addForm;
+        $addForm = new AddPlayerForm($players);
+        return $addForm;
     }
 
     public function addAction()
