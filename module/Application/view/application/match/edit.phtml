@@ -32,3 +32,14 @@
     echo $this->formElement($form->get('submit'));
 
     echo $this->form()->closeTag();
+
+?>
+<?php echo $this->headScript()->prependFile($this->basePath() . '/js/fussiform.js'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var FuFo = new FussiForm();
+        $('.game').each(function() {
+            FuFo.connectFields($('.goals0',this),$('.goals1',this));
+        })
+    });
+</script>

@@ -1,7 +1,5 @@
 var FussiForm = function() {
-    this.connectFields = function(field1, field2) {
-        f1 = $('#'+field1);
-        f2 = $('#'+field2);
+    this.connectFields = function(f1, f2) {
         // fill the field opposite to the field that has less than 10 goals
         this.blurFillField(f1,f2);
         this.blurFillField(f2,f1);
