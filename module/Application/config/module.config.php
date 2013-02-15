@@ -72,16 +72,6 @@ return array(
                     )
                 )
             ),
-            'matchresult' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/matchresult/:id/:year/:month/:player1/:player2',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'matchresult',
-                    ),
-                ),
-            ),
             'players' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -118,13 +108,25 @@ return array(
                     'route'    => '/match',
                 ),
                 'child_routes' => array(
-                    'add' => array(
+                    'new' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => '/add-team/:tid',
+                            'route' => '/new/:tid[/:player1/:player2]',
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Match',
-                                'action'     => 'add',
+                                'action'     => 'new',
+                                'player1'    => null,
+                                'player2'    => null
+                            )
+                        )
+                    ),
+                    'edit' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/edit/:mid',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Match',
+                                'action'     => 'edit',
                             )
                         )
                     ),

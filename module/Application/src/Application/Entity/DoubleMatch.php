@@ -16,7 +16,7 @@ class DoubleMatch extends Match
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
      * @ORM\JoinColumn(name="team1attack", referencedColumnName="id")
      */
-    protected $teamOneAttack;
+    protected $teamOneAttack = null;
 
     /**
      * @var Player
@@ -24,7 +24,7 @@ class DoubleMatch extends Match
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
      * @ORM\JoinColumn(name="team1defence", referencedColumnName="id")
      */
-    protected $teamOneDefence;
+    protected $teamOneDefence = null;
 
     /**
      * @var Player
@@ -32,7 +32,7 @@ class DoubleMatch extends Match
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
      * @ORM\JoinColumn(name="team2attack", referencedColumnName="id")
      */
-    protected $teamTwoAttack;
+    protected $teamTwoAttack = null;
 
     /**
      * @var Player
@@ -40,7 +40,7 @@ class DoubleMatch extends Match
      * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
      * @ORM\JoinColumn(name="team2defence", referencedColumnName="id")
      */
-    protected $teamTwoDefence;
+    protected $teamTwoDefence = null;
 
     public function setTeamOne(Player $attack, Player $defence)
     {
@@ -59,6 +59,9 @@ class DoubleMatch extends Match
      */
     public function getTeamOne()
     {
+        if ($this->teamOneAttack == null || $this->teamOneDefence == null) {
+            return null;
+        }
         return new Team($this->teamOneAttack, $this->teamOneDefence);
     }
 
@@ -67,6 +70,9 @@ class DoubleMatch extends Match
      */
     public function getTeamTwo()
     {
+        if ($this->teamTwoAttack == null || $this->teamTwoDefence == null) {
+            return null;
+        }
         return new Team($this->teamTwoAttack, $this->teamTwoDefence);
     }
 

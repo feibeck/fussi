@@ -15,18 +15,16 @@ class Match extends AbstractHelper
 
         $out = '';
 
-        $url = $this->getView()->url('matchresult', array(
-            'id'   => $tournament->getId(),
-            'year' => $date->format('Y'),
-            'month' => $date->format('m'),
-            'player1' => $player1->getId(),
-            'player2' => $player2->getId(),
-        ));
-
         if ($player1 != $player2) {
 
             $ok = false;
             foreach ($matches as $match) {
+
+                $url = $this->getView()->url('match/edit', array(
+                    'mid' => $match->getId()
+                ));
+
+
                 if ($match->isPlayedBy($player1, $player2)) {
 
                     $title = $player1->getName() . " vs. " . $player2->getName();
@@ -51,6 +49,7 @@ class Match extends AbstractHelper
 
             if (!$ok && $allow) {
 
+                $url = $this->getView()->url('match/new/', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
                 $out .= '<a href="' . $url . '" class="btn btn-small">Edit</a>';
 
             }

@@ -1,6 +1,7 @@
 <?php
 
 use Application\Controller;
+use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\ControllerManager;
 
 return array(
@@ -10,10 +11,6 @@ return array(
             $controller = new Controller\IndexController(
                 $sm->get("doctrine.entitymanager.orm_default")
             );
-            $startDate = new \DateTime();
-            $startDate->setDate(2012, 11, 01);
-            $startDate->setTime(0, 0, 0);
-            $controller->setStartDate($startDate);
             return $controller;
         },
         'Application\Controller\Player' => function(ControllerManager $cm) {
@@ -30,6 +27,7 @@ return array(
         },
         'Application\Controller\Dashboard' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
+            /** @var $em EntityManager */
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\DashboardController(
                 $em->getRepository('Application\Entity\Match'),

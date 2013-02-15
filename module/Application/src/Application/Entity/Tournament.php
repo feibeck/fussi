@@ -39,6 +39,20 @@ class Tournament
     protected $teamType = self::TYPE_SINGLE;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $gamesPerMatch = 1;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date")
+     */
+    protected $start;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Application\Entity\Player")
      * @ORM\JoinTable(name="tournament_players",
      *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
@@ -131,6 +145,38 @@ class Tournament
     public function addPlayer(Player $player)
     {
         $this->players->add($player);
+    }
+
+    /**
+     * @param int $gamesPerMatch
+     */
+    public function setGamesPerMatch($gamesPerMatch)
+    {
+        $this->gamesPerMatch = $gamesPerMatch;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGamesPerMatch()
+    {
+        return $this->gamesPerMatch;
+    }
+
+    /**
+     * @param \DateTime $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
     }
 
 }
