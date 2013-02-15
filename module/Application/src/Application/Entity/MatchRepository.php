@@ -56,8 +56,7 @@ class MatchRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getMatch($tournament, $year, $month, $player1, $player2)
-    {
+    protected function getTournamentPeriod($year, $month) {
         $start =  new \DateTime();
         $start->setDate($year, $month, 1);
         $start->setTime(0, 0, 0);
@@ -65,6 +64,13 @@ class MatchRepository extends EntityRepository
         $end = clone $start;
         $end->setTime(23, 59, 59);
         $end->modify('last day of');
+
+        return array( 0 => $start, 1 => $end);
+    }
+
+    public function getMatch($tournament, $year, $month, $player1, $player2)
+    {
+        list($start, $end) = $this->getTournamentPeriod($year, $month);
 
         $query = $this->_em->createQuery(
             'SELECT m FROM Application\Entity\SingleMatch m
@@ -86,4 +92,42 @@ class MatchRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
+    /**
+     * Get all players who have played a match (yet) in  the tournament
+     *
+     * @param int $tournament Tournament Id
+     * @param int $year       Year of the Tournament
+     * @param int $month      Month of the Tournament
+     *
+     * @return array List of players that have already done a match
+     */
+    public function getActivePlayers($tournament, $year, $month) {
+        list($start, $end) = $this->getTournamentPeriod($year, $month);
+
+        $query = $this->_em->createQuery(
+            'SELECT m FROM Application\Entity\SingleMatch m
+            WHERE m.date >= :start AND m.date <= :end
+            AND m.tournament = :tournament'
+            );
+
+        $query->setParameters(
+            array(
+                 'start' => $start->format('Y-m-d H:i:s'),
+                 'end' => $end->format('Y-m-d H:i:s'),
+                 'tournament' => $tournament
+            )
+        );
+
+        $participants = array();
+
+        /** @var $results \Application\Entity\SingleMatch[] */
+        $results = $query->getResult();
+
+        foreach($results as $result) {
+            $participants[$result->getPlayer1()->getId()] = true;
+            $participants[$result->getPlayer2()->getId()] = true;
+        }
+
+        return array_keys($participants);
+    }
 }

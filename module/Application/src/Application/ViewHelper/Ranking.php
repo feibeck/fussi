@@ -19,7 +19,7 @@ class Ranking extends AbstractHelper
         $this->matchRepository = $matchRepository;
     }
 
-    public function __invoke($tournament, $year, $month, $count = 0)
+    public function __invoke($tournament, $potential, $year, $month, $count = 0)
     {
         $matches = $this->matchRepository->findForMonth(
             $tournament,
@@ -32,7 +32,8 @@ class Ranking extends AbstractHelper
         $model = new \Zend\View\Model\ViewModel(
             array(
                 'ranking' => $ranking,
-                'count'   => $count
+                'count'   => $count,
+                'tournamentPotential' => $potential,
             )
         );
         $model->setTemplate('ranking-table.phtml');

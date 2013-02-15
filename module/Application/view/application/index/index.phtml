@@ -34,13 +34,14 @@
                     Current Potential
                 </th>
                 <td>
-                   <?php echo $ranking->getPotential(); ?>
+                   <?php $tournamentPotential =  $ranking->getPotential(count($players)-1);
+                         echo $tournamentPotential; ?>
                 </td>
             </tr>
 
         </table>
 
-        <?php echo $this->ranking($tournament, $date->format("Y"), $date->format("m")); ?>
+        <?php echo $this->ranking($tournament, $tournamentPotential, $date->format("Y"), $date->format("m")); ?>
 
     </div>
 
@@ -55,10 +56,11 @@
                 echo $this->partial(
                     'application/index/single-league-matches.phtml',
                     array(
-                        'tournament' => $tournament,
-                        'players'    => $players,
-                        'date'       => $date,
-                        'matches'    => $matches
+                        'tournament'    => $tournament,
+                        'players'       => $players,
+                        'activePlayers' => $activePlayers,
+                        'date'          => $date,
+                        'matches'       => $matches
                     )
                 );
             ?>
@@ -71,10 +73,10 @@
                 echo $this->partial(
                     'application/index/double-league-matches.phtml',
                     array(
-                        'tournament' => $tournament,
-                        'players'    => $players,
-                        'date'       => $date,
-                        'matches'    => $matches
+                        'tournament'          => $tournament,
+                        'players'             => $players,
+                        'date'                => $date,
+                        'matches'             => $matches
                     )
                 );
             ?>
