@@ -57,7 +57,7 @@ class FormGame extends AbstractHelper
                 $player2 = "Bar";
             }
 
-            $markup = '<table><tr><th></th><th>%s</th><th>vs.</th><th>%s</th></tr>';
+            $markup = '<table id="matchform"><tr><th></th><th>%s</th><th>vs.</th><th>%s</th></tr>';
             $markup = sprintf(
                 $markup,
                 $player1,
@@ -89,7 +89,7 @@ class FormGame extends AbstractHelper
         }
 
         return sprintf(
-            '<div class="row"><div class="span5"><table class="table" id="matchform">%s</table></div></div>',
+            '<div class="row"><div class="span5">%s</div></div>',
             $markup
         );
     }
@@ -114,6 +114,8 @@ class FormGame extends AbstractHelper
     protected function renderField($element)
     {
         $helper = $this->view->plugin('formElement');
+        $element->setAttribute('class', "span2");
+        $element->setAttribute('maxlength', "2");
         $markup = ''
                 . '<div class="input-prepend input-append">'
                 . '<a class="btn" id=""><i class="icon-arrow-left"></i></a>'
