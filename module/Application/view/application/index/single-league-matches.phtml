@@ -5,7 +5,12 @@
          <td></td>
 
     <?php for ($i = 0; $i < count($players) - 1; $i++): $player1 = $players[$i]; ?>
-        <?php $active = $activePlayers->contains($player1); ?>
+        <?php
+            $active = $activePlayers->contains($player1);
+            if (!$active) {
+                $inactiveColumns[$i] = true;
+            }
+        ?>
         <th class="matchscore<?php if(!$active) echo ' inactive'; ?>"><?php echo $player1->getName(); ?></th>
 
     <?php endfor; ?>
@@ -24,7 +29,9 @@
                 <?php if ($column > $row - 1): ?>
                     <td></td>
                 <?php else: ?>
-                    <td class="matchscore"><?php echo $this->match($date, $tournament, $matches, $player1, $player2); ?></td>
+                    <td class="matchscore<?php if(!$active || $inactiveColumns[$column]) echo ' inactive';?>">
+                        <?php echo $this->match($date, $tournament, $matches, $player1, $player2); ?>
+                    </td>
                 <?php endif; ?>
 
             <?php endfor; ?>
