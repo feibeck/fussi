@@ -1,10 +1,23 @@
 <?php
+/**
+ * Definition of Application\Entity\Game
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Represents a game between two teams (or players), belonging to a match
+ *
  * @ORM\Entity
  * @ORM\Table(name="game")
  */
@@ -89,11 +102,17 @@ class Game
         return $this->id;
     }
 
-    public function setMatch($match)
+    /**
+     * @param Match $match
+     */
+    public function setMatch(Match $match)
     {
         $this->match = $match;
     }
 
+    /**
+     * @return Match
+     */
     public function getMatch()
     {
         return $this->match;

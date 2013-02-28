@@ -1,13 +1,43 @@
 <?php
+/**
+ * Definition of Application\ViewHelper\Match
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\ViewHelper;
 
+use Application\Entity\Tournament;
+use Application\Entity\SingleMatch;
+use Application\Entity\Player;
 use Zend\View\Helper\AbstractHelper;
+use \DateTime;
 
 class Match extends AbstractHelper
 {
 
-    public function __invoke($date, $tournament, $matches, $player1, $player2)
+    /**
+     * @param DateTime $date
+     * @param Tournament $tournament
+     * @param SingleMatch[] $matches
+     * @param Player $player1
+     * @param Player $player2
+     *
+     * @return string
+     */
+    public function __invoke(
+	DateTime $date,
+	Tournament $tournament,
+	array $matches,
+	Player $player1,
+	Player $player2
+    )
     {
 
         $now = new \DateTime();

@@ -1,4 +1,15 @@
 <?php
+/**
+ * Definition of Application\Controller\PlayerController
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Controller;
 
@@ -9,6 +20,9 @@ use \Doctrine\ORM\EntityManager;
 use \Application\Form\Player as PlayerForm;
 use \Application\Entity\Player as Player;
 
+/**
+ * Managing players
+ */
 class PlayerController extends AbstractActionController
 {
 
@@ -25,6 +39,9 @@ class PlayerController extends AbstractActionController
 	$this->em = $em;
     }
 
+    /**
+     * @return array
+     */
     public function listAction()
     {
 	$playerRepository = $this->em->getRepository('Application\Entity\Player');
@@ -34,6 +51,9 @@ class PlayerController extends AbstractActionController
 	);
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
 	$form = new PlayerForm();

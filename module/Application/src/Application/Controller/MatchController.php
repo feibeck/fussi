@@ -1,4 +1,15 @@
 <?php
+/**
+ * Definition of Application\Controller\MatchController
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Controller;
 
@@ -11,6 +22,9 @@ use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+/**
+ * Controller for adding and editing matches
+ */
 class MatchController extends AbstractActionController
 {
 
@@ -34,6 +48,9 @@ class MatchController extends AbstractActionController
      */
     protected $matchRepository;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -42,6 +59,9 @@ class MatchController extends AbstractActionController
         $this->matchRepository = $em->getRepository('Application\Entity\Match');
     }
 
+    /**
+     * @return ViewModel
+     */
     public function newAction()
     {
         $tournamentId = $this->params()->fromRoute('tid');
@@ -56,6 +76,9 @@ class MatchController extends AbstractActionController
         return $this->handleForm($match);
     }
 
+    /**
+     * @return ViewModel
+     */
     public function editAction()
     {
         $matchId = $this->params()->fromRoute('mid');

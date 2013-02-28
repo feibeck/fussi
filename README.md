@@ -30,4 +30,13 @@ Setup
 Hacking
 =======
 
-Feel free to fork Fußi and add cool new features! See the list of issues for some inspiration ;)
+Feel free to fork Fußi and add cool new features! See the list of issues for
+some inspiration. Send a pull request against the develop branch.
+
+License
+=======
+
+"THE BEER-WARE LICENSE" (Revision 42):
+The Fußi-Team wrote this software. As long as you retain this notice you can
+do whatever you want with this stuff. If we meet some day, and you think this
+stuff is worth it, you can buy us a beer in return.

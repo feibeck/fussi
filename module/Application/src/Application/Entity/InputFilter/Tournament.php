@@ -1,36 +1,59 @@
 <?php
+/**
+ * Definition of Application\Entity\InputFilter\Tournament
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Entity\InputFilter;
 
-use Zend\InputFilter\InputFilter;
+use \Application\Validator\UniqueName;
 use \Application\Entity\TournamentRepository;
+use \Zend\InputFilter\InputFilter;
+use \Zend\Validator\NotEmpty;
+use \Zend\Validator\StringLength;
 
+/**
+ * Input filter for a Tournament entity. Used in combination with the
+ * tournament form
+ */
 class Tournament extends InputFilter
 {
 
+    /**
+     * The tournament repository is used to ensure a unique name of tournaments
+     *
+     * @param TournamentRepository $repository
+     */
     public function __construct(TournamentRepository $repository)
     {
-        $this->add(
-            array(
-                'name' => 'name',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'Zend\Filter\StringTrim'),
-                    array('name' => 'Zend\Filter\StripTags'),
-                ),
-                'validators' => array(
-                    new \Zend\Validator\NotEmpty(),
-                    new \Zend\Validator\StringLength(
-                        array(
-                            'min' => 3,
-                            'max' => 100,
-                            'encoding' => 'UTF-8'
-                        )
-                    ),
-		    new \Application\Validator\UniqueName($repository)
-                ),
-            )
-        );
+	$this->add(
+	    array(
+		'name'     => 'name',
+		'required' => true,
+		'filters'  => array(
+		    array('name' => 'Zend\Filter\StringTrim'),
+		    array('name' => 'Zend\Filter\StripTags'),
+		),
+		'validators' => array(
+		    new NotEmpty(),
+		    new StringLength(
+			array(
+			    'min'      => 3,
+			    'max'      => 100,
+			    'encoding' => 'UTF-8'
+			)
+		    ),
+		    new UniqueName($repository)
+		),
+	    )
+	);
     }
 
 }

@@ -1,4 +1,15 @@
 <?php
+/**
+ * Definition of Application\Controller\TournamentController
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Controller;
 
@@ -11,6 +22,9 @@ use \Application\Entity\Tournament as Tournament;
 
 use \Application\Form\PlayerToTournament as AddPlayerForm;
 
+/**
+ * Managing tournaments
+ */
 class TournamentController extends AbstractActionController
 {
 
@@ -27,6 +41,9 @@ class TournamentController extends AbstractActionController
         $this->em = $em;
     }
 
+    /**
+     * @return array
+     */
     public function listAction()
     {
         $repository = $this->em->getRepository('Application\Entity\Tournament');
@@ -36,6 +53,9 @@ class TournamentController extends AbstractActionController
         );
     }
 
+    /**
+     * @return array
+     */
     public function playersAction()
     {
         $id = $this->params()->fromRoute('id');
@@ -52,6 +72,11 @@ class TournamentController extends AbstractActionController
         );
     }
 
+    /**
+     * @return \Zend\Http\Response
+     *
+     * @throws \Exception
+     */
     public function addPlayerAction()
     {
         $id = $this->params()->fromRoute('id');
@@ -88,6 +113,11 @@ class TournamentController extends AbstractActionController
 
     }
 
+    /**
+     * @param $tournament
+     *
+     * @return \Application\Form\PlayerToTournament
+     */
     protected function getAddPlayerForm($tournament)
     {
 	/** @var $playerRepository \Application\Entity\PlayerRepository */
@@ -98,6 +128,9 @@ class TournamentController extends AbstractActionController
         return $addForm;
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
         $form = new TournamentForm();

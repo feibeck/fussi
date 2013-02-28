@@ -1,4 +1,15 @@
 <?php
+/**
+ * Definition of Application\Entity\Game
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Entity;
 
@@ -6,6 +17,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Base class for all match types. Matches of all types are stored in a
+ * single database table (Doctrine's Single Table Inheritance).
+ *
+ * @see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#single-table-inheritance
+ *
  * @ORM\Entity(repositoryClass="Application\Entity\MatchRepository")
  * @ORM\Table(name="match")
  *
@@ -67,6 +83,8 @@ abstract class Match
 
     /**
      * @param int $goalsGame1Player1
+     *
+     * @deprecated Use the game instances
      */
     public function setGoalsGame1Player1($goalsGame1Player1)
     {
@@ -79,6 +97,8 @@ abstract class Match
 
     /**
      * @return int
+     *
+     * @deprecated Use the game instances
      */
     public function getGoalsGame1Player1()
     {
@@ -90,6 +110,8 @@ abstract class Match
 
     /**
      * @param int $goalsGame1Player2
+     *
+     * @deprecated Use the game instances
      */
     public function setGoalsGame1Player2($goalsGame1Player2)
     {
@@ -102,6 +124,8 @@ abstract class Match
 
     /**
      * @return int
+     *
+     * @deprecated Use the game instances
      */
     public function getGoalsGame1Player2()
     {
@@ -113,6 +137,8 @@ abstract class Match
 
     /**
      * @param int $goalsGame2Player1
+     *
+     * @deprecated Use the game instances
      */
     public function setGoalsGame2Player1($goalsGame2Player1)
     {
@@ -125,6 +151,8 @@ abstract class Match
 
     /**
      * @return int
+     *
+     * @deprecated Use the game instances
      */
     public function getGoalsGame2Player1()
     {
@@ -136,6 +164,8 @@ abstract class Match
 
     /**
      * @param int $goalsGame2Player2
+     *
+     * @deprecated Use the game instances
      */
     public function setGoalsGame2Player2($goalsGame2Player2)
     {
@@ -148,6 +178,8 @@ abstract class Match
 
     /**
      * @return int
+     *
+     * @deprecated Use the game instances
      */
     public function getGoalsGame2Player2()
     {
@@ -157,22 +189,38 @@ abstract class Match
         return $this->games[1]->getGoalsTeamTwo();
     }
 
+    /**
+     * @param int $id
+     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Score of the match (won games for each team)
+     *
+     * @return string
+     */
     public function getScore()
     {
         $score = $this->getRawScore();
         return $score[0] . " / " . $score[1];
     }
 
+    /**
+     * Returns an array with the number of won games for each team
+     *
+     * @return array Index 0: Won games team one, index 1: won games team two
+     */
     protected function getRawScore()
     {
         $win1 = 0;
@@ -192,21 +240,26 @@ abstract class Match
     }
 
     /**
-     * @param \Application\Entity\Tournament $tournament
+     * @param Tournament $tournament
      */
-    public function setTournament($tournament)
+    public function setTournament(Tournament $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return \Application\Entity\Tournament
+     * @return Tournament
      */
     public function getTournament()
     {
         return $this->tournament;
     }
 
+    /**
+     * Returns the winning team, either One or Two
+     *
+     * @return int
+     */
     public function getWinner()
     {
         $score = $this->getRawScore();
@@ -219,11 +272,17 @@ abstract class Match
         return 0;
     }
 
+    /**
+     * @return bool
+     */
     public function isTeamOneWinner()
     {
         return $this->getWinner() == 1;
     }
 
+    /**
+     * @return bool
+     */
     public function isTeamTwoWinner()
     {
         return $this->getWinner() == 2;
@@ -238,6 +297,9 @@ abstract class Match
         $this->games[] = $game;
     }
 
+    /**
+     * @param Game[] $games
+     */
     public function setGames($games)
     {
         $this->games = new ArrayCollection($games);
@@ -254,6 +316,11 @@ abstract class Match
         return $this->games;
     }
 
+    /**
+     * Returns a list with all game results
+     *
+     * @return array
+     */
     public function getGameResults()
     {
         $results = array();

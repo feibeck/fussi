@@ -1,14 +1,30 @@
 <?php
+/**
+ * Definition of Application\Entity\MatchRepository
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
 
 namespace Application\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Repository for accessing matches
+ */
 class MatchRepository extends EntityRepository
 {
 
     /**
+     * Returns the last 5 matches for all tournaments
+     *
      * @return Match[]
      */
     public function getLastMatches()
@@ -24,6 +40,8 @@ class MatchRepository extends EntityRepository
     }
 
     /**
+     * Returns all matches for tournament in a given month
+     *
      * @param Tournament $tournament
      * @param int        $year
      * @param int        $month
@@ -57,7 +75,14 @@ class MatchRepository extends EntityRepository
         return $query->getResult();
     }
 
-    protected function getTournamentPeriod($year, $month) {
+    /**
+     * @param int $year
+     * @param int $month
+     *
+     * @return array
+     */
+    protected function getTournamentPeriod($year, $month)
+    {
         $start =  new \DateTime();
         $start->setDate($year, $month, 1);
         $start->setTime(0, 0, 0);
@@ -66,10 +91,25 @@ class MatchRepository extends EntityRepository
         $end->setTime(23, 59, 59);
         $end->modify('last day of');
 
-        return array( 0 => $start, 1 => $end);
+	return array(0 => $start, 1 => $end);
     }
 
-    public function getMatch($tournament, $year, $month, $player1, $player2)
+    /**
+     * @param Tournament $tournament
+     * @param int        $year
+     * @param int        $month
+     * @param Player     $player1
+     * @param Player     $player2
+     *
+     * @return Match|null
+     */
+    public function getMatch(
+	Tournament $tournament,
+	$year,
+	$month,
+	Player $player1,
+	Player $player2
+    )
     {
         list($start, $end) = $this->getTournamentPeriod($year, $month);
 
@@ -94,15 +134,16 @@ class MatchRepository extends EntityRepository
     }
 
     /**
-     * Get all players who have played a match (yet) in  the tournament
+     * Get all players who have played a match (yet) in the tournament
      *
      * @param int $tournament Tournament Id
      * @param int $year       Year of the Tournament
      * @param int $month      Month of the Tournament
      *
-     * @return array List of players that have already done a match
+     * @return ArrayCollection List of players that have already done a match
      */
-    public function getActivePlayers($tournament, $year, $month) {
+    public function getActivePlayers($tournament, $year, $month)
+    {
         list($start, $end) = $this->getTournamentPeriod($year, $month);
 
         $query = $this->_em->createQuery(
@@ -135,6 +176,8 @@ class MatchRepository extends EntityRepository
     }
 
     /**
+     * Creates a new match
+     *
      * @param Tournament $tournament
      * @param Player     $player1
      * @param Player     $player2
