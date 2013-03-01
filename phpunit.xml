@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="./module/Application/test/Bootstrap.php">
+    <testsuites>
+        <testsuite name="Fußi">
+            <directory>./module/Application/test/ApplicationTest</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
