@@ -19,8 +19,9 @@ use Zend\View\HelperPluginManager;
 
 return array(
     'invokables' => array(
-       'match' => 'Application\ViewHelper\Match',
-       'formGame' => 'Application\ViewHelper\FormGame',
+        'match'       => 'Application\ViewHelper\Match',
+        'formGame'    => 'Application\ViewHelper\FormGame',
+        'matchResult' => 'Application\ViewHelper\MatchResult',
     ),
     'factories' => array(
         'tournamentList' => function(HelperPluginManager $manager) {
