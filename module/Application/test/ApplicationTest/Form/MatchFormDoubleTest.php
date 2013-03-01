@@ -18,6 +18,9 @@ use Application\Entity\Player;
 use Application\Entity\Game;
 use Application\Form\MatchFormDouble;
 
+/**
+ * @covers Application\Form\MatchFormDouble
+ */
 class MatchFormDoubleTest extends \PHPUnit_Framework_TestCase
 {
 
