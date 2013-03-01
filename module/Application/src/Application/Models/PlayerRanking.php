@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\PlayerRanking
+ * Definition of Application\Models\PlayerRanking
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application;
+namespace Application\Models;
 
 use \Application\Entity\Player;
 
