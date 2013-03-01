@@ -139,7 +139,7 @@ class Tournament
         $this->id            = (isset($data['id'])) ? $data['id'] : null;
         $this->name          = (isset($data['name'])) ? $data['name'] : null;
         $this->teamType      = (isset($data['team-type'])) ? $data['team-type'] : self::TYPE_SINGLE;
-        $this->start         = (isset($data['start'])) ? $data['start'] : new \DateTime();
+        $this->start         = (isset($data['start-date'])) ? $data['start-date'] : new \DateTime();
         $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
      }
 
