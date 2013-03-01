@@ -52,7 +52,7 @@
 
                 </td>
                 <td>
-                    <?php echo implode(", ", $match->getGameResults()); ?>
+                    <?php echo $this->matchResult($match); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -39,7 +39,7 @@
 
             </td>
             <td>
-                <?php echo implode(", ", $match->getGameResults()); ?>
+                <?php echo $this->matchResult($match); ?>
             </td>
             <td>
                 <a class="btn btn-mini" href="<?php echo $this->url('match/edit', array('mid' => $match->getId())); ?>">Edit</a>

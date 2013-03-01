@@ -98,7 +98,7 @@ abstract class Match
     /**
      * @return int
      *
-     * @deprecated Use the game instances
+     * @deprecated Use the game instances, @see getGames()
      */
     public function getGoalsGame1Player1()
     {
@@ -316,18 +316,5 @@ abstract class Match
         return $this->games;
     }
 
-    /**
-     * Returns a list with all game results
-     *
-     * @return array
-     */
-    public function getGameResults()
-    {
-        $results = array();
-        foreach ($this->games as $game) {
-            $results[] = $game->getGoalsTeamOne() . ':' . $game->getGoalsTeamTwo();
-        }
-        return $results;
-    }
 
 }
