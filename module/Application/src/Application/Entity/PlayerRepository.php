@@ -49,8 +49,8 @@ class PlayerRepository extends EntityRepository implements UniqueNameInterface
      */
     public function getPlayersNotInTournament(Tournament $tournament)
     {
-	// TODO: Create a query (See issue #29)
-	return $this->findAll();
+        // TODO: Create a query (See issue #29)
+        return $this->findAll();
     }
 
 }

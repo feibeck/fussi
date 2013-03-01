@@ -91,7 +91,7 @@ class MatchRepository extends EntityRepository
         $end->setTime(23, 59, 59);
         $end->modify('last day of');
 
-	return array(0 => $start, 1 => $end);
+        return array(0 => $start, 1 => $end);
     }
 
     /**
@@ -104,11 +104,11 @@ class MatchRepository extends EntityRepository
      * @return Match|null
      */
     public function getMatch(
-	Tournament $tournament,
-	$year,
-	$month,
-	Player $player1,
-	Player $player2
+        Tournament $tournament,
+        $year,
+        $month,
+        Player $player1,
+        Player $player2
     )
     {
         list($start, $end) = $this->getTournamentPeriod($year, $month);

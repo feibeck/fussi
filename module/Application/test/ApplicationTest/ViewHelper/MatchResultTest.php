@@ -13,9 +13,9 @@
 
 namespace ApplicationTest\ViewHelper;
 
-
 class MatchResultTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testInvokeSingleGame()
     {
         $match = $this->getMock('Application\Entity\SingleMatch', array('getGames'));
@@ -51,4 +51,5 @@ class MatchResultTest extends \PHPUnit_Framework_TestCase
         $game->expects($this->once())->method('getGoalsTeamTwo')->will($this->returnValue($goalsTwo));
         return $game;
     }
+
 }

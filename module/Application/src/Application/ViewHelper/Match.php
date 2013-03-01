@@ -32,11 +32,11 @@ class Match extends AbstractHelper
      * @return string
      */
     public function __invoke(
-	DateTime $date,
-	Tournament $tournament,
-	array $matches,
-	Player $player1,
-	Player $player2
+        DateTime $date,
+        Tournament $tournament,
+        array $matches,
+        Player $player1,
+        Player $player2
     )
     {
 

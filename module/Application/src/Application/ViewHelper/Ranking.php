@@ -41,11 +41,11 @@ class Ranking extends AbstractHelper
      * @return string
      */
     public function __invoke(
-	Tournament $tournament,
-	$potential,
-	$year,
-	$month,
-	$count = 0
+        Tournament $tournament,
+        $potential,
+        $year,
+        $month,
+        $count = 0
     )
     {
         $matches = $this->matchRepository->findForMonth(

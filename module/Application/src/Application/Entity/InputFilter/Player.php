@@ -32,27 +32,27 @@ class Player extends InputFilter
      */
     public function __construct(PlayerRepository $repository)
     {
-	$this->add(
-	    array(
-		'name'       => 'name',
-		'required'   => true,
-		'filters'    => array(
-		    array('name' => 'Zend\Filter\StringTrim'),
-		    array('name' => 'Zend\Filter\StripTags'),
-		),
-		'validators' => array(
-		    new NotEmpty(),
-		    new StringLength(
-			array(
-			    'min'      => 3,
-			    'max'      => 100,
-			    'encoding' => 'UTF-8'
-			)
-		    ),
-		    new UniqueName($repository)
-		)
-	    )
-	);
+        $this->add(
+            array(
+            'name'       => 'name',
+            'required'   => true,
+            'filters'    => array(
+                array('name' => 'Zend\Filter\StringTrim'),
+                array('name' => 'Zend\Filter\StripTags'),
+            ),
+            'validators' => array(
+                new NotEmpty(),
+                new StringLength(
+                    array(
+                        'min'      => 3,
+                        'max'      => 100,
+                        'encoding' => 'UTF-8'
+                    )
+                ),
+                new UniqueName($repository)
+            )
+            )
+        );
     }
 
 }

@@ -38,8 +38,8 @@ class Player
      */
     public function exchangeArray($data)
     {
-	$this->id = (isset($data['id'])) ? $data['id'] : null;
-	$this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->id   = (isset($data['id'])) ? $data['id'] : null;
+        $this->name = (isset($data['name'])) ? $data['name'] : null;
     }
 
     /**
@@ -47,7 +47,7 @@ class Player
      */
     public function getArrayCopy()
     {
-	return get_object_vars($this);
+        return get_object_vars($this);
     }
 
     /**

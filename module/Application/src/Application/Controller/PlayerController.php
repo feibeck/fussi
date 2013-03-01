@@ -36,7 +36,7 @@ class PlayerController extends AbstractActionController
      */
     public function __construct(EntityManager $em)
     {
-	$this->em = $em;
+        $this->em = $em;
     }
 
     /**
@@ -44,11 +44,11 @@ class PlayerController extends AbstractActionController
      */
     public function listAction()
     {
-	$playerRepository = $this->em->getRepository('Application\Entity\Player');
-	$players = $playerRepository->findAll();
-	return array(
-	    'players' => $players
-	);
+        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $players = $playerRepository->findAll();
+        return array(
+            'players' => $players
+        );
     }
 
     /**
@@ -56,29 +56,29 @@ class PlayerController extends AbstractActionController
      */
     public function addAction()
     {
-	$form = new PlayerForm();
+        $form = new PlayerForm();
 
-	$player = new Player();
-	$form->bind($player);
+        $player = new Player();
+        $form->bind($player);
 
-	$form->setInputFilter(
-	    new \Application\Entity\InputFilter\Player(
-		$this->em->getRepository('\Application\Entity\Player')
-	    )
-	);
+        $form->setInputFilter(
+            new \Application\Entity\InputFilter\Player(
+                $this->em->getRepository('\Application\Entity\Player')
+            )
+        );
 
-	if ($this->request->isPost()) {
-	    $form->setData($this->request->getPost());
-	    if ($form->isValid()) {
-		$this->em->persist($player);
-		$this->em->flush();
-		return $this->redirect()->toRoute('players');
-	    }
-	}
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+                $this->em->persist($player);
+                $this->em->flush();
+                return $this->redirect()->toRoute('players');
+            }
+        }
 
-	return array(
-	    'form' => $form
-	);
+        return array(
+            'form' => $form
+        );
     }
 
 }

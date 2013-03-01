@@ -22,18 +22,18 @@ class Player extends ZendForm
 
     public function __construct()
     {
-	parent::__construct('Player');
+        parent::__construct('Player');
 
-	$name = new TextElement('name');
-	$name->setLabel('Name');
-	$this->add($name);
+        $name = new TextElement('name');
+        $name->setLabel('Name');
+        $this->add($name);
 
-	$submit = new Element('submit');
-	$submit->setValue('Speichern');
-	$submit->setAttributes(array(
-	    'type'  => 'submit'
-	));
-	$this->add($submit);
+        $submit = new Element('submit');
+        $submit->setValue('Speichern');
+        $submit->setAttributes(array(
+            'type'  => 'submit'
+        ));
+        $this->add($submit);
     }
 
 }

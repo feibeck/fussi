@@ -70,7 +70,7 @@ class IndexController extends AbstractActionController
             return;
         }
 
-	/** @var $matchRepository \Application\Entity\MatchRepository */
+        /** @var $matchRepository \Application\Entity\MatchRepository */
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
 

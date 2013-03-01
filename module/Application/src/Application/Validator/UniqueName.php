@@ -25,7 +25,7 @@ class UniqueName extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-	self::NOT_UNIQUE   => "The name is already in use"
+        self::NOT_UNIQUE   => "The name is already in use"
     );
 
 
@@ -39,8 +39,8 @@ class UniqueName extends AbstractValidator
      */
     public function __construct(UniqueNameInterface $repository)
     {
-	parent::__construct();
-	$this->repository = $repository;
+        parent::__construct();
+        $this->repository = $repository;
     }
 
     /**
@@ -55,11 +55,11 @@ class UniqueName extends AbstractValidator
      */
     public function isValid($value)
     {
-	$valid = $this->repository->isUniqueName($value);
-	if (!$valid) {
-	    $this->error(self::NOT_UNIQUE);
-	}
-	return $valid;
+        $valid = $this->repository->isUniqueName($value);
+        if (!$valid) {
+            $this->error(self::NOT_UNIQUE);
+        }
+        return $valid;
     }
 
 }
