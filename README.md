@@ -1,6 +1,8 @@
 Fußi - Table Football Tracking
 ==============================
 
+[![Build Status](https://travis-ci.org/feibeck/fussi.png)](https://travis-ci.org/feibeck/fussi)
+
 Fußi allows you to track the results of table football matches. Each month a
 new league is started where each player has to play against every other player.
 All game results are archived. With Fußi you can view the result and statistics
