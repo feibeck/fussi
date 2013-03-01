@@ -28,12 +28,57 @@
     <?php $form->get('name')->setLabelAttributes(array('class' => 'control-label')); ?>
     <?php echo $this->formLabel($form->get('name')); ?>
     <div class="controls">
-	<?php echo $this->formElement($form->get('name')); ?>
-	<?php echo $this->formElementErrors()
-			->setMessageOpenFormat('<div class="help-inline">')
-			->setMessageSeparatorString('. ')
-			->setMessageCloseString('.</div>')
-			->render($form->get('name')); ?>
+    <?php echo $this->formElement($form->get('name')); ?>
+    <?php echo $this->formElementErrors()
+            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</div>')
+            ->render($form->get('name')); ?>
+    </div>
+</div>
+
+<?php $messages = $form->get('games-per-match')->getMessages(); ?>
+<div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
+    <?php $form->get('games-per-match')->setLabelAttributes(array('class' => 'control-label')); ?>
+    <?php $form->get('games-per-match')->setAttributes(array('class' => 'input-mini')); ?>
+    <?php echo $this->formLabel($form->get('games-per-match')); ?>
+    <div class="controls">
+    <?php echo $this->formElement($form->get('games-per-match')); ?>
+    <?php echo $this->formElementErrors()
+            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</div>')
+            ->render($form->get('games-per-match')); ?>
+    </div>
+</div>
+
+<?php $messages = $form->get('team-type')->getMessages(); ?>
+<div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
+    <?php $form->get('team-type')->setLabelAttributes(array('class' => 'control-label')); ?>
+    <?php echo $this->formLabel($form->get('team-type')); ?>
+    <div class="controls">
+    <?php $form->get('team-type')->setLabelAttributes(array('class' => 'radio')); ?>
+    <?php echo $this->formElement($form->get('team-type')); ?>
+    <?php echo $this->formElementErrors()
+            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</div>')
+            ->render($form->get('team-type')); ?>
+    </div>
+</div>
+
+<?php $messages = $form->get('start-date')->getMessages(); ?>
+<div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
+    <?php $form->get('start-date')->setLabelAttributes(array('class' => 'control-label')); ?>
+    <?php $form->get('start-date')->setAttributes(array('class' => 'input-small')); ?>
+    <?php echo $this->formLabel($form->get('start-date')); ?>
+    <div class="controls">
+    <?php echo $this->formElement($form->get('start-date')); ?>
+    <?php echo $this->formElementErrors()
+            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</div>')
+            ->render($form->get('start-date')); ?>
     </div>
 </div>
 

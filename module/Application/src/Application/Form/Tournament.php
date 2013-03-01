@@ -12,27 +12,64 @@
  */
 namespace Application\Form;
 
-use \Zend\Form\Form as ZendForm;
-use \Zend\Form\Element;
-use \Zend\Form\Element\Text as TextElement;
+use \Application\Entity\Tournament as TournamentEntity;
+use \Zend\Form\Form;
 
-class Tournament extends ZendForm
+class Tournament extends Form
 {
 
     public function __construct()
     {
         parent::__construct('Tournament');
 
-        $name = new TextElement('name');
-        $name->setLabel('Name');
-        $this->add($name);
-
-        $submit = new Element('submit');
-        $submit->setValue('Speichern');
-        $submit->setAttributes(array(
-            'type'  => 'submit'
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'name',
+            'options' => array(
+                'label' => 'Name'
+            )
         ));
-        $this->add($submit);
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'games-per-match',
+            'options' => array(
+                'label' => 'Games per match',
+            ),
+            'attributes' => array(
+                'maxlength' => 2
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Radio',
+            'name' => 'team-type',
+            'options' => array(
+                'label' => 'Match-Type',
+                'value_options' => array(
+                    TournamentEntity::TYPE_TEAM   => 'Team',
+                    TournamentEntity::TYPE_SINGLE => 'Single Player',
+                ),
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Date',
+            'name' => 'start-date',
+            'options' => array(
+                'label' => 'Start date'
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Submit',
+            'name' => 'submit',
+            'options' => array(
+                'type'  => 'submit'
+            )
+        ));
+        $this->get('submit')->setValue('Save');
+
     }
 
 }

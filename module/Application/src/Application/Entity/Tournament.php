@@ -136,10 +136,12 @@ class Tournament
      */
     public function exchangeArray($data)
     {
-        $this->id       = (isset($data['id'])) ? $data['id'] : null;
-        $this->name     = (isset($data['name'])) ? $data['name'] : null;
-        $this->teamType = (isset($data['teamType'])) ? $data['teamType'] : self::TYPE_SINGLE;
-    }
+        $this->id            = (isset($data['id'])) ? $data['id'] : null;
+        $this->name          = (isset($data['name'])) ? $data['name'] : null;
+        $this->teamType      = (isset($data['team-type'])) ? $data['team-type'] : self::TYPE_SINGLE;
+        $this->start         = (isset($data['start'])) ? $data['start'] : new \DateTime();
+        $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
+     }
 
     /**
      * @return array
@@ -147,9 +149,11 @@ class Tournament
     public function getArrayCopy()
     {
         return array(
-            'id'       => $this->id,
-            'name'     => $this->name,
-            'teamType' => $this->teamType
+            'id'              => $this->id,
+            'name'            => $this->name,
+            'team-type'       => $this->teamType,
+            'start-date'      => $this->start,
+            'games-per-match' => $this->gamesPerMatch
         );
     }
 
