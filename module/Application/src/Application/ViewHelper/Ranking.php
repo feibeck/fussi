@@ -15,7 +15,7 @@ namespace Application\ViewHelper;
 
 use Application\Entity\MatchRepository;
 use Application\Entity\Tournament;
-use Application\Ranking as RankingCalculator;
+use Application\Model\Ranking as RankingCalculator;
 use Zend\View\Helper\AbstractHelper;
 
 class Ranking extends AbstractHelper
