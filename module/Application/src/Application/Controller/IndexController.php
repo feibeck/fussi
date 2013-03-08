@@ -15,7 +15,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-use \Application\Models\Ranking;
+use \Application\Model\Ranking;
 use \Application\Entity\TournamentRepository;
 use \Application\Entity\Tournament;
 
