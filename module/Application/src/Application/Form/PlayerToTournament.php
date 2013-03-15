@@ -16,7 +16,7 @@ use Zend\Form\Form;
 use Zend\Form\Element\Select;
 use Zend\Form\Element;
 
-use Application\Entity\Player;
+use Application\Model\Entity\Player;
 
 class PlayerToTournament extends Form
 {

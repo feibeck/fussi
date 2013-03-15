@@ -11,9 +11,9 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity\InputFilter;
+namespace Application\Form\InputFilter;
 
-use \Application\Entity\PlayerRepository;
+use Application\Model\Entity\PlayerRepository;
 use \Application\Validator\UniqueName;
 use \Zend\InputFilter\InputFilter;
 use \Zend\Validator\NotEmpty;

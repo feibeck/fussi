@@ -11,9 +11,9 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace ApplicationTest\Entity;
+namespace ApplicationTest\Model\Entity;
 
-use Application\Entity\Game;
+use Application\Model\Entity\Game;
 
 /**
  * @covers Application\Entity\Game
@@ -39,7 +39,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchProperty()
     {
-        $match = $this->getMock('Application\Entity\Match');
+        $match = $this->getMock('Application\Model\Entity\Match');
         $this->game->setMatch($match);
         $this->assertSame($match, $this->game->getMatch());
     }

@@ -11,10 +11,10 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace ApplicationTest\Entity;
+namespace ApplicationTest\Model\Entity;
 
-use Application\Entity\Tournament;
-use ApplicationTest\Entity\Constraint\Tournament as TournamentConstraint;
+use Application\Model\Entity\Tournament;
+use ApplicationTest\Model\Entity\Constraint\Tournament as TournamentConstraint;
 
 /**
  * @covers Application\Entity\Tournament
@@ -23,7 +23,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Tournament
+     * @var \Application\Model\Entity\Tournament
      */
     protected $tournament;
 
@@ -47,12 +47,13 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
     public function testTeamTypeProperty()
     {
         $this->tournament->setTeamType(Tournament::TYPE_TEAM);
-        $this->assertEquals(Tournament::TYPE_TEAM, $this->tournament->getTeamType());
+        $this->assertEquals(
+            \Application\Model\Entity\Tournament::TYPE_TEAM, $this->tournament->getTeamType());
     }
 
     public function testIsSinglePlayer()
     {
-        $this->tournament->setTeamType(Tournament::TYPE_SINGLE);
+        $this->tournament->setTeamType(\Application\Model\Entity\Tournament::TYPE_SINGLE);
         $this->assertTrue($this->tournament->isSinglePlayer());
         $this->assertFalse($this->tournament->isTeams());
     }
@@ -89,8 +90,8 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testPlayers()
     {
-        $player1 = $this->getMock('\Application\Entity\Player');
-        $player2 = $this->getMock('\Application\Entity\Player');
+        $player1 = $this->getMock('\Application\Model\Entity\Player');
+        $player2 = $this->getMock('\Application\Model\Entity\Player');
         $this->tournament->addPlayer($player1);
         $this->tournament->addPlayer($player2);
         $players = $this->tournament->getPlayers();

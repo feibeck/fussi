@@ -11,8 +11,9 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Entity;
 
+use Application\Model\Entity\Player;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 

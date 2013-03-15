@@ -13,9 +13,9 @@
 
 namespace Application\ViewHelper;
 
-use Application\Entity\Tournament;
-use Application\Entity\SingleMatch;
-use Application\Entity\Player;
+use Application\Model\Entity\Tournament;
+use Application\Model\Entity\SingleMatch;
+use Application\Model\Entity\Player;
 use Zend\View\Helper\AbstractHelper;
 use \DateTime;
 
@@ -24,10 +24,10 @@ class Match extends AbstractHelper
 
     /**
      * @param DateTime $date
-     * @param Tournament $tournament
+     * @param \Application\Model\Entity\Tournament $tournament
      * @param SingleMatch[] $matches
-     * @param Player $player1
-     * @param Player $player2
+     * @param \Application\Model\Entity\Player $player1
+     * @param \Application\Model\Entity\Player $player2
      *
      * @return string
      */

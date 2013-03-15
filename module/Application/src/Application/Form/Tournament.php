@@ -12,7 +12,7 @@
  */
 namespace Application\Form;
 
-use \Application\Entity\Tournament as TournamentEntity;
+use Application\Model\Entity\Tournament as TournamentEntity;
 use \Zend\Form\Form;
 
 class Tournament extends Form

@@ -16,8 +16,8 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 
 use \Application\Model\Ranking;
-use \Application\Entity\TournamentRepository;
-use \Application\Entity\Tournament;
+use Application\Model\Repository\TournamentRepository;
+use Application\Model\Entity\Tournament;
 
 use \Datetime;
 
@@ -53,7 +53,7 @@ class IndexController extends AbstractActionController
 
         /** @var $tournamentRepository TournamentRepository */
         $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
-        /** @var $tournament Tournament */
+        /** @var $tournament \Application\Model\Entity\Tournament */
         $tournament = $tournamentRepository->find($id);
 
         $date = new DateTime();
@@ -70,7 +70,7 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        /** @var $matchRepository \Application\Entity\MatchRepository */
+        /** @var $matchRepository \Application\Model\Repository\MatchRepository */
         $matchRepository = $this->em->getRepository('Application\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
 

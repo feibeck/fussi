@@ -11,7 +11,9 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model;
+
+use Application\Model\Entity\Player;
 
 class Team
 {

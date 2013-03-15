@@ -11,8 +11,10 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Entity;
 
+use Application\Model\Entity\Player;
+use Application\Model\Entity\Match;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

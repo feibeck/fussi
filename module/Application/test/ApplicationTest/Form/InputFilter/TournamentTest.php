@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace ApplicationTest\Entity\InputFilter;
+namespace ApplicationTest\Form\InputFilter;
 
 class TournamentTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,13 +19,13 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
     protected $validData = array(
         'name' => 'Foobar',
         'games-per-match' => 1,
-        'team-type' => \Application\Entity\Tournament::TYPE_SINGLE,
+        'team-type' => \Application\Model\Entity\Tournament::TYPE_SINGLE,
         'start-date' => '2013-01-01'
     );
 
     public function testDate()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -36,7 +36,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidMatchType()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -47,7 +47,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyValuesIsInvalid()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository()
         );
 
@@ -57,7 +57,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testValidDataPasses()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository()
         );
 
@@ -67,7 +67,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testNameNeedsToBeUnique()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $inputFilter->setData($this->validData);
@@ -76,7 +76,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testThereNeedsToBeAtLeastOneGame()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -87,7 +87,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testGamesPerMatchIsNumber()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -98,7 +98,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testGamesPerMatchRequired()
     {
-        $inputFilter = new \Application\Entity\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\Tournament(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -110,7 +110,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
     protected function getRepository($nameIsUnique = true)
     {
         $repository = $this->getMock(
-            '\Application\Entity\TournamentRepository',
+            '\Application\Model\Repository\TournamentRepository',
             array(
                 'isUniqueName'
             ),

@@ -13,8 +13,8 @@
 
 namespace Application\Controller;
 
-use Application\Entity\MatchRepository;
-use Application\Entity\TournamentRepository;
+use Application\Model\Repository\MatchRepository;
+use Application\Model\Repository\TournamentRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
@@ -24,18 +24,18 @@ class DashboardController extends AbstractActionController
 {
 
     /**
-     * @var MatchRepository
+     * @var \Application\Model\Repository\MatchRepository
      */
     protected $matchRepository;
 
     /**
-     * @var TournamentRepository
+     * @var \Application\Model\Repository\TournamentRepository
      */
     protected $tournamentRepository;
 
     /**
-     * @param MatchRepository      $matchRepository
-     * @param TournamentRepository $tournamentRepository
+     * @param \Application\Model\Repository\MatchRepository      $matchRepository
+     * @param \Application\Model\Repository\TournamentRepository $tournamentRepository
      */
     public function __construct(
         MatchRepository $matchRepository,

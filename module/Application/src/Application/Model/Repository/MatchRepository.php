@@ -11,8 +11,14 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Repository;
 
+use Application\Model\Entity\Player;
+use Application\Model\Entity\Tournament;
+use Application\Model\Entity\DoubleMatch;
+use Application\Model\Entity\Game;
+use Application\Model\Entity\Match;
+use Application\Model\Entity\SingleMatch;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -42,7 +48,7 @@ class MatchRepository extends EntityRepository
     /**
      * Returns all matches for tournament in a given month
      *
-     * @param Tournament $tournament
+     * @param \Application\Model\Entity\Tournament $tournament
      * @param int        $year
      * @param int        $month
      *
@@ -95,7 +101,7 @@ class MatchRepository extends EntityRepository
     }
 
     /**
-     * @param Tournament $tournament
+     * @param \Application\Model\Entity\Tournament $tournament
      * @param int        $year
      * @param int        $month
      * @param Player     $player1
@@ -163,7 +169,7 @@ class MatchRepository extends EntityRepository
 
         $participants = array();
 
-        /** @var $results \Application\Entity\SingleMatch[] */
+        /** @var $results \Application\Model\Entity\SingleMatch[] */
         $results = $query->getResult();
 
         foreach($results as $result) {
@@ -178,8 +184,8 @@ class MatchRepository extends EntityRepository
     /**
      * Creates a new match
      *
-     * @param Tournament $tournament
-     * @param Player     $player1
+     * @param \Application\Model\Entity\Tournament $tournament
+     * @param \Application\Model\Entity\Player     $player1
      * @param Player     $player2
      *
      * @return Match

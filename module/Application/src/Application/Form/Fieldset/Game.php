@@ -13,7 +13,7 @@
 
 namespace Application\Form\Fieldset;
 
-use Application\Entity\Game as GameEntity;
+use Application\Model\Entity\Game as GameEntity;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;

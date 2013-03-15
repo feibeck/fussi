@@ -14,7 +14,7 @@
 namespace Application\Model;
 
 use \Application\Model\PlayerRanking;
-use \Application\Entity\Match;
+use Application\Model\Entity\Match;
 
 class Ranking
 {
@@ -31,7 +31,7 @@ class Ranking
 
     /**
      *
-     * @param \Application\Entity\Match[] $matches
+     * @param \Application\Model\Entity\Match[] $matches
      */
     public function __construct($matches)
     {
@@ -40,7 +40,7 @@ class Ranking
 
         foreach ($matches as $match) {
 
-            if ($match instanceof \Application\Entity\DoubleMatch) {
+            if ($match instanceof Entity\DoubleMatch) {
 
                 $team1 = $match->getTeamOne();
                 $team2 = $match->getTeamTwo();
@@ -136,7 +136,7 @@ class Ranking
     }
 
     /**
-     * @param Match $match
+     * @param \Application\Model\Entity\Match $match
      * 
      * @return int
      */
@@ -154,7 +154,7 @@ class Ranking
     }
 
     /**
-     * @param Match $match
+     * @param \Application\Model\Entity\Match $match
      *
      * @return int
      */

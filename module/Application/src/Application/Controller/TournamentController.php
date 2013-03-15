@@ -18,7 +18,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use \Doctrine\ORM\EntityManager;
 
 use \Application\Form\Tournament as TournamentForm;
-use \Application\Entity\Tournament as Tournament;
+use Application\Model\Entity\Tournament as Tournament;
 
 use \Application\Form\PlayerToTournament as AddPlayerForm;
 
@@ -120,7 +120,7 @@ class TournamentController extends AbstractActionController
      */
     protected function getAddPlayerForm($tournament)
     {
-        /** @var $playerRepository \Application\Entity\PlayerRepository */
+        /** @var $playerRepository \Application\Model\Entity\PlayerRepository */
         $playerRepository = $this->em->getRepository('Application\Entity\Player');
         $players = $playerRepository->getPlayersNotInTournament($tournament);
 
@@ -141,7 +141,7 @@ class TournamentController extends AbstractActionController
         $form->bind($tournament);
 
         $form->setInputFilter(
-            new \Application\Entity\InputFilter\Tournament(
+            new \Application\Form\InputFilter\Tournament(
                 $this->em->getRepository('Application\Entity\Tournament')
             )
         );

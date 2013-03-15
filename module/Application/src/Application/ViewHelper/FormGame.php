@@ -14,7 +14,7 @@
 namespace Application\ViewHelper;
 
 use Application\Form\Fieldset\Game;
-use Application\Entity\Game as GameEntity;
+use Application\Model\Entity\Game as GameEntity;
 use Symfony\Component\Console\Application;
 use Zend\Form\Element;
 use Zend\Form\ElementInterface;
@@ -49,10 +49,10 @@ class FormGame extends AbstractHelper
             if ($match == null) {
                 $player1 = 'n/a';
                 $player2 = 'n/a';
-            } else if ($match instanceof \Application\Entity\DoubleMatch) {
+            } else if ($match instanceof \Application\Model\Entity\DoubleMatch) {
                 $player1 = 'Team 1';
                 $player2 = 'Team 2';
-            } else if ($match instanceof \Application\Entity\SingleMatch) {
+            } else if ($match instanceof \Application\Model\Entity\SingleMatch) {
                 $player1 = $match->getPlayer1()->getName();
                 $player2 = $match->getPlayer2()->getName();
             } else {
@@ -100,7 +100,7 @@ class FormGame extends AbstractHelper
     /**
      * @param $element
      *
-     * @return \Application\Entity\Match
+     * @return \Application\Model\Entity\Match
      */
     protected function getMatch($element)
     {

@@ -11,10 +11,10 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity\InputFilter;
+namespace Application\Form\InputFilter;
 
 use \Application\Validator\UniqueName;
-use \Application\Entity\TournamentRepository;
+use Application\Model\Repository\TournamentRepository;
 use \Zend\InputFilter\InputFilter;
 use \Zend\Validator\NotEmpty;
 use \Zend\Validator\StringLength;

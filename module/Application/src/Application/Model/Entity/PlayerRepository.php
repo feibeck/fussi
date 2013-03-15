@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\TournamentRepository
+ * Definition of Application\Entity\PlayerRepository
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -11,14 +11,17 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Entity;
 
+use Application\Model\Entity\Tournament;
+use Application\Model\Repository\UniqueNameInterface;
+use Application\Model\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Repository class for tournaments
+ * Repository class for players
  */
-class TournamentRepository extends EntityRepository implements UniqueNameInterface
+class PlayerRepository extends EntityRepository implements \Application\Model\Repository\UniqueNameInterface
 {
 
     /**
@@ -31,12 +34,26 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     public function isUniqueName($name)
     {
         $query = $this->_em->createQuery(
-            'SELECT COUNT(t.id) FROM Application\Entity\Tournament t WHERE t.name = :name'
+            'SELECT COUNT(p.id) FROM Application\Entity\Player p WHERE p.name = :name'
         );
         $query->setParameter('name', $name);
         $count = $query->getSingleScalarResult();
 
         return $count == 0;
+    }
+
+    /**
+     * Returns all players that are currently not playing in the given
+     * tournament.
+     *
+     * @param Tournament $tournament
+     *
+     * @return Player[]
+     */
+    public function getPlayersNotInTournament(Tournament $tournament)
+    {
+        // TODO: Create a query (See issue #29)
+        return $this->findAll();
     }
 
 }

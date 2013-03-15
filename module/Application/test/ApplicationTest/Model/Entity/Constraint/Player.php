@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace ApplicationTest\Entity\Constraint;
+namespace ApplicationTest\Model\Entity\Constraint;
 
 class Player extends \PHPUnit_Framework_Constraint
 {

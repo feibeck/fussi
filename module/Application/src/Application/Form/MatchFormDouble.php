@@ -13,8 +13,8 @@
 
 namespace Application\Form;
 
-use \Application\Entity\PlayerRepository;
-use \Application\Entity\Player;
+use Application\Model\Entity\PlayerRepository;
+use Application\Model\Entity\Player;
 use Zend\Form\Element\Select as SelectElement;
 
 class MatchFormDouble extends MatchForm
@@ -22,7 +22,7 @@ class MatchFormDouble extends MatchForm
 
     /**
      * @param int              $gameCount
-     * @param Player[]         $players
+     * @param \Application\Model\Entity\Player[]         $players
      * @param PlayerRepository $playerRepository
      */
     public function __construct($playerRepository, $gameCount, $players)

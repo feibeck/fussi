@@ -13,9 +13,9 @@
 
 namespace ApplicationTest\Form;
 
-use Application\Entity\DoubleMatch;
-use Application\Entity\Player;
-use Application\Entity\Game;
+use Application\Model\Entity\DoubleMatch;
+use Application\Model\Entity\Player;
+use Application\Model\Entity\Game;
 use Application\Form\MatchFormDouble;
 
 /**
@@ -60,7 +60,7 @@ class MatchFormDoubleTest extends \PHPUnit_Framework_TestCase
     protected function createForm()
     {
         $playerRepository = $this->getMock(
-            'Application\Entity\PlayerRepository',
+            'Application\Model\Entity\PlayerRepository',
             array('find'),
             array(),
             '',
@@ -131,7 +131,7 @@ class MatchFormDoubleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($valid);
 
-        /** @var $data DoubleMatch */
+        /** @var $data \Application\Model\Entity\DoubleMatch */
         $data = $form->getData();
         $this->assertSame($match, $data);
 

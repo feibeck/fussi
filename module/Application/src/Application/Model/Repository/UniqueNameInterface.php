@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Repository;
 
 /**
  * Repositories implementing the interface have a method to check wether the

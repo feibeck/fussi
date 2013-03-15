@@ -13,10 +13,10 @@
 
 namespace Application\Form;
 
-use \Application\Entity\DoubleMatch;
-use \Application\Entity\SingleMatch;
-use \Application\Entity\Match;
-use \Application\Entity\PlayerRepository;
+use Application\Model\Entity\DoubleMatch;
+use Application\Model\Entity\SingleMatch;
+use Application\Model\Entity\Match;
+use Application\Model\Entity\PlayerRepository;
 use \Zend\Stdlib\Hydrator\HydratorInterface;
 
 class MatchHydrator implements HydratorInterface
@@ -35,7 +35,7 @@ class MatchHydrator implements HydratorInterface
     /**
      * Extract values from an object
      *
-     * @param Match $match
+     * @param \Application\Model\Entity\Match $match
      *
      * @return array
      */
@@ -67,9 +67,9 @@ class MatchHydrator implements HydratorInterface
      * Hydrate $object with the provided $data.
      *
      * @param array $data
-     * @param Match $match
+     * @param \Application\Model\Entity\Match $match
      *
-     * @return Match
+     * @return \Application\Model\Entity\Match
      */
     public function hydrate(array $data, $match)
     {

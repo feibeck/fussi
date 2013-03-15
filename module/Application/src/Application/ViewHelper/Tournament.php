@@ -18,7 +18,7 @@ use Zend\View\Helper\AbstractHelper;
 class Tournament extends AbstractHelper
 {
     /**
-     * @var \Application\Entity\Tournament[]
+     * @var \Application\Model\Entity\Tournament[]
      */
     protected $tournaments;
 

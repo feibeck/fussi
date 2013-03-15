@@ -11,8 +11,10 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Entity;
 
+use Application\Model\Entity\Game;
+use Application\Model\Entity\Tournament;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 

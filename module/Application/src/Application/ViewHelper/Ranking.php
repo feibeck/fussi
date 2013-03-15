@@ -13,8 +13,8 @@
 
 namespace Application\ViewHelper;
 
-use Application\Entity\MatchRepository;
-use Application\Entity\Tournament;
+use Application\Model\Repository\MatchRepository;
+use Application\Model\Entity\Tournament;
 use Application\Model\Ranking as RankingCalculator;
 use Zend\View\Helper\AbstractHelper;
 
@@ -22,7 +22,7 @@ class Ranking extends AbstractHelper
 {
 
     /**
-     * @var MatchRepository
+     * @var \Application\Model\Repository\MatchRepository
      */
     protected $matchRepository;
 
@@ -32,7 +32,7 @@ class Ranking extends AbstractHelper
     }
 
     /**
-     * @param Tournament $tournament
+     * @param \Application\Model\Entity\Tournament $tournament
      * @param int $potential
      * @param int $year
      * @param int $month

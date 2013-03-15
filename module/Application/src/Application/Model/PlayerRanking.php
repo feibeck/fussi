@@ -13,13 +13,13 @@
 
 namespace Application\Model;
 
-use \Application\Entity\Player;
+use Application\Model\Entity\Player;
 
 class PlayerRanking
 {
 
     /**
-     * @var Player
+     * @var \Application\Model\Entity\Player
      */
     protected $player;
 
@@ -44,7 +44,7 @@ class PlayerRanking
     public $potential = 0;
 
     /**
-     * @param  Player $player
+     * @param  \Application\Model\Entity\Player $player
      */
     public function __construct(Player $player)
     {

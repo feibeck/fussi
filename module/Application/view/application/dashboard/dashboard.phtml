@@ -24,7 +24,7 @@
                 <td><?php echo $match->getDate()->format("d.m. H:i"); ?></td>
                 <td>
 
-                    <?php if ($match instanceof \Application\Entity\SingleMatch): ?>
+                    <?php if ($match instanceof \Application\Model\Entity\SingleMatch): ?>
 
                         <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
                             <?php echo $match->getPlayer1()->getName(); ?>
@@ -34,7 +34,7 @@
                             <?php echo $match->getPlayer2()->getName(); ?>
                         </span>
 
-                    <?php elseif ($match instanceof \Application\Entity\DoubleMatch): ?>
+                    <?php elseif ($match instanceof \Application\Model\Entity\DoubleMatch): ?>
 
                         <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
                             <?php echo $match->getTeamOne()->getName(); ?>

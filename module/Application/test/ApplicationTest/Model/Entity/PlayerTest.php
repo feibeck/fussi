@@ -11,10 +11,10 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace ApplicationTest\Entity;
+namespace ApplicationTest\Model\Entity;
 
-use Application\Entity\Player;
-use ApplicationTest\Entity\Constraint\Player as PlayerConstraint;
+use Application\Model\Entity\Player;
+use ApplicationTest\Model\Entity\Constraint\Player as PlayerConstraint;
 
 /**
  * @covers Application\Entity\Player
@@ -23,13 +23,13 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Player
+     * @var \Application\Model\Entity\Player
      */
     protected $player;
 
     public function setUp()
     {
-        $this->player = new Player();
+        $this->player = new \Application\Model\Entity\Player();
     }
 
     public function testIdProperty()

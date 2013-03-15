@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Entity;
+namespace Application\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,7 +53,7 @@ class Player
     /**
      * @param int $id
      *
-     * @return Player Fluid interface
+     * @return \Application\Model\Entity\Player Fluid interface
      */
     public function setId($id)
     {
@@ -72,7 +72,7 @@ class Player
     /**
      * @param string $name
      *
-     * @return Player Fluent interface
+     * @return \Application\Model\Entity\Player Fluent interface
      */
     public function setName($name)
     {

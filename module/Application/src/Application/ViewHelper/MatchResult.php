@@ -22,7 +22,7 @@ class MatchResult extends AbstractHelper
 {
 
     /**
-     * @param \Application\Entity\Match $match
+     * @param \Application\Model\Entity\Match $match
      *
      * @return string
      */

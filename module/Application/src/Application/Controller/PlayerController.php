@@ -18,7 +18,7 @@ use \Zend\Mvc\Controller\AbstractActionController;
 use \Doctrine\ORM\EntityManager;
 
 use \Application\Form\Player as PlayerForm;
-use \Application\Entity\Player as Player;
+use Application\Model\Entity\Player as Player;
 
 /**
  * Managing players
@@ -62,7 +62,7 @@ class PlayerController extends AbstractActionController
         $form->bind($player);
 
         $form->setInputFilter(
-            new \Application\Entity\InputFilter\Player(
+            new \Application\Form\InputFilter\Player(
                 $this->em->getRepository('\Application\Entity\Player')
             )
         );

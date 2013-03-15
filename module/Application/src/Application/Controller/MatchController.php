@@ -13,11 +13,11 @@
 
 namespace Application\Controller;
 
-use Application\Entity\TournamentRepository;
-use Application\Entity\Tournament;
-use Application\Entity\Match;
-use Application\Entity\MatchRepository;
-use Application\Entity\PlayerRepository;
+use Application\Model\Repository\TournamentRepository;
+use Application\Model\Entity\Tournament;
+use Application\Model\Entity\Match;
+use Application\Model\Repository\MatchRepository;
+use Application\Model\Entity\PlayerRepository;
 use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -39,12 +39,12 @@ class MatchController extends AbstractActionController
     protected $playerRepository;
     
     /**
-     * @var TournamentRepository
+     * @var \Application\Model\Repository\TournamentRepository
      */
     protected $tournamentRepository;
 
     /**
-     * @var MatchRepository
+     * @var \Application\Model\Repository\MatchRepository
      */
     protected $matchRepository;
 

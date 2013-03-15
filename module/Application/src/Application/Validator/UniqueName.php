@@ -13,7 +13,7 @@
 
 namespace Application\Validator;
 
-use Application\Entity\UniqueNameInterface;
+use Application\Model\Repository\UniqueNameInterface;
 use Zend\Validator\AbstractValidator;
 
 class UniqueName extends AbstractValidator
@@ -35,7 +35,7 @@ class UniqueName extends AbstractValidator
     protected $repository;
 
     /**
-     * @param UniqueNameInterface $repository
+     * @param \Application\Model\Repository\UniqueNameInterface $repository
      */
     public function __construct(UniqueNameInterface $repository)
     {
