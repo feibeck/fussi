@@ -14,7 +14,7 @@
 namespace Application\Form;
 
 use Application\Model\Entity\Tournament;
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 
 class Factory 
 {
@@ -25,7 +25,7 @@ class Factory
     protected $playerRepostitory;
 
     /**
-     * @param \Application\Model\Entity\PlayerRepository $playerRepository
+     * @param \Application\Model\Repository\PlayerRepository $playerRepository
      */
     public function __construct(PlayerRepository $playerRepository)
     {

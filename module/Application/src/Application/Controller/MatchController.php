@@ -17,7 +17,7 @@ use Application\Model\Repository\TournamentRepository;
 use Application\Model\Entity\Tournament;
 use Application\Model\Entity\Match;
 use Application\Model\Repository\MatchRepository;
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;

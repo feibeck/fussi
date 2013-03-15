@@ -60,7 +60,7 @@ class MatchFormDoubleTest extends \PHPUnit_Framework_TestCase
     protected function createForm()
     {
         $playerRepository = $this->getMock(
-            'Application\Model\Entity\PlayerRepository',
+            'Application\Model\Repository\PlayerRepository',
             array('find'),
             array(),
             '',

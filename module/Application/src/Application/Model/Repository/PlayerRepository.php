@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 
-namespace Application\Model\Entity;
+namespace Application\Model\Repository;
 
 use Application\Model\Entity\Tournament;
 use Application\Model\Repository\UniqueNameInterface;

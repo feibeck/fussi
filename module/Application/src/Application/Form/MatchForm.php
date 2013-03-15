@@ -13,7 +13,7 @@
 
 namespace Application\Form;
 
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
@@ -22,7 +22,7 @@ abstract class MatchForm extends Form
 {
 
     /**
-     * @param \Application\Model\Entity\PlayerRepository $playerRepository
+     * @param \Application\Model\Repository\PlayerRepository $playerRepository
      * @param int              $gameCount
      */
     public function __construct($playerRepository, $gameCount)

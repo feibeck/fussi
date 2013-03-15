@@ -16,7 +16,7 @@ namespace Application\Form;
 use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Entity\Match;
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 use \Zend\Stdlib\Hydrator\HydratorInterface;
 
 class MatchHydrator implements HydratorInterface

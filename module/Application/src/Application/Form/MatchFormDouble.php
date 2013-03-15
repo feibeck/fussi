@@ -13,7 +13,7 @@
 
 namespace Application\Form;
 
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 use Application\Model\Entity\Player;
 use Zend\Form\Element\Select as SelectElement;
 

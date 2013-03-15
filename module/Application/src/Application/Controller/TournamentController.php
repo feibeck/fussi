@@ -120,7 +120,7 @@ class TournamentController extends AbstractActionController
      */
     protected function getAddPlayerForm($tournament)
     {
-        /** @var $playerRepository \Application\Model\Entity\PlayerRepository */
+        /** @var $playerRepository \Application\Model\Repository\PlayerRepository */
         $playerRepository = $this->em->getRepository('Application\Entity\Player');
         $players = $playerRepository->getPlayersNotInTournament($tournament);
 

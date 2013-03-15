@@ -13,7 +13,7 @@
 
 namespace Application\Form\InputFilter;
 
-use Application\Model\Entity\PlayerRepository;
+use Application\Model\Repository\PlayerRepository;
 use \Application\Validator\UniqueName;
 use \Zend\InputFilter\InputFilter;
 use \Zend\Validator\NotEmpty;
