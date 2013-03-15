@@ -18,7 +18,7 @@ class MatchResultTest extends \PHPUnit_Framework_TestCase
 
     public function testInvokeSingleGame()
     {
-        $match = $this->getMock('Application\Entity\SingleMatch', array('getGames'));
+        $match = $this->getMock('Application\Model\Entity\SingleMatch', array('getGames'));
         $game = $this->getGameMock(1, 10);
 
         $match->expects($this->once())->method('getGames')->will($this->returnValue(array($game)));
@@ -31,7 +31,7 @@ class MatchResultTest extends \PHPUnit_Framework_TestCase
 
     public function testInvokeMultipleGames()
     {
-        $match = $this->getMock('Application\Entity\SingleMatch', array('getGames'));
+        $match = $this->getMock('Application\Model\Entity\SingleMatch', array('getGames'));
         $games = array();
         $games[] = $this->getGameMock(1, 10);
         $games[] = $this->getGameMock(10, 5);
@@ -46,7 +46,7 @@ class MatchResultTest extends \PHPUnit_Framework_TestCase
 
     protected function getGameMock($goalsOne, $goalsTwo)
     {
-        $game = $this->getMock('Application\Entity\Game', array('getGoalsTeamOne', 'getGoalsTeamTwo'));
+        $game = $this->getMock('Application\Model\Entity\Game', array('getGoalsTeamOne', 'getGoalsTeamTwo'));
         $game->expects($this->once())->method('getGoalsTeamOne')->will($this->returnValue($goalsOne));
         $game->expects($this->once())->method('getGoalsTeamTwo')->will($this->returnValue($goalsTwo));
         return $game;

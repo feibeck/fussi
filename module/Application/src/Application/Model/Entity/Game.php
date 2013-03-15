@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\Game
+ * Definition of Application\Model\Entity\Game
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -36,7 +36,7 @@ class Game
     /**
      * @var Match
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Match", inversedBy="games")
+     * @ORM\ManyToOne(targetEntity="Application\Model\Entity\Match", inversedBy="games")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     protected $match;

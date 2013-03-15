@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\SingleMatch
+ * Definition of Application\Model\Entity\SingleMatch
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -26,7 +26,7 @@ class SingleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="player1_id", referencedColumnName="id")
      */
     protected $player1;
@@ -34,7 +34,7 @@ class SingleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="player2_id", referencedColumnName="id")
      */
     protected $player2;
@@ -103,18 +103,6 @@ class SingleMatch extends Match
         if (isset($data['player2'])) {
             $this->player2 = $data['player2'];
         }
-        if (isset($data['goalsGame1Player1'])) {
-            $this->setGoalsGame1Player1($data['goalsGame1Player1']);
-        }
-        if (isset($data['goalsGame1Player2'])) {
-            $this->setGoalsGame1Player2($data['goalsGame1Player2']);
-        }
-        if (isset($data['goalsGame2Player1'])) {
-            $this->setGoalsGame2Player1($data['goalsGame2Player1']);
-        }
-        if (isset($data['goalsGame2Player2'])) {
-            $this->setGoalsGame2Player2($data['goalsGame2Player2']);
-        }
         if (isset($data['date'])) {
             $this->date = $data['date'];
         }
@@ -129,10 +117,6 @@ class SingleMatch extends Match
             'id'                => $this->id,
             'player1'           => $this->player1,
             'player2'           => $this->player2,
-            'goalsGame1Player1' => $this->getGoalsGame1Player1(),
-            'goalsGame1Player2' => $this->getGoalsGame1Player2(),
-            'goalsGame2Player1' => $this->getGoalsGame2Player1(),
-            'goalsGame2Player2' => $this->getGoalsGame2Player2(),
             'date'              => $this->date
         );
     }

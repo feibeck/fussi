@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\Game
+ * Definition of Application\Model\Entity\Game
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -24,12 +24,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#single-table-inheritance
  *
- * @ORM\Entity(repositoryClass="Application\Entity\MatchRepository")
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\MatchRepository")
  * @ORM\Table(name="match")
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"single" = "Application\Entity\SingleMatch", "double" = "Application\Entity\DoubleMatch"})
+ * @ORM\DiscriminatorMap({"single" = "Application\Model\Entity\SingleMatch", "double" = "Application\Model\Entity\DoubleMatch"})
  */
 abstract class Match
 {
@@ -43,7 +43,7 @@ abstract class Match
     /**
      * @var Tournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Tournament")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
@@ -58,7 +58,7 @@ abstract class Match
     /**
      * @var Game[]
      *
-     * @ORM\OneToMany(targetEntity="Application\Entity\Game", mappedBy="match", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\Game", mappedBy="match", cascade={"persist"})
      */
     protected $games;
 

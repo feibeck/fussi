@@ -52,7 +52,7 @@ class IndexController extends AbstractActionController
         $id    = $this->params()->fromRoute('id');
 
         /** @var $tournamentRepository TournamentRepository */
-        $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
+        $tournamentRepository = $this->em->getRepository('Application\Model\Entity\Tournament');
         /** @var $tournament \Application\Model\Entity\Tournament */
         $tournament = $tournamentRepository->find($id);
 
@@ -71,7 +71,7 @@ class IndexController extends AbstractActionController
         }
 
         /** @var $matchRepository \Application\Model\Repository\MatchRepository */
-        $matchRepository = $this->em->getRepository('Application\Entity\Match');
+        $matchRepository = $this->em->getRepository('Application\Model\Entity\Match');
         $matches = $matchRepository->findForMonth($tournament, $year, $month);
 
         $players = $tournament->getPlayers();

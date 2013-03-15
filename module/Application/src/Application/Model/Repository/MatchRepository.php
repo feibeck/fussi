@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\MatchRepository
+ * Definition of Application\Model\Entity\MatchRepository
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -36,7 +36,7 @@ class MatchRepository extends EntityRepository
     public function getLastMatches()
     {
         $query = $this->_em->createQuery(
-            'SELECT m FROM Application\Entity\Match m
+            'SELECT m FROM Application\Model\Entity\Match m
             ORDER BY m.date DESC'
         );
 
@@ -65,7 +65,7 @@ class MatchRepository extends EntityRepository
         $end->modify('last day of');
 
         $query = $this->_em->createQuery(
-            'SELECT m FROM Application\Entity\Match m
+            'SELECT m FROM Application\Model\Entity\Match m
             WHERE m.date >= :start AND m.date <= :end
             AND m.tournament = :tournament'
         );
@@ -120,7 +120,7 @@ class MatchRepository extends EntityRepository
         list($start, $end) = $this->getTournamentPeriod($year, $month);
 
         $query = $this->_em->createQuery(
-            'SELECT m FROM Application\Entity\SingleMatch m
+            'SELECT m FROM Application\Model\Entity\SingleMatch m
             WHERE m.date >= :start AND m.date <= :end
             AND m.player1 = :player1 AND m.player2 = :player2
             AND m.tournament = :tournament'
@@ -153,7 +153,7 @@ class MatchRepository extends EntityRepository
         list($start, $end) = $this->getTournamentPeriod($year, $month);
 
         $query = $this->_em->createQuery(
-            'SELECT m FROM Application\Entity\SingleMatch m
+            'SELECT m FROM Application\Model\Entity\SingleMatch m
             WHERE m.date >= :start AND m.date <= :end
             AND m.tournament = :tournament'
             );

@@ -46,7 +46,7 @@ class TournamentController extends AbstractActionController
      */
     public function listAction()
     {
-        $repository = $this->em->getRepository('Application\Entity\Tournament');
+        $repository = $this->em->getRepository('Application\Model\Entity\Tournament');
         $tournaments = $repository->findAll();
         return array(
             'tournaments' => $tournaments
@@ -59,7 +59,7 @@ class TournamentController extends AbstractActionController
     public function playersAction()
     {
         $id = $this->params()->fromRoute('id');
-        $repository = $this->em->getRepository('Application\Entity\Tournament');
+        $repository = $this->em->getRepository('Application\Model\Entity\Tournament');
         $tournament = $repository->find($id);
 
         $addForm = $this->getAddPlayerForm($tournament);
@@ -81,10 +81,10 @@ class TournamentController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
 
-        $tournamentRepository = $this->em->getRepository('Application\Entity\Tournament');
+        $tournamentRepository = $this->em->getRepository('Application\Model\Entity\Tournament');
         $tournament = $tournamentRepository->find($id);
 
-        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
 
         $form = $this->getAddPlayerForm($tournament);
 
@@ -121,7 +121,7 @@ class TournamentController extends AbstractActionController
     protected function getAddPlayerForm($tournament)
     {
         /** @var $playerRepository \Application\Model\Repository\PlayerRepository */
-        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
         $players = $playerRepository->getPlayersNotInTournament($tournament);
 
         $addForm = new AddPlayerForm($players);
@@ -142,7 +142,7 @@ class TournamentController extends AbstractActionController
 
         $form->setInputFilter(
             new \Application\Form\InputFilter\Tournament(
-                $this->em->getRepository('Application\Entity\Tournament')
+                $this->em->getRepository('Application\Model\Entity\Tournament')
             )
         );
 

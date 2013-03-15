@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\Team
+ * Definition of Application\Model\Team
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)

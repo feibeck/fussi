@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\Player
+ * Definition of Application\Model\Entity\Player
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -16,7 +16,7 @@ namespace Application\Model\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Application\Entity\PlayerRepository")
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\PlayerRepository")
  * @ORM\Table(name="player")
  */
 class Player

@@ -151,11 +151,11 @@ return array(
             'Application_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/Application/Entity')
+                'paths' => array(__DIR__ . '/../src/Application/Model/Entity')
             ),
             'orm_default' => array(
                 'drivers' => array(
-                    'Application\Entity' => 'Application_driver'
+                    'Application\Model\Entity' => 'Application_driver'
                 )
             )
         )

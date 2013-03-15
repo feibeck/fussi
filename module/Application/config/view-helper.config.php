@@ -28,7 +28,7 @@ return array(
             /** @var $em EntityManager */
             $em = $manager->getServiceLocator()
                       ->get("doctrine.entitymanager.orm_default");
-            $repo = $em->getRepository('Application\Entity\Tournament');
+            $repo = $em->getRepository('Application\Model\Entity\Tournament');
             return new Tournament($repo);
         },
         'ranking' => function(HelperPluginManager $manager) {
@@ -36,7 +36,7 @@ return array(
             $em = $manager->getServiceLocator()
                       ->get("doctrine.entitymanager.orm_default");
             return new Ranking(
-                $em->getRepository('Application\Entity\Match')
+                $em->getRepository('Application\Model\Entity\Match')
             );
         },
     )

@@ -41,8 +41,8 @@ return array(
             /** @var $em EntityManager */
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\DashboardController(
-                $em->getRepository('Application\Entity\Match'),
-                $em->getRepository('Application\Entity\Tournament')
+                $em->getRepository('Application\Model\Entity\Match'),
+                $em->getRepository('Application\Model\Entity\Tournament')
             );
         },
         'Application\Controller\Match' => function(ControllerManager $cm) {

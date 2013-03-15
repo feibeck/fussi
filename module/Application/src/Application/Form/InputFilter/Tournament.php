@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\InputFilter\Tournament
+ * Definition of Application\Form\InputFilter\Tournament
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)

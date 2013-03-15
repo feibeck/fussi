@@ -44,7 +44,7 @@ class PlayerController extends AbstractActionController
      */
     public function listAction()
     {
-        $playerRepository = $this->em->getRepository('Application\Entity\Player');
+        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
         $players = $playerRepository->findAll();
         return array(
             'players' => $players
@@ -63,7 +63,7 @@ class PlayerController extends AbstractActionController
 
         $form->setInputFilter(
             new \Application\Form\InputFilter\Player(
-                $this->em->getRepository('\Application\Entity\Player')
+                $this->em->getRepository('\Application\Model\Entity\Player')
             )
         );
 

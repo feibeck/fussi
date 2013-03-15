@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\Tournament
+ * Definition of Application\Model\Entity\Tournament
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Application\Entity\TournamentRepository")
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\TournamentRepository")
  * @ORM\Table(name="tournament")
  */
 class Tournament
@@ -65,7 +65,7 @@ class Tournament
     protected $start;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Application\Entity\Player")
+     * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
      * @ORM\JoinTable(name="tournament_players",
      *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}

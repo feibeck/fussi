@@ -54,9 +54,9 @@ class MatchController extends AbstractActionController
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->tournamentRepository = $em->getRepository('Application\Entity\Tournament');
-        $this->playerRepository = $em->getRepository('Application\Entity\Player');
-        $this->matchRepository = $em->getRepository('Application\Entity\Match');
+        $this->tournamentRepository = $em->getRepository('Application\Model\Entity\Tournament');
+        $this->playerRepository = $em->getRepository('Application\Model\Entity\Player');
+        $this->matchRepository = $em->getRepository('Application\Model\Entity\Match');
     }
 
     /**

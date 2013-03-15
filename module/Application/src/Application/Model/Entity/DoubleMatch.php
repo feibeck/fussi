@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\DoubleMatch
+ * Definition of Application\Model\Entity\DoubleMatch
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -30,7 +30,7 @@ class DoubleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="team1attack", referencedColumnName="id")
      */
     protected $teamOneAttack = null;
@@ -38,7 +38,7 @@ class DoubleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="team1defence", referencedColumnName="id")
      */
     protected $teamOneDefence = null;
@@ -46,7 +46,7 @@ class DoubleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="team2attack", referencedColumnName="id")
      */
     protected $teamTwoAttack = null;
@@ -54,7 +54,7 @@ class DoubleMatch extends Match
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
      * @ORM\JoinColumn(name="team2defence", referencedColumnName="id")
      */
     protected $teamTwoDefence = null;

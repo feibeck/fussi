@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\PlayerRepository
+ * Definition of Application\Model\Entity\PlayerRepository
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -34,7 +34,7 @@ class PlayerRepository extends EntityRepository implements \Application\Model\Re
     public function isUniqueName($name)
     {
         $query = $this->_em->createQuery(
-            'SELECT COUNT(p.id) FROM Application\Entity\Player p WHERE p.name = :name'
+            'SELECT COUNT(p.id) FROM Application\Model\Entity\Player p WHERE p.name = :name'
         );
         $query->setParameter('name', $name);
         $count = $query->getSingleScalarResult();

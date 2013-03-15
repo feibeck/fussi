@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\TournamentRepository
+ * Definition of Application\Model\Entity\TournamentRepository
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -32,7 +32,7 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     public function isUniqueName($name)
     {
         $query = $this->_em->createQuery(
-            'SELECT COUNT(t.id) FROM Application\Entity\Tournament t WHERE t.name = :name'
+            'SELECT COUNT(t.id) FROM Application\Model\Entity\Tournament t WHERE t.name = :name'
         );
         $query->setParameter('name', $name);
         $count = $query->getSingleScalarResult();

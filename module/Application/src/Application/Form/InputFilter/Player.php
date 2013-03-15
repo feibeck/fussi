@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Entity\InputFilter\Player
+ * Definition of Application\Form\InputFilter\Player
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
