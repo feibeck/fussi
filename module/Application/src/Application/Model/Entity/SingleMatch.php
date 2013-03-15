@@ -82,43 +82,9 @@ class SingleMatch extends Match
     public function isPlayedBy($player1, $player2)
     {
 
-        return ($this->player1 == $player1 && $this->player2 == $player2)
-            || ($this->player2 == $player1 && $this->player1 == $player2);
+        return ($this->player1 === $player1 && $this->player2 === $player2)
+            || ($this->player2 === $player1 && $this->player1 === $player2);
 
-    }
-
-    /**
-     * Hydrate the entity by array
-     *
-     * @param array $data
-     */
-    public function exchangeArray($data)
-    {
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['player1'])) {
-            $this->player1 = $data['player1'];
-        }
-        if (isset($data['player2'])) {
-            $this->player2 = $data['player2'];
-        }
-        if (isset($data['date'])) {
-            $this->date = $data['date'];
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        return array(
-            'id'                => $this->id,
-            'player1'           => $this->player1,
-            'player2'           => $this->player2,
-            'date'              => $this->date
-        );
     }
 
 }
