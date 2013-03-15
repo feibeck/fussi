@@ -70,7 +70,7 @@ class Tournament
      *
      * @ORM\Column(type="integer")
      */
-    protected $maxScore = MAXSCORE_DEFAULT;
+    protected $maxScore = self::MAXSCORE_DEFAULT;
 
     /**
      * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")

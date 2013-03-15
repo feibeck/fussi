@@ -67,6 +67,21 @@
     </div>
 </div>
 
+<?php $messages = $form->get('max-score')->getMessages(); ?>
+<div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
+    <?php $form->get('max-score')->setLabelAttributes(array('class' => 'control-label')); ?>
+    <?php $form->get('max-score')->setAttributes(array('class' => 'input-mini')); ?>
+    <?php echo $this->formLabel($form->get('max-score')); ?>
+    <div class="controls">
+    <?php echo $this->formElement($form->get('max-score')); ?>
+    <?php echo $this->formElementErrors()
+            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</div>')
+            ->render($form->get('max-score')); ?>
+    </div>
+</div>
+
 <?php $messages = $form->get('start-date')->getMessages(); ?>
 <div class="control-group<?php if (count($messages)): ?> error<?php endif; ?>">
     <?php $form->get('start-date')->setLabelAttributes(array('class' => 'control-label')); ?>
