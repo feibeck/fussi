@@ -18,7 +18,6 @@ use Application\Model\Entity\SingleMatch;
 
 /**
  * @covers Application\Model\Entity\SingleMatch
- * @covers Application\Model\Entity\Match
  */
 class SingleMatchTest extends \PHPUnit_Framework_TestCase
 {
