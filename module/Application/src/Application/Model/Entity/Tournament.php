@@ -26,6 +26,7 @@ class Tournament
 
     const TYPE_SINGLE = 0;
     const TYPE_TEAM = 1;
+    const MAXSCORE_DEFAULT = 10;
 
     /**
      * @var int
@@ -63,6 +64,13 @@ class Tournament
      * @ORM\Column(type="date")
      */
     protected $start;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $maxScore = self::MAXSCORE_DEFAULT;
 
     /**
      * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
@@ -146,6 +154,7 @@ class Tournament
         } else {
             $this->setStart(new \DateTime());
         }
+        $this->maxScore      = (isset($data['max-score'])) ? $data['max-score'] : self::MAXSCORE_DEFAULT;
      }
 
     /**
@@ -158,7 +167,8 @@ class Tournament
             'name'            => $this->name,
             'team-type'       => $this->teamType,
             'start-date'      => $this->start,
-            'games-per-match' => $this->gamesPerMatch
+            'games-per-match' => $this->gamesPerMatch,
+            'max-score'       => $this->maxScore
         );
     }
 
@@ -200,6 +210,21 @@ class Tournament
     public function getStart()
     {
         return $this->start;
+    }
+
+    /**
+     * @param $maxScore
+     */
+    public function setMaxScore($maxScore) {
+        $this->maxScore = $maxScore;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxScore()
+    {
+        return $this->maxScore;
     }
 
 }
