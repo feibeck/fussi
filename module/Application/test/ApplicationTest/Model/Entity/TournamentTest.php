@@ -17,7 +17,7 @@ use Application\Model\Entity\Tournament;
 use ApplicationTest\Model\Entity\Constraint\Tournament as TournamentConstraint;
 
 /**
- * @covers Application\Entity\Tournament
+ * @covers Application\Model\Entity\Tournament
  */
 class TournamentTest extends \PHPUnit_Framework_TestCase
 {

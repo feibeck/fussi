@@ -17,7 +17,7 @@ use Application\Model\Entity\Player;
 use ApplicationTest\Model\Entity\Constraint\Player as PlayerConstraint;
 
 /**
- * @covers Application\Entity\Player
+ * @covers Application\Model\Entity\Player
  */
 class PlayerTest extends \PHPUnit_Framework_TestCase
 {

@@ -16,7 +16,7 @@ namespace ApplicationTest\Model\Entity;
 use Application\Model\Entity\Game;
 
 /**
- * @covers Application\Entity\Game
+ * @covers Application\Model\Entity\Game
  */
 class GameTest extends \PHPUnit_Framework_TestCase
 {
