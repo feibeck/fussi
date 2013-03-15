@@ -9,6 +9,8 @@ composer.lock
 composer.phar
 error.log
 
+atlassian-ide-plugin.xml
+
 vendor/composer
 vendor/.composer
 vendor/autoload.php
