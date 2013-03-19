@@ -215,4 +215,13 @@ class MatchRepository extends EntityRepository
         return $match;
     }
 
+    /**
+     * @param Match $match
+     */
+    public function persist(Match $match)
+    {
+        $this->_em->persist($match);
+        $this->_em->flush();
+    }
+
 }

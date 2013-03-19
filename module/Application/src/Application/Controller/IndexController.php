@@ -15,13 +15,12 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-use \Application\Model\Ranking;
+use Application\Model\Ranking;
 use Application\Model\Repository\TournamentRepository;
+use Application\Model\Repository\MatchRepository;
 use Application\Model\Entity\Tournament;
 
 use \Datetime;
-
-use \Doctrine\ORM\EntityManager;
 
 /**
  * Controller displaying the monthly view of a league tournament
@@ -30,16 +29,26 @@ class IndexController extends AbstractActionController
 {
 
     /**
-     * @var EntityManager
+     * @var TournamentRepository
      */
-    private $em;
+    protected $tournamentRepository;
 
     /**
-     * @param EntityManager $em
+     * @var MatchRepository
      */
-    public function __construct(EntityManager $em)
+    protected $matchRepository;
+
+    /**
+     * @param MatchRepository      $matchRepository
+     * @param TournamentRepository $tournamentRepository
+     */
+    public function __construct(
+        MatchRepository      $matchRepository,
+        TournamentRepository $tournamentRepository
+    )
     {
-        $this->em = $em;
+        $this->matchRepository      = $matchRepository;
+        $this->tournamentRepository = $tournamentRepository;
     }
 
     /**
@@ -51,10 +60,8 @@ class IndexController extends AbstractActionController
         $month = $this->params()->fromRoute('month');
         $id    = $this->params()->fromRoute('id');
 
-        /** @var $tournamentRepository TournamentRepository */
-        $tournamentRepository = $this->em->getRepository('Application\Model\Entity\Tournament');
         /** @var $tournament \Application\Model\Entity\Tournament */
-        $tournament = $tournamentRepository->find($id);
+        $tournament = $this->tournamentRepository->find($id);
 
         $date = new DateTime();
         $date->setDate($year, $month, 1);
@@ -70,12 +77,10 @@ class IndexController extends AbstractActionController
             return;
         }
 
-        /** @var $matchRepository \Application\Model\Repository\MatchRepository */
-        $matchRepository = $this->em->getRepository('Application\Model\Entity\Match');
-        $matches = $matchRepository->findForMonth($tournament, $year, $month);
+        $matches = $this->matchRepository->findForMonth($tournament, $year, $month);
 
         $players = $tournament->getPlayers();
-        $activePlayers = $matchRepository->getActivePlayers($tournament, $year, $month);
+        $activePlayers = $this->matchRepository->getActivePlayers($tournament, $year, $month);
 
         if ($now->format('Ym') != $date->format('Ym')) {
             $players = $activePlayers;

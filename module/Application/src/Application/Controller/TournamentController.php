@@ -15,12 +15,11 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-use \Doctrine\ORM\EntityManager;
-
-use \Application\Form\Tournament as TournamentForm;
+use Application\Form\Tournament as TournamentForm;
+use Application\Form\PlayerToTournament as AddPlayerForm;
 use Application\Model\Entity\Tournament as Tournament;
-
-use \Application\Form\PlayerToTournament as AddPlayerForm;
+use Application\Model\Repository\TournamentRepository;
+use Application\Model\Repository\PlayerRepository;
 
 /**
  * Managing tournaments
@@ -29,16 +28,26 @@ class TournamentController extends AbstractActionController
 {
 
     /**
-     * @var EntityManager
+     * @var TournamentRepository
      */
-    protected $em;
+    protected $tournamentRepository;
 
     /**
-     * @param EntityManager $em
+     * @var PlayerRepository
      */
-    public function __construct(EntityManager $em)
+    protected $playerRepository;
+
+    /**
+     * @param TournamentRepository $tournamentRepository
+     * @param PlayerRepository     $playerRepository
+     */
+    public function __construct(
+        TournamentRepository $tournamentRepository,
+        PlayerRepository     $playerRepository
+    )
     {
-        $this->em = $em;
+        $this->tournamentRepository = $tournamentRepository;
+        $this->playerRepository     = $playerRepository;
     }
 
     /**
@@ -46,8 +55,7 @@ class TournamentController extends AbstractActionController
      */
     public function listAction()
     {
-        $repository = $this->em->getRepository('Application\Model\Entity\Tournament');
-        $tournaments = $repository->findAll();
+        $tournaments = $this->tournamentRepository->findAll();
         return array(
             'tournaments' => $tournaments
         );
@@ -59,8 +67,7 @@ class TournamentController extends AbstractActionController
     public function playersAction()
     {
         $id = $this->params()->fromRoute('id');
-        $repository = $this->em->getRepository('Application\Model\Entity\Tournament');
-        $tournament = $repository->find($id);
+        $tournament = $this->tournamentRepository->find($id);
 
         $addForm = $this->getAddPlayerForm($tournament);
         $action = $this->url()->fromRoute('tournament/addplayer', array('id' => $id));
@@ -81,10 +88,7 @@ class TournamentController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
 
-        $tournamentRepository = $this->em->getRepository('Application\Model\Entity\Tournament');
-        $tournament = $tournamentRepository->find($id);
-
-        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
+        $tournament = $this->tournamentRepository->find($id);
 
         $form = $this->getAddPlayerForm($tournament);
 
@@ -93,12 +97,10 @@ class TournamentController extends AbstractActionController
             if ($form->isValid()) {
 
                 $playerId = $form->get('player')->getValue();
-                $player = $playerRepository->find($playerId);
+                $player = $this->playerRepository->find($playerId);
 
                 $tournament->addPlayer($player);
-
-                $this->em->persist($tournament);
-                $this->em->flush();
+                $this->tournamentRepository->persist($tournament);
 
                 return $this->redirect()->toRoute(
                     'tournament/players',
@@ -120,10 +122,9 @@ class TournamentController extends AbstractActionController
      */
     protected function getAddPlayerForm($tournament)
     {
-        /** @var $playerRepository \Application\Model\Repository\PlayerRepository */
-        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
-        $players = $playerRepository->getPlayersNotInTournament($tournament);
-
+        $players = $this->playerRepository->getPlayersNotInTournament(
+            $tournament
+        );
         $addForm = new AddPlayerForm($players);
         return $addForm;
     }
@@ -142,15 +143,14 @@ class TournamentController extends AbstractActionController
 
         $form->setInputFilter(
             new \Application\Form\InputFilter\Tournament(
-                $this->em->getRepository('Application\Model\Entity\Tournament')
+                $this->tournamentRepository
             )
         );
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-                $this->em->persist($tournament);
-                $this->em->flush();
+                $this->tournamentRepository->persist($tournament);
                 return $this->redirect()->toRoute('tournaments');
             }
         }

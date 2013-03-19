@@ -19,21 +19,26 @@ return array(
     'factories' => array(
         'Application\Controller\Index' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
             $controller = new Controller\IndexController(
-                $sm->get("doctrine.entitymanager.orm_default")
+                $em->getRepository('Application\Model\Entity\Match'),
+                $em->getRepository('Application\Model\Entity\Tournament')
             );
             return $controller;
         },
         'Application\Controller\Player' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\PlayerController(
-                $sm->get("doctrine.entitymanager.orm_default")
+                $em->getRepository('Application\Model\Entity\Player')
             );
         },
         'Application\Controller\Tournament' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\TournamentController(
-                $sm->get("doctrine.entitymanager.orm_default")
+                $em->getRepository('Application\Model\Entity\Tournament'),
+                $em->getRepository('Application\Model\Entity\Player')
             );
         },
         'Application\Controller\Dashboard' => function(ControllerManager $cm) {
@@ -47,8 +52,11 @@ return array(
         },
         'Application\Controller\Match' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\MatchController(
-                $sm->get("doctrine.entitymanager.orm_default")
+                $em->getRepository('Application\Model\Entity\Match'),
+                $em->getRepository('Application\Model\Entity\Tournament'),
+                $em->getRepository('Application\Model\Entity\Player')
             );
         },
     )

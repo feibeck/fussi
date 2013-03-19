@@ -13,12 +13,14 @@
 
 namespace Application\Controller;
 
+use Application\Form\InputFilter\Player as PlayerInputFilter;
+use Application\Model\Repository\PlayerRepository;
 use \Zend\Mvc\Controller\AbstractActionController;
 
 use \Doctrine\ORM\EntityManager;
 
 use \Application\Form\Player as PlayerForm;
-use Application\Model\Entity\Player as Player;
+use Application\Model\Entity\Player;
 
 /**
  * Managing players
@@ -27,16 +29,16 @@ class PlayerController extends AbstractActionController
 {
 
     /**
-     * @var EntityManager
+     * @var PlayerRepository
      */
-    private $em;
+    protected $playerRepository;
 
     /**
-     * @param EntityManager $em
+     * @param PlayerRepository $playerRepository
      */
-    public function __construct(EntityManager $em)
+    public function __construct(PlayerRepository $playerRepository)
     {
-        $this->em = $em;
+        $this->playerRepository = $playerRepository;
     }
 
     /**
@@ -44,8 +46,7 @@ class PlayerController extends AbstractActionController
      */
     public function listAction()
     {
-        $playerRepository = $this->em->getRepository('Application\Model\Entity\Player');
-        $players = $playerRepository->findAll();
+        $players = $this->playerRepository->findAll();
         return array(
             'players' => $players
         );
@@ -61,17 +62,12 @@ class PlayerController extends AbstractActionController
         $player = new Player();
         $form->bind($player);
 
-        $form->setInputFilter(
-            new \Application\Form\InputFilter\Player(
-                $this->em->getRepository('\Application\Model\Entity\Player')
-            )
-        );
+        $form->setInputFilter(new PlayerInputFilter($this->playerRepository));
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-                $this->em->persist($player);
-                $this->em->flush();
+                $this->playerRepository->persist($player);
                 return $this->redirect()->toRoute('players');
             }
         }

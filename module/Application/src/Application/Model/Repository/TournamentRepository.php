@@ -14,6 +14,7 @@
 namespace Application\Model\Repository;
 
 use Application\Model\Repository\UniqueNameInterface;
+use Application\Model\Entity\Tournament;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -38,6 +39,15 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
         $count = $query->getSingleScalarResult();
 
         return $count == 0;
+    }
+
+    /**
+     * @param Tournament $tournament
+     */
+    public function persist($tournament)
+    {
+        $this->_em->persist($tournament);
+        $this->_em->flush();
     }
 
 }

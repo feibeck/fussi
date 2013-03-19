@@ -18,7 +18,6 @@ use Application\Model\Entity\Tournament;
 use Application\Model\Entity\Match;
 use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\PlayerRepository;
-use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -29,34 +28,34 @@ class MatchController extends AbstractActionController
 {
 
     /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
      * @var PlayerRepository
      */
     protected $playerRepository;
     
     /**
-     * @var \Application\Model\Repository\TournamentRepository
+     * @var TournamentRepository
      */
     protected $tournamentRepository;
 
     /**
-     * @var \Application\Model\Repository\MatchRepository
+     * @var MatchRepository
      */
     protected $matchRepository;
 
     /**
-     * @param EntityManager $em
+     * @param MatchRepository      $matchRepository
+     * @param TournamentRepository $tournamentRepository
+     * @param PlayerRepository     $playerRepository
      */
-    public function __construct(EntityManager $em)
+    public function __construct(
+        MatchRepository      $matchRepository,
+        TournamentRepository $tournamentRepository,
+        PlayerRepository     $playerRepository
+    )
     {
-        $this->em = $em;
-        $this->tournamentRepository = $em->getRepository('Application\Model\Entity\Tournament');
-        $this->playerRepository = $em->getRepository('Application\Model\Entity\Player');
-        $this->matchRepository = $em->getRepository('Application\Model\Entity\Match');
+        $this->matchRepository      = $matchRepository;
+        $this->tournamentRepository = $tournamentRepository;
+        $this->playerRepository     = $playerRepository;
     }
 
     /**
@@ -106,8 +105,7 @@ class MatchController extends AbstractActionController
 
             if ($form->isValid()) {
 
-                $this->em->persist($match);
-                $this->em->flush();
+                $this->matchRepository->persist($match);
 
                 return $this->redirect()->toRoute(
                     'tournament/show',

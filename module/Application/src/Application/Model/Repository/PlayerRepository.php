@@ -56,4 +56,13 @@ class PlayerRepository extends EntityRepository implements \Application\Model\Re
         return $this->findAll();
     }
 
+    /**
+     * @param Player $player
+     */
+    public function persist(Player $player)
+    {
+        $this->_em->persist($player);
+        $this->_em->flush();
+    }
+
 }
