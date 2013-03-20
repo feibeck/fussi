@@ -23,6 +23,8 @@ return array(
         'formGame'        => 'Application\ViewHelper\FormGame',
         'matchResult'     => 'Application\ViewHelper\MatchResult',
         'leaguePaginator' => 'Application\ViewHelper\LeaguePaginator',
+        'tbsFormRow'      => 'Application\ViewHelper\TwitterBootstrapFormRow',
+        'tbsFormError'      => 'Application\ViewHelper\TwitterBootstrapFormError',
     ),
     'factories' => array(
         'tournamentList' => function(HelperPluginManager $manager) {
