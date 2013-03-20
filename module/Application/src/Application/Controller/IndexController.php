@@ -13,6 +13,7 @@
 
 namespace Application\Controller;
 
+use Application\Model\LeaguePeriod;
 use Zend\Mvc\Controller\AbstractActionController;
 
 use Application\Model\Ranking;
@@ -63,39 +64,30 @@ class IndexController extends AbstractActionController
         /** @var $tournament \Application\Model\Entity\Tournament */
         $tournament = $this->tournamentRepository->find($id);
 
-        $date = new DateTime();
-        $date->setDate($year, $month, 1);
-
-        $date->setTime(0, 0, 0);
-
-        $now = new DateTime();
-        $now->setTime(0, 0, 0);
-        $now->modify('first day of');
-
-        if ($date > $now || $date < $tournament->getStart()->modify('first day of')) {
+        $leaguePeriod = new LeaguePeriod($tournament->getStart(), $year, $month);
+        if ($leaguePeriod->isOutOfBounds()) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
-        $matches = $this->matchRepository->findForMonth($tournament, $year, $month);
+        $matches = $this->matchRepository->findForPeriod($tournament, $leaguePeriod);
 
         $players = $tournament->getPlayers();
-        $activePlayers = $this->matchRepository->getActivePlayers($tournament, $year, $month);
+        $activePlayers = $this->matchRepository->getActivePlayers($tournament, $leaguePeriod);
 
-        if ($now->format('Ym') != $date->format('Ym')) {
+        if ($leaguePeriod->inCurrentMonth()) {
             $players = $activePlayers;
         }
 
         $ranking = new Ranking($matches);
 
         return array(
-            'date'           => $date,
-            'players'        => $players,
-            'activePlayers'  => $activePlayers,
-            'matches'        => $matches,
-            'ranking'        => $ranking,
-            'startDate'      => $tournament->getStart()->modify('first day of'),
-            'tournament'     => $tournament,
+            'period'        => $leaguePeriod,
+            'players'       => $players,
+            'activePlayers' => $activePlayers,
+            'matches'       => $matches,
+            'ranking'       => $ranking,
+            'tournament'    => $tournament,
         );
 
     }

@@ -16,32 +16,30 @@ namespace Application\ViewHelper;
 use Application\Model\Entity\Tournament;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Entity\Player;
+use Application\Model\LeaguePeriod;
 use Zend\View\Helper\AbstractHelper;
-use \DateTime;
 
 class Match extends AbstractHelper
 {
 
     /**
-     * @param DateTime $date
-     * @param \Application\Model\Entity\Tournament $tournament
+     * @param LeaguePeriod  $period
+     * @param Tournament    $tournament
      * @param SingleMatch[] $matches
-     * @param \Application\Model\Entity\Player $player1
-     * @param \Application\Model\Entity\Player $player2
+     * @param Player        $player1
+     * @param Player        $player2
      *
      * @return string
      */
     public function __invoke(
-        DateTime $date,
+        LeaguePeriod $period,
         Tournament $tournament,
         array $matches,
         Player $player1,
         Player $player2
     )
     {
-
-        $now = new \DateTime();
-        $allow = $now->format('Ym') == $date->format('Ym');
+        $allow = $period->inCurrentMonth();
 
         $out = '';
 

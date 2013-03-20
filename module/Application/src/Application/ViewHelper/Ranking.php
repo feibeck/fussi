@@ -34,8 +34,7 @@ class Ranking extends AbstractHelper
     /**
      * @param \Application\Model\Entity\Tournament $tournament
      * @param int $potential
-     * @param int $year
-     * @param int $month
+     * @param \Application\Model\LeaguePeriod $period
      * @param int $count
      *
      * @return string
@@ -43,15 +42,13 @@ class Ranking extends AbstractHelper
     public function __invoke(
         Tournament $tournament,
         $potential,
-        $year,
-        $month,
+        $period,
         $count = 0
     )
     {
-        $matches = $this->matchRepository->findForMonth(
+        $matches = $this->matchRepository->findForPeriod(
             $tournament,
-            $year,
-            $month
+            $period
         );
 
         $ranking = new RankingCalculator($matches);

@@ -13,7 +13,7 @@
 ?>
 <div class="row">
     <div class="span12">
-        <h1><?php echo $tournament->getName(); ?> - Month <?php echo $date->format('Y/m'); ?></h1>
+        <h1><?php echo $tournament->getName(); ?> - Month <?php echo $period->getStart()->format('Y/m'); ?></h1>
     </div>
 </div>
 
@@ -54,7 +54,7 @@
 
         </table>
 
-        <?php echo $this->ranking($tournament, $tournamentPotential, $date->format("Y"), $date->format("m")); ?>
+        <?php echo $this->ranking($tournament, $tournamentPotential, $period); ?>
 
     </div>
 
@@ -72,7 +72,7 @@
                         'tournament'    => $tournament,
                         'players'       => $players,
                         'activePlayers' => $activePlayers,
-                        'date'          => $date,
+                        'period'        => $period,
                         'matches'       => $matches
                     )
                 );
@@ -88,7 +88,6 @@
                     array(
                         'tournament'          => $tournament,
                         'players'             => $players,
-                        'date'                => $date,
                         'matches'             => $matches
                     )
                 );
@@ -102,30 +101,7 @@
 
 </div>
 
-<?php
-    $prev = clone($date);
-    $prev->modify("-1 month");
-
-    $disablePrev = $prev < $startDate;
-
-    $prev = $this->url('tournament/show', array('id' => $tournament->getId(), 'year' => $prev->format('Y'), 'month' => $prev->format('m')));
-
-    $next = clone($date);
-    $next->modify("+1 month");
-    $next = $this->url('tournament/show', array('id' => $tournament->getId(), 'year' => $next->format('Y'), 'month' => $next->format('m')));
-
-    $now = new \DateTime();
-    $disableNext = $now->format('Ym') == $date->format('Ym');
-?>
-
-<ul class="pager">
-    <li class="previous <?php echo $disablePrev ? 'disabled' : ''; ?>">
-        <a href="<?php echo $disablePrev ? '#' : $prev; ?>">&larr; Older</a>
-    </li>
-    <li class="next <?php echo $disableNext ? 'disabled' : ''; ?>">
-        <a href="<?php echo $disableNext ? '#' : $next; ?>">Newer &rarr;</a>
-    </li>
-</ul>
+<?php echo $this->leaguePaginator($tournament, $period); ?>
 
 <script>
     $(document).ready(function() {

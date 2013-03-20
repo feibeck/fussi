@@ -72,7 +72,7 @@
                 <div class="span3">
                     <h4><?php echo $tournament->getName(); ?></h4>
 
-                    <?php echo $this->ranking($tournament, 999, date('Y'), date('m'), 3); ?>
+                    <?php echo $this->ranking($tournament, 999, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
 
                     <p>
                         <a href="<?php echo $this->url("tournament/show", array('id' => $tournament->getId())); ?>" class="btn btn-small">

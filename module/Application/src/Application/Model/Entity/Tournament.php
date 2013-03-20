@@ -143,6 +143,8 @@ class Tournament
         $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
         if (isset($data['start-date'])) {
             $this->setStart($data['start-date']);
+        } else {
+            $this->setStart(new \DateTime());
         }
      }
 
