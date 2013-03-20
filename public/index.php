@@ -1,6 +1,6 @@
 <?php
 /**
- * Application entry point
+ * Fußi
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -12,5 +12,9 @@
  */
 
 chdir(dirname(__DIR__));
-require 'init_autoloader.php';
+if (!file_exists('vendor/autoload.php')) {
+    throw new RuntimeException('Unable to load dependencies. See installation instructions in README.md');
+
+}
+$loader = include 'vendor/autoload.php';
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();
