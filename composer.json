@@ -1,4 +1,5 @@
 {
+    "config":{"process-timeout":3000}, 
     "minimum-stability": "alpha",
     "repositories": [
         {
