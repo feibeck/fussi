@@ -17,9 +17,15 @@ use Application\Model\Entity\Game as GameEntity;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Validator\Between;
+use Zend\Validator\Digits;
+use \Application\Validator\Game as GameValidator;
 
 class Game extends Fieldset implements InputFilterProviderInterface
 {
+
+    protected $maxGoals = 10;
+
     public function __construct()
     {
         parent::__construct('game');
@@ -54,19 +60,57 @@ class Game extends Fieldset implements InputFilterProviderInterface
 
     }
 
+    public function setOptions($options)
+    {
+        parent::setOptions($options);
+        if (isset($options['maxGoals'])) {
+            $this->setMaxGoals($options['maxGoals']);
+        }
+        return $this;
+    }
+
+    public function setMaxGoals($maxGoals)
+    {
+        $this->maxGoals = $maxGoals;
+    }
+
+    public function getMaxGoals()
+    {
+        return $this->maxGoals;
+    }
+
     /**
      * @return array
      */
     public function getInputFilterSpecification()
     {
+
+        $digitsValidator  = new Digits();
+        $betweenValidator = new Between(
+            array(
+                 'min' => 0,
+                 'max' => $this->maxGoals
+            )
+        );
+
         return array(
             'goalsTeamOne' => array(
                 'required' => true,
+                'validators' => array(
+                    $digitsValidator,
+                    $betweenValidator,
+                    new GameValidator($this->maxGoals)
+                )
             ),
             'goalsTeamTwo' => array(
                 'required' => true,
+                'validators' => array(
+                    $digitsValidator,
+                    $betweenValidator,
+                )
             )
         );
+
     }
 
 }

@@ -42,7 +42,10 @@ abstract class MatchForm extends Form
                 'should_create_template' => false,
                 'allow_add' => false,
                 'target_element' => array(
-                    'type' => 'Application\Form\Fieldset\Game'
+                    'type' => 'Application\Form\Fieldset\Game',
+                    'options' => array(
+                        'maxGoals' => 10
+                    )
                 )
             )
         ));
