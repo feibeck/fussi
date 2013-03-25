@@ -1,15 +1,9 @@
 {
     "config":{"process-timeout":3000}, 
     "minimum-stability": "alpha",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/feibeck/zf2"
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-develop",
+        "zendframework/zendframework": "2.2.*@dev",
         "doctrine/doctrine-orm-module": "dev-master"
     }
 }
