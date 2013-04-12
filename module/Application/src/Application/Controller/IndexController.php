@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController
         $players = $tournament->getPlayers();
         $activePlayers = $this->matchRepository->getActivePlayers($tournament, $leaguePeriod);
 
-        if ($leaguePeriod->inCurrentMonth()) {
+        if (!$leaguePeriod->inCurrentMonth()) {
             $players = $activePlayers;
         }
 
