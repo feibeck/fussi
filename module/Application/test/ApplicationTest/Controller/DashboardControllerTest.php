@@ -42,7 +42,7 @@ class DashboardControllerTest extends \PHPUnit_Framework_TestCase
             false
         );
         $tournamentRepository->expects($this->once())
-            ->method('findAll')
+            ->method('findAllActive')
             ->will($this->returnValue('alltournaments'));
 
         $controller = new DashboardController(

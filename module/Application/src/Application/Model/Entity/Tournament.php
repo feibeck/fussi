@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Model\Entity\Tournament
+ * Definition of Application\Entity\Tournament
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -63,6 +63,13 @@ class Tournament
      * @ORM\Column(type="date")
      */
     protected $start;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $end;
 
     /**
      * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
@@ -202,4 +209,23 @@ class Tournament
         return $this->start;
     }
 
+    /**
+     * @param \DateTime|null $end Casted to null if not \DateTime
+     */
+    public function setEnd($end)
+    {
+        if (!$end instanceof \DateTime) {
+            $end = null;
+        }
+
+        $this->end = $end;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
 }
