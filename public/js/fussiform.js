@@ -1,21 +1,21 @@
 var FussiForm = function() {
-    this.connectFields = function(f1, f2) {
+    this.connectFields = function(f1, f2, maxGoals) {
         // fill the field opposite to the field that has less than 10 goals
-        this.blurFillField(f1,f2);
-        this.blurFillField(f2,f1);
+        this.blurFillField(f1,f2, maxGoals);
+        this.blurFillField(f2,f1, maxGoals);
 
         // let the user increase/decrease fields, set 10 onFocus if empty
-        this.focusFillField(f1,f2);
-        this.focusFillField(f2,f1);
-        this.adornField(f1);
-        this.adornField(f2);
+        this.focusFillField(f1,f2, maxGoals);
+        this.focusFillField(f2,f1, maxGoals);
+        this.adornField(f1, maxGoals);
+        this.adornField(f2, maxGoals);
     }
 
-    this.focusFillField = function(current, other) {
+    this.focusFillField = function(current, other, maxGoals) {
         current.focus(function(){
             var o = other.val();
-            if (current.val()==='' && o !== '' && o != 10 ) {
-                current.val(10);
+            if (current.val()==='' && o !== '' && o != maxGoals ) {
+                current.val(maxGoals);
             }
         });
     }
@@ -24,11 +24,11 @@ var FussiForm = function() {
         current.blur(function(){
             if(current.val()<=0){
                 current.val(0);
-                other.val(10);
-            } else if(current.val()>10){
+                other.val(maxGoals);
+            } else if(current.val()>maxGoals){
                 current.val(10);
-            } else if(current.val()!=10){
-                other.val(10);
+            } else if(current.val()!=maxGoals){
+                other.val(maxGoals);
             }
         });
 
@@ -42,7 +42,7 @@ var FussiForm = function() {
             .after('<a class="btn" id="'+inc+'"><i class="icon-arrow-right"></i></a>')
             .before('<a class="btn" id="'+dec+'"><i class="icon-arrow-left"></i></a>')
         element.next().click(function(){
-            if (element.val()<10) {
+            if (element.val()<maxGoals) {
                 element.val(element.val() - 0 + 1);
             }
         });

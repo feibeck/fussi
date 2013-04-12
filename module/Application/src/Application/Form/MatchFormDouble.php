@@ -22,12 +22,13 @@ class MatchFormDouble extends MatchForm
 
     /**
      * @param int              $gameCount
-     * @param \Application\Model\Entity\Player[]         $players
+     * @param Player[]         $players
+     * @param int              $maxGoals
      * @param PlayerRepository $playerRepository
      */
-    public function __construct($playerRepository, $gameCount, $players)
+    public function __construct($playerRepository, $gameCount, $maxGoals, $players)
     {
-        parent::__construct($playerRepository, $gameCount);
+        parent::__construct($playerRepository, $gameCount, $maxGoals);
 
         $values = array(
             '' => ''

@@ -52,7 +52,7 @@
     $(document).ready(function() {
         var FuFo = new FussiForm();
         $('.game').each(function() {
-            FuFo.connectFields($('.goals0',this),$('.goals1',this));
+            FuFo.connectFields($('.goals0',this),$('.goals1',this), <?php echo $tournament->getMaxScore(); ?>);
         })
     });
 </script>

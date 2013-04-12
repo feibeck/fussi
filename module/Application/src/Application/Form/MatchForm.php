@@ -22,10 +22,11 @@ abstract class MatchForm extends Form
 {
 
     /**
-     * @param \Application\Model\Repository\PlayerRepository $playerRepository
+     * @param PlayerRepository $playerRepository
      * @param int              $gameCount
+     * @param int              $maxGoals
      */
-    public function __construct($playerRepository, $gameCount)
+    public function __construct($playerRepository, $gameCount, $maxGoals)
     {
         parent::__construct('match');
 
@@ -44,7 +45,7 @@ abstract class MatchForm extends Form
                 'target_element' => array(
                     'type' => 'Application\Form\Fieldset\Game',
                     'options' => array(
-                        'maxGoals' => 10
+                        'maxGoals' => $maxGoals
                     )
                 )
             )

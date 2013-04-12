@@ -40,6 +40,16 @@ class Tournament extends Form
                 'maxlength' => 2
             )
         ));
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'games-per-match',
+            'options' => array(
+                'label' => 'Games per match',
+            ),
+            'attributes' => array(
+                'maxlength' => 2
+            )
+        ));
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',
@@ -50,6 +60,17 @@ class Tournament extends Form
                     TournamentEntity::TYPE_TEAM   => 'Team',
                     TournamentEntity::TYPE_SINGLE => 'Single Player',
                 ),
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'max-score',
+            'options' => array(
+                'label' => 'Max. score to win a game',
+            ),
+            'attributes' => array(
+                'maxlength' => 2
             )
         ));
 

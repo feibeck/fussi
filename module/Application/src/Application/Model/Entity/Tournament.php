@@ -213,9 +213,10 @@ class Tournament
     }
 
     /**
-     * @param $maxScore
+     * @param int $maxScore
      */
-    public function setMaxScore($maxScore) {
+    public function setMaxScore($maxScore)
+    {
         $this->maxScore = $maxScore;
     }
 

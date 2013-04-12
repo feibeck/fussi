@@ -122,7 +122,8 @@ class MatchController extends AbstractActionController
 
         $view = new ViewModel(
             array(
-                'form' => $form,
+                'form'       => $form,
+                'tournament' => $tournament
             )
         );
         $view->setTemplate('application/match/edit');

@@ -43,7 +43,8 @@ class Factory
 
             $form = new MatchFormSingle(
                 $this->playerRepository,
-                $tournament->getGamesPerMatch()
+                $tournament->getGamesPerMatch(),
+                $tournament->getMaxScore()
             );
 
         } else {
@@ -51,6 +52,7 @@ class Factory
             $form = new MatchFormDouble(
                 $this->playerRepository,
                 $tournament->getGamesPerMatch(),
+                $tournament->getMaxScore(),
                 $tournament->getPlayers()
             );
 

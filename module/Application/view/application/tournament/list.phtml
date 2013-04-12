@@ -23,6 +23,7 @@
         <th>Name</th>
         <th>Type</th>
         <th>Games per match</th>
+        <th>Goals to win</th>
         <th>Started</th>
         <th>Players</th>
         <th></th>
@@ -41,6 +42,9 @@
         </td>
         <td>
             <?php echo $tournament->getGamesPerMatch(); ?>
+        </td>
+        <td>
+            <?php echo $tournament->getMaxScore(); ?>
         </td>
         <td>
             <?php echo $tournament->getStart()->format('d.m.Y'); ?>

@@ -99,7 +99,7 @@ class Game extends Fieldset implements InputFilterProviderInterface
                 'validators' => array(
                     $digitsValidator,
                     $betweenValidator,
-                    new GameValidator($this->maxGoals)
+                    new GameValidator(array('maxGoals' => $this->maxGoals))
                 )
             ),
             'goalsTeamTwo' => array(

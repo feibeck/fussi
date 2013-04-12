@@ -44,6 +44,12 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Foo', $this->tournament->getName());
     }
 
+    public function testMaxScoreProperty()
+    {
+        $this->tournament->setMaxScore(5);
+        $this->assertEquals(5, $this->tournament->getMaxScore());
+    }
+
     public function testTeamTypeProperty()
     {
         $this->tournament->setTeamType(Tournament::TYPE_TEAM);
@@ -113,6 +119,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
                 'team-type' => 1,
                 'start-date' => new \DateTime('1994-04-05'),
                 'games-per-match' => 2,
+                'max-score' => 10
             ),
             $this->tournament->getArrayCopy()
         );
@@ -135,7 +142,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
                 'name' => 'Foo',
                 'games-per-match' => 2,
                 'start-date' => new \DateTime('1994-05-04'),
-                'team-type' => 1
+                'team-type' => 1,
             )
         );
         $this->assertThat(

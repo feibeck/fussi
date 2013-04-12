@@ -83,7 +83,7 @@ class MatchFormDoubleTest extends \PHPUnit_Framework_TestCase
             $this->getPlayer(4, 'Qux'),
         );
 
-        $form = new MatchFormDouble($playerRepository, 1, $players);
+        $form = new MatchFormDouble($playerRepository, 1, 10, $players);
         return $form;
     }
 
