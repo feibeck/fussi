@@ -73,6 +73,13 @@ class Tournament
     protected $maxScore = self::MAXSCORE_DEFAULT;
 
     /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $end;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
      * @ORM\JoinTable(name="tournament_players",
      *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
@@ -226,6 +233,26 @@ class Tournament
     public function getMaxScore()
     {
         return $this->maxScore;
+    }
+
+    /*
+     * @param \DateTime|null $end Casted to null if not \DateTime
+     */
+    public function setEnd($end)
+    {
+        if (!$end instanceof \DateTime) {
+            $end = null;
+        }
+
+        $this->end = $end;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
     }
 
 }
