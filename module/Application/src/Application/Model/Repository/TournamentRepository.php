@@ -50,4 +50,25 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
         $this->_em->flush();
     }
 
+    /**
+     * @return Tournament[]
+     */
+    public function findAllWithoutEndDate()
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->where('t.end IS NULL');
+
+        /** @var $tournaments Tournament[] */
+        $tournaments = $qb->getQuery()->getResult();
+
+        return $tournaments;
+    }
+
+    /**
+     * @return \Application\Model\Entity\Tournament[]
+     */
+    public function findAllActive()
+    {
+        return $this->findAllWithoutEndDate();
+    }
 }

@@ -144,4 +144,17 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testEndProperty()
+    {
+        $dateTime = new \DateTime();
+
+        $this->tournament->setEnd($dateTime);
+        $this->assertSame($dateTime, $this->tournament->getEnd());
+
+        $this->tournament->setEnd(null);
+        $this->assertNull($this->tournament->getEnd());
+
+        $this->tournament->setEnd('aString');
+        $this->assertNull($this->tournament->getEnd());
+    }
 }

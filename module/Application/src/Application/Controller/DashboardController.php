@@ -53,7 +53,7 @@ class DashboardController extends AbstractActionController
     {
         return array(
             'matches' => $this->matchRepository->getLastMatches(),
-            'tournaments' => $this->tournamentRepository->findAll()
+            'tournaments' => $this->tournamentRepository->findAllActive()
         );
     }
 
