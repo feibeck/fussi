@@ -55,7 +55,7 @@ class TournamentController extends AbstractActionController
      */
     public function listAction()
     {
-        $tournaments = $this->tournamentRepository->findAllActive();
+        $tournaments = $this->tournamentRepository->findAll();
         return array(
             'tournaments' => $tournaments
         );

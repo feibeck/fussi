@@ -21,6 +21,7 @@
 
     <tr>
         <th>Name</th>
+        <th>Active</th>
         <th>Type</th>
         <th>Games per match</th>
         <th>Goals to win</th>
@@ -36,6 +37,9 @@
             <a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>">
                 <?php echo $tournament->getName(); ?>
             </a>
+        </td>
+        <td>
+            <?php echo ($tournament->isActive() ? 'yes' : 'no'); ?>
         </td>
         <td>
             <?php if ($tournament->isTeams()): ?>Team<?php else: ?>Single<?php endif; ?>

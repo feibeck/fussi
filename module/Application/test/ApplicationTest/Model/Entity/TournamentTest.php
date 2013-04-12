@@ -164,4 +164,16 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
         $this->tournament->setEnd('aString');
         $this->assertNull($this->tournament->getEnd());
     }
+
+    public function testIsActive()
+    {
+        $this->assertTrue($this->tournament->isActive());
+    }
+
+    public function testIsInactive()
+    {
+        $this->tournament->setEnd(new \DateTime("2013-01-31"));
+        $this->assertFalse($this->tournament->isActive());
+    }
+
 }

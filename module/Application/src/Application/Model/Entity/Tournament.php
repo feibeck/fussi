@@ -255,4 +255,12 @@ class Tournament
         return $this->end;
     }
 
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->end == null;
+    }
+
 }
