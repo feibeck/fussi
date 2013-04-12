@@ -18,17 +18,19 @@ Setup
 =====
 
 1. Clone the repository to your harddisk
-2. Get Composer if you do not already have it ( http://getcomposer.org/download/ )
-3. Run composer update to fetch all dependencies
-4. Create a database (vendor/bin/doctrine-module orm:schema-tool:create)
-5. Chown/chmod ./data/db and ./data/db/db.sqlite for the webserver user to be writable
-6. Set up a webserver (e.g. php -S localhost:8080 -t public from project root)
-7. Make sure php.ini has short_open_tags set to On
-8. Open Fußi in your browser (http://localhost:8080)
-9. Add some players
-10. Add a tournament
-11. Add players to the tournament
-12. Play and enter data
+2. Get Composer if you do not already have it (http://getcomposer.org/download/)
+3. Run composer update to fetch all PHP dependencies
+4. Get Bower if you do not already have it (http://twitter.github.io/bower/)
+5. Run bower install to fetch all Frontend dependencies
+6. Create a database (vendor/bin/doctrine-module orm:schema-tool:create)
+7. Chown/chmod ./data/db and ./data/db/db.sqlite for the webserver user to be writable
+8. Set up a webserver (e.g. php -S localhost:8080 -t public from project root)
+9. Make sure php.ini has short_open_tags set to On
+10. Open Fußi in your browser (http://localhost:8080)
+11. Add some players
+12. Add a tournament
+13. Add players to the tournament
+14. Play and enter data
 
 Hacking
 =======
