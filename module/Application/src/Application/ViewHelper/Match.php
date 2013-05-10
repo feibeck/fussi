@@ -76,10 +76,8 @@ class Match extends AbstractHelper
             }
 
             if (!$ok && $allow) {
-
-                $url = $this->getView()->url('match/new/', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
+                $url = $this->getView()->url('match/new', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
                 $out .= '<a href="' . $url . '" class="btn btn-small">Edit</a>';
-
             }
 
         }
