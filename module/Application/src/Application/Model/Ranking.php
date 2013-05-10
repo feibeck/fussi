@@ -111,7 +111,9 @@ class Ranking
         $potential = 0;
         foreach($playersRanking as $playerid => $rank) {
             $playerPotential = $rank->getScore() + ($maxMatchesPerPlayer - $rank->getMatchCount()) * 2;
-            $this->playerRankings[$playerid]->potential = $playerPotential;
+            if (isset($this->playerRankings[$playerid])) {
+                $this->playerRankings[$playerid]->potential = $playerPotential;
+            }
             if ($playerPotential > $potential) {
                 $potential = $playerPotential;
             }
