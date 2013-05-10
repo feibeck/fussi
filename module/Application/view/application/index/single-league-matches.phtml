@@ -42,7 +42,7 @@
                 <?php if ($column > $row - 1): ?>
                     <td></td>
                 <?php else: ?>
-                    <td class="matchscore<?php if(!$active || $inactiveColumns[$column]) echo ' inactive';?>">
+                    <td class="matchscore<?php if(!$active || isset($inactiveColumns[$column]) && $inactiveColumns[$column]) echo ' inactive';?>">
                         <?php echo $this->match($period, $tournament, $matches, $player1, $player2); ?>
                     </td>
                 <?php endif; ?>
