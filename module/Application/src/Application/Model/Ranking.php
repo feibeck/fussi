@@ -52,16 +52,27 @@ class Ranking
 
                 $team1Player1->addGoals($match->getGoalsGame1Player1());
                 $team1Player1->addGoals($match->getGoalsGame2Player1());
+                $team1Player1->addGoalsAgainst($match->getGoalsGame1Player2());
+                $team1Player1->addGoalsAgainst($match->getGoalsGame2Player2());
                 $team1Player1->addPoints($this->getPointsPlayer1($match));
+
                 $team1Player2->addGoals($match->getGoalsGame1Player1());
                 $team1Player2->addGoals($match->getGoalsGame2Player1());
+                $team1Player2->addGoalsAgainst($match->getGoalsGame1Player2());
+                $team1Player2->addGoalsAgainst($match->getGoalsGame2Player2());
                 $team1Player2->addPoints($this->getPointsPlayer1($match));
+
 
                 $team2Player1->addGoals($match->getGoalsGame1Player2());
                 $team2Player1->addGoals($match->getGoalsGame2Player2());
+                $team2Player1->addGoalsAgainst($match->getGoalsGame1Player1());
+                $team2Player1->addGoalsAgainst($match->getGoalsGame2Player1());
                 $team2Player1->addPoints($this->getPointsPlayer2($match));
+
                 $team2Player2->addGoals($match->getGoalsGame1Player2());
                 $team2Player2->addGoals($match->getGoalsGame2Player2());
+                $team2Player2->addGoalsAgainst($match->getGoalsGame1Player1());
+                $team2Player2->addGoalsAgainst($match->getGoalsGame2Player1());
                 $team2Player2->addPoints($this->getPointsPlayer2($match));
 
             } else {
@@ -70,11 +81,19 @@ class Ranking
                 $player2 = $this->getPlayerRanking($match->getPlayer2());
 
                 $player1->addGoals($match->getGoalsGame1Player1());
+                $player1->addGoalsAgainst($match->getGoalsGame1Player2());
+
                 $player1->addGoals($match->getGoalsGame2Player1());
+                $player1->addGoalsAgainst($match->getGoalsGame2Player2());
+
                 $player1->addPoints($this->getPointsPlayer1($match));
 
                 $player2->addGoals($match->getGoalsGame1Player2());
+                $player2->addGoalsAgainst($match->getGoalsGame1Player1());
+
                 $player2->addGoals($match->getGoalsGame2Player2());
+                $player2->addGoalsAgainst($match->getGoalsGame2Player1());
+
                 $player2->addPoints($this->getPointsPlayer2($match));
 
             }
@@ -111,7 +130,9 @@ class Ranking
         $potential = 0;
         foreach($playersRanking as $playerid => $rank) {
             $playerPotential = $rank->getScore() + ($maxMatchesPerPlayer - $rank->getMatchCount()) * 2;
-            $this->playerRankings[$playerid]->potential = $playerPotential;
+            if (isset($this->playerRankings[$playerid])) {
+                $this->playerRankings[$playerid]->potential = $playerPotential;
+            }
             if ($playerPotential > $potential) {
                 $potential = $playerPotential;
             }
