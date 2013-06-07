@@ -56,12 +56,14 @@ class Match extends AbstractHelper
                 if ($match->isPlayedBy($player1, $player2)) {
 
                     $title = $player1->getName() . " vs. " . $player2->getName();
-                    $content = sprintf("Game 1: %s / %s<br>Game 2: %s / %s",
-                        $match->getGoalsGame1Player1(),
-                        $match->getGoalsGame1Player2(),
-                        $match->getGoalsGame2Player1(),
-                        $match->getGoalsGame2Player2()
-                    );
+
+                    $results = array();
+                    $counter = 1;
+                    foreach ($match->getGames() as $game) {
+                        $results[] = "Game " . $counter . ": " . $game->getGoalsTeamOne() . ' / ' . $game->getGoalsTeamTwo();
+                        $counter++;
+                    }
+                    $content = implode("<br>", $results);
 
                     if ($allow) {
                         $content .= "<br><br><a href='" . $url . "' class='btn btn-small'>Edit</a>";
