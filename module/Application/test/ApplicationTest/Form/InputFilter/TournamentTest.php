@@ -13,6 +13,9 @@
 
 namespace ApplicationTest\Form\InputFilter;
 
+/**
+ * @covers Application\Form\InputFilter\Tournament
+ */
 class TournamentTest extends \PHPUnit_Framework_TestCase
 {
 
