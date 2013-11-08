@@ -33,7 +33,7 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     public function isUniqueName($name)
     {
         $query = $this->_em->createQuery(
-            'SELECT COUNT(t.id) FROM Application\Model\Entity\Tournament t WHERE t.name = :name'
+            'SELECT COUNT(t.id) FROM Application\Model\Entity\AbstractTournament t WHERE t.name = :name'
         );
         $query->setParameter('name', $name);
         $count = $query->getSingleScalarResult();
