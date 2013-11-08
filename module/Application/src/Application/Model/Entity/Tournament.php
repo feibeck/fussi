@@ -102,4 +102,12 @@ class Tournament extends AbstractTournament
         return true;
     }
 
+    /**
+     * @return bool
+     */
+    public function isReady()
+    {
+        return count($this->rounds) > 0 && count($this->teams) > 0;
+    }
+
 }

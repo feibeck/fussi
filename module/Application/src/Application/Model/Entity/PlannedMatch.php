@@ -171,8 +171,8 @@ class PlannedMatch
     public function setTeam1(Team $team)
     {
         $this->team1 = $team;
-        $this->team1Player1 = $team->getAttackingPlayer();
-        $this->team1Player2 = $team->getDefendingPlayer();
+        $this->team1Player1 = $team->getPlayer1();
+        $this->team1Player2 = $team->getPlayer2();
     }
 
     /**
@@ -181,8 +181,8 @@ class PlannedMatch
     public function setTeam2(Team $team)
     {
         $this->team2 = $team;
-        $this->team2Player1 = $team->getAttackingPlayer();
-        $this->team2Player2 = $team->getDefendingPlayer();
+        $this->team2Player1 = $team->getPlayer1();
+        $this->team2Player2 = $team->getPlayer2();
     }
 
     /**

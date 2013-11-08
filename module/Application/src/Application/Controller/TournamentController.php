@@ -13,44 +13,50 @@
 
 namespace Application\Controller;
 
+use Application\Model\Repository\TournamentRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\EntityManager;
 
 /**
  * Controller displaying the monthly view of a league tournament
  */
-class PlayTournamentController extends AbstractActionController
+class TournamentController extends AbstractActionController
 {
 
     /**
-     * @var EntityManager
+     * @var TournamentRepository
      */
-    protected $em;
+    protected $repository;
 
     /**
-     * @param EntityManager $em
+     * @param TournamentRepository $repository
      */
-    public function __construct(EntityManager $em)
+    public function __construct(TournamentRepository $repository)
     {
-        $this->em = $em;
+        $this->repository = $repository;
     }
 
-    public function listAction()
+    /**
+     * @return array
+     *
+     * @throws \RuntimeException
+     */
+    public function showAction()
     {
-        $repository = $this->em->getRepository('\Application\Model\Entity\AbstractTournament');
-        $tournaments = $repository->findAll();
-        return $tournaments;
-    }
+        $id = $this->params()->fromRoute('id');
 
-    public function addAction()
-    {
+        $tournament = $this->repository->find($id);
+        if (!$tournament instanceof \Application\Model\Entity\Tournament) {
+            throw new \RuntimeException('Invalid tournament ID');
+        }
 
+        return array('tournament' => $tournament);
     }
 
     /**
      * @return array
      */
-    public function indexAction()
+    public function oldfoobarAction()
     {
         $player = array();
         $tournament = new \Application\Model\Entity\Tournament();

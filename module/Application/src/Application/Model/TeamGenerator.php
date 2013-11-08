@@ -19,7 +19,7 @@ class TeamGenerator
         $teams = array();
 
         while (count($availablePlayers) > 0) {
-            $team = new \Application\Model\Team(
+            $team = new \Application\Model\Entity\Team(
                 $this->getRandomPlayer($availablePlayers),
                 $this->getRandomPlayer($availablePlayers)
             );

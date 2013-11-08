@@ -55,6 +55,16 @@ class Team
     protected $tournament;
 
     /**
+     * @param Player $player1
+     * @param Player $player2
+     */
+    function __construct(Player $player1 = null, Player $player2 = null)
+    {
+        $this->player1 = $player1;
+        $this->player2 = $player2;
+    }
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -116,6 +126,20 @@ class Team
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    /**
+     * Returns a string representation as a name of the team
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return sprintf(
+            "%s / %s",
+            $this->getPlayer1()->getName(),
+            $this->getPlayer2()->getName()
+        );
     }
 
 }

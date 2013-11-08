@@ -26,10 +26,12 @@ return array(
             );
             return $controller;
         },
-        'Application\Controller\PlayTournament' => function(ControllerManager $cm) {
+        'Application\Controller\Tournament' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
-            $controller = new Controller\PlayTournamentController($em);
+            $controller = new Controller\TournamentController(
+                $em->getRepository('Application\Model\Entity\AbstractTournament')
+            );
             return $controller;
         },
         'Application\Controller\Player' => function(ControllerManager $cm) {

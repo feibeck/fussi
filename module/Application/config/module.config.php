@@ -64,6 +64,16 @@ return array(
                             )
                         )
                     ),
+                    'show-tournament' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 't/:id',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Tournament',
+                                'action'     => 'show',
+                            )
+                        )
+                    ),
                     'add-league' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
