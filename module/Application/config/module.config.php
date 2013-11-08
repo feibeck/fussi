@@ -24,6 +24,16 @@ return array(
                     ),
                 ),
             ),
+            'tournament-test' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\PlayTournament',
+                        'action'     => 'index'
+                    ),
+                ),
+            ),
             'tournament' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(

@@ -101,4 +101,16 @@ class DoubleMatch extends Match
         return new Team($this->teamTwoAttack, $this->teamTwoDefence);
     }
 
+    /**
+     * @return Team
+     */
+    public function getWinningTeam()
+    {
+        $index = $this->getWinner();
+        if ($index == 0) {
+            return $this->getTeamOne();
+        }
+        return $this->getTeamTwo();
+    }
+
 }

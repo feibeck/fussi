@@ -1,0 +1,14 @@
+
+<?php foreach ($tournament->getRounds() as $round): ?>
+
+    <div>
+    <?php foreach ($round->getMatches() as $match): ?>
+        <div style="float: left; width: 100px; border: 1px solid grey; height: 60px; margin-right: 4px; margin-bottom: 4px;">
+            <div><?php echo $match->getTeam1Name(); ?></div>
+            <div><?php echo $match->getTeam2Name(); ?></div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+    <div class="clearfix"></div>
+
+<?php endforeach; ?>
