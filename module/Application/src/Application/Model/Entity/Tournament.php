@@ -18,31 +18,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="Application\Model\Repository\TournamentRepository")
- * @ORM\Table(name="tournament")
+ * @ORM\Entity
  */
-class Tournament
+class Tournament extends AbstractTournament
 {
 
     const TYPE_SINGLE = 0;
     const TYPE_TEAM = 1;
     const MAXSCORE_DEFAULT = 10;
-
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=150)
-     */
-    protected $name;
 
     /**
      * @var int
@@ -91,26 +74,6 @@ class Tournament
     public function __construct()
     {
         $this->players = new ArrayCollection();
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

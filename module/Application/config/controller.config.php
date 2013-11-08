@@ -22,7 +22,7 @@ return array(
             $em = $sm->get("doctrine.entitymanager.orm_default");
             $controller = new Controller\IndexController(
                 $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament')
+                $em->getRepository('Application\Model\Entity\AbstractTournament')
             );
             return $controller;
         },
@@ -43,7 +43,7 @@ return array(
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\TournamentController(
-                $em->getRepository('Application\Model\Entity\Tournament'),
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },
@@ -53,7 +53,7 @@ return array(
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\DashboardController(
                 $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament')
+                $em->getRepository('Application\Model\Entity\AbstractTournament')
             );
         },
         'Application\Controller\Match' => function(ControllerManager $cm) {
@@ -61,7 +61,7 @@ return array(
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\MatchController(
                 $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament'),
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },

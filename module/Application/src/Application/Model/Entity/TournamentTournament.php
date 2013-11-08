@@ -16,19 +16,10 @@ namespace Application\Model\Entity;
 use \Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="tournamenttournament")
  * @ORM\Entity
  */
-class TournamentTournament
+class TournamentTournament extends AbstractTournament
 {
-
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var int
-     */
-    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Application\Model\Entity\Team", mappedBy="tournament", cascade={"persist"})
