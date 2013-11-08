@@ -12,7 +12,6 @@
  */
 namespace Application\Form;
 
-use Application\Model\Entity\League as TournamentEntity;
 use \Zend\Form\Form;
 
 class Tournament extends Form
@@ -20,65 +19,13 @@ class Tournament extends Form
 
     public function __construct()
     {
-        parent::__construct('League');
+        parent::__construct('Tournament');
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'name',
             'options' => array(
                 'label' => 'Name'
-            )
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Text',
-            'name' => 'games-per-match',
-            'options' => array(
-                'label' => 'Games per match',
-            ),
-            'attributes' => array(
-                'maxlength' => 2
-            )
-        ));
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Text',
-            'name' => 'games-per-match',
-            'options' => array(
-                'label' => 'Games per match',
-            ),
-            'attributes' => array(
-                'maxlength' => 2
-            )
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'team-type',
-            'options' => array(
-                'label' => 'Match-Type',
-                'value_options' => array(
-                    TournamentEntity::TYPE_TEAM   => 'Team',
-                    TournamentEntity::TYPE_SINGLE => 'Single Player',
-                ),
-            )
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Text',
-            'name' => 'max-score',
-            'options' => array(
-                'label' => 'Max. score to win a game',
-            ),
-            'attributes' => array(
-                'maxlength' => 2
-            )
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Date',
-            'name' => 'start-date',
-            'options' => array(
-                'label' => 'Start date'
             )
         ));
 

@@ -47,6 +47,15 @@ abstract class AbstractTournament
     protected $name;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
+     * @ORM\JoinTable(name="tournament_players",
+     *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $players;
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -76,6 +85,31 @@ abstract class AbstractTournament
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        if ($this instanceof Tournament) {
+            return "Tournament";
+        } else {
+            return "League";
+        }
+    }
+
+    public function addPlayer(Player $player)
+    {
+        $this->players->add($player);
     }
 
 }

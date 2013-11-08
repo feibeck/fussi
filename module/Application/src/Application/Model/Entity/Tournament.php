@@ -74,4 +74,32 @@ class Tournament extends AbstractTournament
         return $this->rounds;
     }
 
+    /**
+     * @param $data
+     */
+    public function exchangeArray($data)
+    {
+        $this->id   = (isset($data['id'])) ? $data['id'] : null;
+        $this->name = (isset($data['name'])) ? $data['name'] : null;
+     }
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return array(
+            'id'              => $this->id,
+            'name'            => $this->name,
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return true;
+    }
+
 }

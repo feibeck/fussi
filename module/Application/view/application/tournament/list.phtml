@@ -14,19 +14,16 @@
 <h1>List of tournaments</h1>
 
 <div class="btn-group" style="margin-bottom: 10px;">
-    <a href="<?= $this->url('tournament/add'); ?>" class="btn">Add tournament</a>
+    <a href="<?= $this->url('tournament/add-league'); ?>" class="btn">Add league</a>
+    <a href="<?= $this->url('tournament/add-tournament'); ?>" class="btn">Add tournament</a>
 </div>
 
 <table class="table table-striped table-hover">
 
     <tr>
         <th>Name</th>
-        <th>Active</th>
         <th>Type</th>
-        <th>Games per match</th>
-        <th>Goals to win</th>
-        <th>Started</th>
-        <th>Players</th>
+        <th>Active</th>
         <th></th>
     </tr>
 
@@ -39,22 +36,10 @@
             </a>
         </td>
         <td>
+            <?php echo $tournament->getType(); ?>
+        </td>
+        <td>
             <?php echo ($tournament->isActive() ? 'yes' : 'no'); ?>
-        </td>
-        <td>
-            <?php if ($tournament->isTeams()): ?>Team<?php else: ?>Single<?php endif; ?>
-        </td>
-        <td>
-            <?php echo $tournament->getGamesPerMatch(); ?>
-        </td>
-        <td>
-            <?php echo $tournament->getMaxScore(); ?>
-        </td>
-        <td>
-            <?php echo $tournament->getStart()->format('d.m.Y'); ?>
-        </td>
-        <td>
-            <?php echo count($tournament->getPlayers()); ?>
         </td>
         <td class="right">
             <a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Show</a>

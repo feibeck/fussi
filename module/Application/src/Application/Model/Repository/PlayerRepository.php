@@ -13,7 +13,7 @@
 
 namespace Application\Model\Repository;
 
-use Application\Model\Entity\League;
+use Application\Model\Entity\AbstractTournament;
 use Application\Model\Repository\UniqueNameInterface;
 use Application\Model\Entity\Player;
 use Doctrine\ORM\EntityRepository;
@@ -46,11 +46,11 @@ class PlayerRepository extends EntityRepository implements \Application\Model\Re
      * Returns all players that are currently not playing in the given
      * tournament.
      *
-     * @param League $tournament
+     * @param AbstractTournament $tournament
      *
      * @return Player[]
      */
-    public function getPlayersNotInTournament(League $tournament)
+    public function getPlayersNotInTournament(AbstractTournament $tournament)
     {
         // TODO: Create a query (See issue #29)
         return $this->findAll();

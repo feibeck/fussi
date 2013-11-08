@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Form\InputFilter\Tournament
+ * Definition of Application\Form\InputFilter\League
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -24,7 +24,7 @@ use \Zend\Validator\Digits;
  * Input filter for a League entity. Used in combination with the
  * tournament form
  */
-class Tournament extends InputFilter
+class League extends InputFilter
 {
 
     /**
@@ -50,6 +50,20 @@ class Tournament extends InputFilter
                     'encoding' => 'UTF-8'
                 )),
                 new UniqueName($repository)
+            ),
+        ));
+
+        $this->add(array(
+            'name'     => 'games-per-match',
+            'required' => true,
+            'filters'  => array(
+                array('name' => 'StringTrim'),
+                array('name' => 'StripTags'),
+            ),
+            'validators' => array(
+                array('name' => 'NotEmpty'),
+                array('name' => 'Digits'),
+                new \Zend\Validator\GreaterThan(array('min' => 0))
             ),
         ));
 

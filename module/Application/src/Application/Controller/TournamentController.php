@@ -13,11 +13,14 @@
 
 namespace Application\Controller;
 
+
 use Zend\Mvc\Controller\AbstractActionController;
 
+use Application\Form\League as LeagueForm;
 use Application\Form\Tournament as TournamentForm;
 use Application\Form\PlayerToTournament as AddPlayerForm;
-use Application\Model\Entity\League as Tournament;
+use Application\Model\Entity\League;
+use Application\Model\Entity\Tournament;
 use Application\Model\Repository\TournamentRepository;
 use Application\Model\Repository\PlayerRepository;
 
@@ -132,13 +135,42 @@ class TournamentController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function addAction()
+    public function addLeagueAction()
     {
-        $form = new TournamentForm();
+        $form = new LeagueForm();
 
         $tournament = new League();
         $tournament->setStart(new \DateTime());
 
+        $form->bind($tournament);
+
+        $form->setInputFilter(
+            new \Application\Form\InputFilter\League(
+                $this->tournamentRepository
+            )
+        );
+
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+                $this->tournamentRepository->persist($tournament);
+                return $this->redirect()->toRoute('tournaments');
+            }
+        }
+
+        return array(
+            'form' => $form
+        );
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
+    public function addTournamentAction()
+    {
+        $form = new TournamentForm();
+
+        $tournament = new Tournament();
         $form->bind($tournament);
 
         $form->setInputFilter(

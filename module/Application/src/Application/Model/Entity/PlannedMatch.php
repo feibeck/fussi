@@ -13,7 +13,6 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Team;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

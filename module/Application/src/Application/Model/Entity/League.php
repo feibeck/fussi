@@ -62,15 +62,6 @@ class League extends AbstractTournament
      */
     protected $end;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
-     * @ORM\JoinTable(name="tournament_players",
-     *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $players;
-
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -103,14 +94,6 @@ class League extends AbstractTournament
     }
 
     /**
-     * @return Player[]
-     */
-    public function getPlayers()
-    {
-        return $this->players;
-    }
-
-    /**
      * @param $data
      */
     public function exchangeArray($data)
@@ -140,11 +123,6 @@ class League extends AbstractTournament
             'games-per-match' => $this->gamesPerMatch,
             'max-score'       => $this->maxScore
         );
-    }
-
-    public function addPlayer(Player $player)
-    {
-        $this->players->add($player);
     }
 
     /**

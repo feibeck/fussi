@@ -64,13 +64,23 @@ return array(
                             )
                         )
                     ),
-                    'add' => array(
+                    'add-league' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => 'tournament/add',
+                            'route' => 'tournament/add-league',
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Tournament',
-                                'action'     => 'add',
+                                'action'     => 'addLeague',
+                            )
+                        )
+                    ),
+                    'add-tournament' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/add-tournament',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Tournament',
+                                'action'     => 'addTournament',
                             )
                         )
                     ),
