@@ -29,9 +29,11 @@
 
     <?php foreach ($tournaments as $tournament): ?>
 
+        <?php $route = ($tournament->getType() == 'League') ? 'tournament/show' : 'tournament/show-tournament'; ?>
+
     <tr>
         <td>
-            <a href="<?= $this->url('tournament/show', array('id' => $tournament->getId())) ?>">
+            <a href="<?= $this->url($route, array('id' => $tournament->getId())) ?>">
                 <?php echo $tournament->getName(); ?>
             </a>
         </td>
@@ -42,7 +44,6 @@
             <?php echo ($tournament->isActive() ? 'yes' : 'no'); ?>
         </td>
         <td class="right">
-            <?php $route = ($tournament->getType() == 'League') ? 'tournament/show' : 'tournament/show-tournament'; ?>
             <a href="<?= $this->url($route, array('id' => $tournament->getId())) ?>" class="btn btn-mini">Show</a>
             <a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Players</a>
         </td>
