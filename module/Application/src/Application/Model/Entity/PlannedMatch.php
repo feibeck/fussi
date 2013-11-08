@@ -17,7 +17,8 @@ use Application\Model\Team;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="planned-match")
+ * @ORM\Entity
+ * @ORM\Table(name="plannedmatch")
  */
 class PlannedMatch
 {

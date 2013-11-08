@@ -17,6 +17,7 @@ use \Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tournamenttournament")
+ * @ORM\Entity
  */
 class TournamentTournament
 {

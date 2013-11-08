@@ -16,6 +16,7 @@ namespace Application\Model\Entity;
 use \Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
  * @ORM\Table(name="team")
  */
 class Team
