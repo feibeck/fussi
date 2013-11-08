@@ -27,7 +27,9 @@ return array(
             return $controller;
         },
         'Application\Controller\PlayTournament' => function(ControllerManager $cm) {
-            $controller = new Controller\PlayTournamentController();
+            $sm = $cm->getServiceLocator();
+            $em = $sm->get("doctrine.entitymanager.orm_default");
+            $controller = new Controller\PlayTournamentController($em);
             return $controller;
         },
         'Application\Controller\Player' => function(ControllerManager $cm) {

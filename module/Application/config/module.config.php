@@ -27,10 +27,22 @@ return array(
             'tournament-test' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/tt',
                     'defaults' => array(
                         'controller' => 'Application\Controller\PlayTournament',
                         'action'     => 'index'
+                    ),
+                ),
+                'child_routes' => array(
+                    'list' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route'    => '/list',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\PlayTournament',
+                                'action'     => 'list'
+                            ),
+                        ),
                     ),
                 ),
             ),

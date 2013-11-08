@@ -14,12 +14,38 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Controller displaying the monthly view of a league tournament
  */
 class PlayTournamentController extends AbstractActionController
 {
+
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+    public function listAction()
+    {
+        $repository = $this->em->getRepository('\Application\Model\Entity\TournamentTournament');
+        $tournaments = $repository->findAll();
+        return $tournaments;
+    }
+
+    public function addAction()
+    {
+
+    }
 
     /**
      * @return array
