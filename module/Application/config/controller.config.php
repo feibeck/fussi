@@ -39,10 +39,10 @@ return array(
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },
-        'Application\Controller\Tournament' => function(ControllerManager $cm) {
+        'Application\Controller\TournamentSetup' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
-            return new Controller\TournamentController(
+            return new Controller\TournamentSetupController(
                 $em->getRepository('Application\Model\Entity\AbstractTournament'),
                 $em->getRepository('Application\Model\Entity\Player')
             );

@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Controller\TournamentController
+ * Definition of Application\Controller\TournamentSetupController
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -27,7 +27,7 @@ use Application\Model\Repository\PlayerRepository;
 /**
  * Managing tournaments
  */
-class TournamentController extends AbstractActionController
+class TournamentSetupController extends AbstractActionController
 {
 
     /**

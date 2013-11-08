@@ -69,7 +69,7 @@ return array(
                         'options' => array(
                             'route' => 'tournament/add-league',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action'     => 'addLeague',
                             )
                         )
@@ -79,7 +79,7 @@ return array(
                         'options' => array(
                             'route' => 'tournament/add-tournament',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action'     => 'addTournament',
                             )
                         )
@@ -89,7 +89,7 @@ return array(
                         'options' => array(
                             'route' => 'tournament/:id/players',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action' => 'players'
                             )
                         )
@@ -99,7 +99,7 @@ return array(
                         'options' => array(
                             'route' => 'tournament/:id/addplayer',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action' => 'addplayer'
                             )
                         )
@@ -111,7 +111,7 @@ return array(
                 'options' => array(
                     'route' => '/tournaments',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Tournament',
+                        'controller' => 'Application\Controller\TournamentSetup',
                         'action' => 'list'
                     )
                 )
