@@ -13,10 +13,10 @@
 
 namespace Application\Form;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Repository\PlayerRepository;
 
-class Factory 
+class Factory
 {
 
     /**
@@ -33,11 +33,11 @@ class Factory
     }
 
     /**
-     * @param Tournament $tournament
+     * @param League $tournament
      *
      * @return MatchForm
      */
-    public function getMatchForm(Tournament $tournament)
+    public function getMatchForm(League $tournament)
     {
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 

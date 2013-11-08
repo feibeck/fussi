@@ -39,9 +39,9 @@ class Round
     protected $matches;
 
     /**
-     * @var TournamentTournament
+     * @var Tournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\TournamentTournament")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
@@ -94,7 +94,7 @@ class Round
     }
 
     /**
-     * @param \Application\Model\Entity\TournamentTournament $tournament
+     * @param \Application\Model\Entity\Tournament $tournament
      */
     public function setTournament($tournament)
     {
@@ -102,7 +102,7 @@ class Round
     }
 
     /**
-     * @return \Application\Model\Entity\TournamentTournament
+     * @return \Application\Model\Entity\Tournament
      */
     public function getTournament()
     {

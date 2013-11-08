@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Model\Entity\Tournament
+ * Definition of Application\Model\Tournament
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,9 +13,7 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Player;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -23,207 +21,57 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Tournament extends AbstractTournament
 {
 
-    const TYPE_SINGLE = 0;
-    const TYPE_TEAM = 1;
-    const MAXSCORE_DEFAULT = 10;
-
     /**
-     * @var int
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\Team", mappedBy="tournament", cascade={"persist"})
      *
-     * @ORM\Column(type="integer")
+     * @var Team[]
      */
-    protected $teamType = self::TYPE_SINGLE;
+    protected $teams;
 
     /**
-     * @var int
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\Round", mappedBy="tournament", cascade={"persist"})
      *
-     * @ORM\Column(type="integer")
+     * @var Round[]
      */
-    protected $gamesPerMatch = 1;
+    protected $rounds;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="date")
+     * @param Team[]  $teams
+     * @param Round[] $rounds
      */
-    protected $start;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $maxScore = self::MAXSCORE_DEFAULT;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(type="date", nullable=true)
-     */
-    protected $end;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
-     * @ORM\JoinTable(name="tournament_players",
-     *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $players;
-
-    public function __construct()
+    public function init($teams, $rounds)
     {
-        $this->players = new ArrayCollection();
+        $this->teams = $teams;
+        $this->rounds = $rounds;
     }
 
     /**
-     * @param int $teamType
+     * @param PlannedMatch $plannedMatch
+     * @param DoubleMatch  $match
      */
-    public function setTeamType($teamType)
+    public function matchPlayed(PlannedMatch $plannedMatch, DoubleMatch $match)
     {
-        $this->teamType = $teamType;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTeamType()
-    {
-        return $this->teamType;
-    }
-
-    public function isSinglePlayer()
-    {
-        return $this->teamType == self::TYPE_SINGLE;
-    }
-
-    public function isTeams()
-    {
-        return $this->teamType == self::TYPE_TEAM;
-    }
-
-    /**
-     * @return Player[]
-     */
-    public function getPlayers()
-    {
-        return $this->players;
-    }
-
-    /**
-     * @param $data
-     */
-    public function exchangeArray($data)
-    {
-        $this->id            = (isset($data['id'])) ? $data['id'] : null;
-        $this->name          = (isset($data['name'])) ? $data['name'] : null;
-        $this->teamType      = (isset($data['team-type'])) ? $data['team-type'] : self::TYPE_SINGLE;
-        $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
-        if (isset($data['start-date'])) {
-            $this->setStart($data['start-date']);
-        } else {
-            $this->setStart(new \DateTime());
-        }
-        $this->maxScore      = (isset($data['max-score'])) ? $data['max-score'] : self::MAXSCORE_DEFAULT;
-     }
-
-    /**
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        return array(
-            'id'              => $this->id,
-            'name'            => $this->name,
-            'team-type'       => $this->teamType,
-            'start-date'      => $this->start,
-            'games-per-match' => $this->gamesPerMatch,
-            'max-score'       => $this->maxScore
+        $plannedMatch->matchPlayed($match);
+        $plannedMatch->getMatchForWinner()->setTeam(
+            $match->getWinningTeam(),
+            $plannedMatch->getMatchIndexForWinner()
         );
     }
 
-    public function addPlayer(Player $player)
+    /**
+     * @return Team[]
+     */
+    public function getTeams()
     {
-        $this->players->add($player);
+        return $this->teams;
     }
 
     /**
-     * @param int $gamesPerMatch
+     * @return Round[]
      */
-    public function setGamesPerMatch($gamesPerMatch)
+    public function getRounds()
     {
-        $this->gamesPerMatch = $gamesPerMatch;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGamesPerMatch()
-    {
-        return $this->gamesPerMatch;
-    }
-
-    /**
-     * @param \DateTime|string $start
-     */
-    public function setStart($start)
-    {
-        if (!($start instanceof \DateTime)) {
-            $start = new \DateTime($start);
-        }
-        $this->start = $start;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
-     * @param int $maxScore
-     */
-    public function setMaxScore($maxScore)
-    {
-        $this->maxScore = $maxScore;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxScore()
-    {
-        return $this->maxScore;
-    }
-
-    /*
-     * @param \DateTime|null $end Casted to null if not \DateTime
-     */
-    public function setEnd($end)
-    {
-        if (!$end instanceof \DateTime) {
-            $end = null;
-        }
-
-        $this->end = $end;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->end == null;
+        return $this->rounds;
     }
 
 }

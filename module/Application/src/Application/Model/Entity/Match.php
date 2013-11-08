@@ -14,7 +14,7 @@
 namespace Application\Model\Entity;
 
 use Application\Model\Entity\Game;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,9 +41,9 @@ abstract class Match
     protected $id;
 
     /**
-     * @var Tournament
+     * @var League
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\League")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
@@ -134,15 +134,15 @@ abstract class Match
     }
 
     /**
-     * @param Tournament $tournament
+     * @param League $tournament
      */
-    public function setTournament(Tournament $tournament)
+    public function setTournament(League $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return Tournament
+     * @return League
      */
     public function getTournament()
     {

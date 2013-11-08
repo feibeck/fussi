@@ -13,7 +13,7 @@
 
 namespace Application\ViewHelper;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Entity\Player;
 use Application\Model\LeaguePeriod;
@@ -24,7 +24,7 @@ class Match extends AbstractHelper
 
     /**
      * @param LeaguePeriod  $period
-     * @param Tournament    $tournament
+     * @param League    $tournament
      * @param SingleMatch[] $matches
      * @param Player        $player1
      * @param Player        $player2
@@ -33,7 +33,7 @@ class Match extends AbstractHelper
      */
     public function __invoke(
         LeaguePeriod $period,
-        Tournament $tournament,
+        League $tournament,
         array $matches,
         Player $player1,
         Player $player2

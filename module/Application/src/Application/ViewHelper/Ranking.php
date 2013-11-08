@@ -14,7 +14,7 @@
 namespace Application\ViewHelper;
 
 use Application\Model\Repository\MatchRepository;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Ranking as RankingCalculator;
 use Zend\View\Helper\AbstractHelper;
 
@@ -32,7 +32,7 @@ class Ranking extends AbstractHelper
     }
 
     /**
-     * @param \Application\Model\Entity\Tournament $tournament
+     * @param \Application\Model\Entity\League $tournament
      * @param int $potential
      * @param \Application\Model\LeaguePeriod $period
      * @param int $count
@@ -40,7 +40,7 @@ class Ranking extends AbstractHelper
      * @return string
      */
     public function __invoke(
-        Tournament $tournament,
+        League $tournament,
         $potential,
         $period,
         $count = 0

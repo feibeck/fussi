@@ -14,7 +14,7 @@
 namespace Application\Controller;
 
 use Application\Model\Repository\TournamentRepository;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Entity\Match;
 use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\PlayerRepository;
@@ -31,7 +31,7 @@ class MatchController extends AbstractActionController
      * @var PlayerRepository
      */
     protected $playerRepository;
-    
+
     /**
      * @var TournamentRepository
      */

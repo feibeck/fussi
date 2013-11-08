@@ -37,7 +37,7 @@ class PlayTournamentController extends AbstractActionController
 
     public function listAction()
     {
-        $repository = $this->em->getRepository('\Application\Model\Entity\TournamentTournament');
+        $repository = $this->em->getRepository('\Application\Model\Entity\AbstractTournament');
         $tournaments = $repository->findAll();
         return $tournaments;
     }
@@ -53,7 +53,7 @@ class PlayTournamentController extends AbstractActionController
     public function indexAction()
     {
         $player = array();
-        $tournament = new \Application\Model\Entity\TournamentTournament();
+        $tournament = new \Application\Model\Entity\Tournament();
         for ($i = 1; $i <= 16; $i++) {
             $player[] = $this->getPlayer($i, 'Foo' . $i);
         }

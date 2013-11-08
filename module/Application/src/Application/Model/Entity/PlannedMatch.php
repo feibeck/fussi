@@ -32,9 +32,9 @@ class PlannedMatch
     protected $id;
 
     /**
-     * @var Tournament
+     * @var League
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\League")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
@@ -151,15 +151,15 @@ class PlannedMatch
     }
 
     /**
-     * @param Tournament $tournament
+     * @param League $tournament
      */
-    public function setTournament(Tournament $tournament)
+    public function setTournament(League $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return Tournament
+     * @return League
      */
     public function getTournament()
     {

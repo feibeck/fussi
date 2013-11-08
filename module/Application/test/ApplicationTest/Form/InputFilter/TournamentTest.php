@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of ApplicationTest\Entity\InputFilter\TournamentTest
+ * Definition of ApplicationTest\Form\InputFilter\TournamentTest
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -22,7 +22,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
     protected $validData = array(
         'name' => 'Foobar',
         'games-per-match' => 1,
-        'team-type' => \Application\Model\Entity\Tournament::TYPE_SINGLE,
+        'team-type' => \Application\Model\Entity\League::TYPE_SINGLE,
         'start-date' => '2013-01-01'
     );
 

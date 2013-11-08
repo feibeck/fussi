@@ -13,7 +13,7 @@
 
 namespace Application\ViewHelper;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\LeaguePeriod;
 use Zend\View\Helper\AbstractHelper;
 use \DateTime;
@@ -21,7 +21,7 @@ use \DateTime;
 class LeaguePaginator extends AbstractHelper
 {
 
-    public function __invoke(Tournament $tournament, LeaguePeriod $period)
+    public function __invoke(League $tournament, LeaguePeriod $period)
     {
         $html = '<ul class="pager">';
         $html .= '<li class="previous ' . ($period->hasPrevious() ? '' : 'disabled') . '">';
@@ -36,12 +36,12 @@ class LeaguePaginator extends AbstractHelper
     }
 
     /**
-     * @param Tournament $tournament
+     * @param League $tournament
      * @param DateTime   $date
      *
      * @return string
      */
-    protected function getUrl(Tournament $tournament, DateTime $date)
+    protected function getUrl(League $tournament, DateTime $date)
     {
         return $this->view->url(
             'tournament/show',

@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"league" = "Application\Model\Entity\Tournament", "double" = "Application\Model\Entity\TournamentTournament"})
+ * @ORM\DiscriminatorMap({"league" = "Application\Model\Entity\League", "double" = "Application\Model\Entity\Tournament"})
  */
 abstract class AbstractTournament
 {

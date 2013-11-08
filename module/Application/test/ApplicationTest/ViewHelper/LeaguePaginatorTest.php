@@ -20,7 +20,7 @@ class LeaguePaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function testPaginatorWithPreviousAndNext()
     {
-        $tournament = new \Application\Model\Entity\Tournament();
+        $tournament = new \Application\Model\Entity\League();
         $period = $this->getPeriod(true, false);
 
         $helper = new LeaguePaginator();
@@ -33,7 +33,7 @@ class LeaguePaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function testPaginatorOnStartMonth()
     {
-        $tournament = new \Application\Model\Entity\Tournament();
+        $tournament = new \Application\Model\Entity\League();
         $period = $this->getPeriod(false, false);
 
         $helper = new LeaguePaginator();
@@ -46,7 +46,7 @@ class LeaguePaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function testPaginatorOnLastMonth()
     {
-        $tournament = new \Application\Model\Entity\Tournament();
+        $tournament = new \Application\Model\Entity\League();
         $period = $this->getPeriod(false, true);
 
         $helper = new LeaguePaginator();

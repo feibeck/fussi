@@ -19,7 +19,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Application\Model\Ranking;
 use Application\Model\Repository\TournamentRepository;
 use Application\Model\Repository\MatchRepository;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 
 use \Datetime;
 
@@ -61,7 +61,7 @@ class IndexController extends AbstractActionController
         $month = $this->params()->fromRoute('month');
         $id    = $this->params()->fromRoute('id');
 
-        /** @var $tournament \Application\Model\Entity\Tournament */
+        /** @var $tournament \Application\Model\Entity\League */
         $tournament = $this->tournamentRepository->find($id);
 
         $leaguePeriod = new LeaguePeriod($tournament->getStart(), $year, $month);

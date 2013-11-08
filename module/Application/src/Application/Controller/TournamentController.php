@@ -17,7 +17,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 use Application\Form\Tournament as TournamentForm;
 use Application\Form\PlayerToTournament as AddPlayerForm;
-use Application\Model\Entity\Tournament as Tournament;
+use Application\Model\Entity\League as Tournament;
 use Application\Model\Repository\TournamentRepository;
 use Application\Model\Repository\PlayerRepository;
 
@@ -136,7 +136,7 @@ class TournamentController extends AbstractActionController
     {
         $form = new TournamentForm();
 
-        $tournament = new Tournament();
+        $tournament = new League();
         $tournament->setStart(new \DateTime());
 
         $form->bind($tournament);

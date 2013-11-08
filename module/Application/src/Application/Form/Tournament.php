@@ -12,7 +12,7 @@
  */
 namespace Application\Form;
 
-use Application\Model\Entity\Tournament as TournamentEntity;
+use Application\Model\Entity\League as TournamentEntity;
 use \Zend\Form\Form;
 
 class Tournament extends Form
@@ -20,7 +20,7 @@ class Tournament extends Form
 
     public function __construct()
     {
-        parent::__construct('Tournament');
+        parent::__construct('League');
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Text',

@@ -16,7 +16,7 @@ namespace ApplicationTest\Model\Entity;
 use Application\Model\Entity\Game;
 use Application\Model\Entity\Player;
 use Application\Model\Entity\Match;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 
 /**
  * @covers Application\Model\Entity\Match
@@ -51,7 +51,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
 
     public function testTournamentProperty()
     {
-        $tournament = new Tournament();
+        $tournament = new League();
         $this->match->setTournament($tournament);
         $this->assertEquals($tournament, $this->match->getTournament());
     }

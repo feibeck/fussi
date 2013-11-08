@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of ApplicationTest\Entity\TournamentTest
+ * Definition of ApplicationTest\Entity\LeagueTest
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,23 +13,23 @@
 
 namespace ApplicationTest\Model\Entity;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use ApplicationTest\Model\Entity\Constraint\Tournament as TournamentConstraint;
 
 /**
- * @covers Application\Model\Entity\Tournament
+ * @covers Application\Model\Entity\League
  */
-class TournamentTest extends \PHPUnit_Framework_TestCase
+class LeagueTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Application\Model\Entity\Tournament
+     * @var \Application\Model\Entity\League
      */
     protected $tournament;
 
     public function setUp()
     {
-        $this->tournament = new Tournament();
+        $this->tournament = new League();
     }
 
     public function testIdProperty()
@@ -52,21 +52,21 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testTeamTypeProperty()
     {
-        $this->tournament->setTeamType(Tournament::TYPE_TEAM);
+        $this->tournament->setTeamType(League::TYPE_TEAM);
         $this->assertEquals(
-            \Application\Model\Entity\Tournament::TYPE_TEAM, $this->tournament->getTeamType());
+            \Application\Model\Entity\League::TYPE_TEAM, $this->tournament->getTeamType());
     }
 
     public function testIsSinglePlayer()
     {
-        $this->tournament->setTeamType(\Application\Model\Entity\Tournament::TYPE_SINGLE);
+        $this->tournament->setTeamType(\Application\Model\Entity\League::TYPE_SINGLE);
         $this->assertTrue($this->tournament->isSinglePlayer());
         $this->assertFalse($this->tournament->isTeams());
     }
 
     public function testIsTeams()
     {
-        $this->tournament->setTeamType(Tournament::TYPE_TEAM);
+        $this->tournament->setTeamType(League::TYPE_TEAM);
         $this->assertFalse($this->tournament->isSinglePlayer());
         $this->assertTrue($this->tournament->isTeams());
     }
