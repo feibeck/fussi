@@ -113,6 +113,16 @@ return array(
                                 'action' => 'addplayer'
                             )
                         )
+                    ),
+                    'start' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/start/:id',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\TournamentSetup',
+                                'action' => 'startTournament'
+                            )
+                        )
                     )
                 )
             ),
@@ -123,6 +133,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Application\Controller\TournamentSetup',
                         'action' => 'list'
+                    )
+                )
+            ),
+            'setup' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/setup/:id',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\TournamentSetup',
+                        'action' => 'setupTournament'
                     )
                 )
             ),

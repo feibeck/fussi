@@ -45,7 +45,13 @@
         </td>
         <td class="right">
             <a href="<?= $this->url($route, array('id' => $tournament->getId())) ?>" class="btn btn-mini">Show</a>
-            <a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Players</a>
+
+            <?php if ($tournament->getType() == 'League'): ?>
+                <a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Players</a>
+            <?php else: ?>
+                <a href="<?= $this->url('setup', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Setup</a>
+            <?php endif; ?>
+
         </td>
     </tr>
 

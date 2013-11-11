@@ -13,6 +13,7 @@
 
 namespace Application\Model\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use \Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,8 +42,14 @@ class Tournament extends AbstractTournament
      */
     public function init($teams, $rounds)
     {
-        $this->teams = $teams;
-        $this->rounds = $rounds;
+        $this->teams = new ArrayCollection($teams);
+        foreach ($this->teams as $team) {
+            $team->setTournament($this);
+        }
+        $this->rounds = new ArrayCollection($rounds);
+        foreach ($this->rounds as $round) {
+            $round->setTournament($this);
+        }
     }
 
     /**

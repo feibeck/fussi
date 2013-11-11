@@ -53,33 +53,4 @@ class TournamentController extends AbstractActionController
         return array('tournament' => $tournament);
     }
 
-    /**
-     * @return array
-     */
-    public function oldfoobarAction()
-    {
-        $player = array();
-        $tournament = new \Application\Model\Entity\Tournament();
-        for ($i = 1; $i <= 16; $i++) {
-            $player[] = $this->getPlayer($i, 'Foo' . $i);
-        }
-
-        $teamGenerator = new \Application\Model\TeamGenerator();
-        $teams = $teamGenerator->generateTeams($player);
-
-        $plan = new \Application\Model\TournamentPlan\SimplePlan($teams);
-        $rounds = $plan->init();
-
-        $tournament->init($teams, $rounds);
-        return array('tournament' => $tournament);
-    }
-
-    protected function getPlayer($id, $name)
-    {
-        $player = new \Application\Model\Entity\Player();
-        $player->setId($id);
-        $player->setName($name);
-        return $player;
-    }
-
 }

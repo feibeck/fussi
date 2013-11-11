@@ -31,60 +31,42 @@ class PlannedMatch
     protected $id;
 
     /**
-     * @var League
+     * @var Tournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\League")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
 
     /**
+     * @var Round
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Model\Entity\Round", inversedBy="matches")
+     * @ORM\JoinColumn(name="round_id", referencedColumnName="id")
+     */
+    protected $round;
+
+    /**
      * @var Team
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="team1_id", referencedColumnName="id")
      */
     protected $team1;
 
     /**
      * @var Team
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="team2_id", referencedColumnName="id")
      */
     protected $team2;
 
     /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
-     * @ORM\JoinColumn(name="team1_player1_id", referencedColumnName="id")
-     */
-    protected $team1Player1;
-
-    /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
-     * @ORM\JoinColumn(name="team1_player2_id", referencedColumnName="id")
-     */
-    protected $team1Player2;
-
-    /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
-     * @ORM\JoinColumn(name="team2_player1_id", referencedColumnName="id")
-     */
-    protected $team2Player1;
-
-    /**
-     * @var Player
-     *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Player")
-     * @ORM\JoinColumn(name="team2_player2_id", referencedColumnName="id")
-     */
-    protected $team2Player2;
-
-    /**
      * @var DoubleMatch
      *
-     * @ORM\ManyToOne(targetEntity="Application\Model\Entity\Match")
-     * @ORM\JoinColumn(name="played_match_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\DoubleMatch")
+     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     protected $match;
 
@@ -115,7 +97,7 @@ class PlannedMatch
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $winnerPlaysInMatchAt = null;
 
@@ -150,15 +132,15 @@ class PlannedMatch
     }
 
     /**
-     * @param League $tournament
+     * @param Tournament $tournament
      */
-    public function setTournament(League $tournament)
+    public function setTournament(Tournament $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return League
+     * @return Tournament
      */
     public function getTournament()
     {
@@ -171,8 +153,6 @@ class PlannedMatch
     public function setTeam1(Team $team)
     {
         $this->team1 = $team;
-        $this->team1Player1 = $team->getPlayer1();
-        $this->team1Player2 = $team->getPlayer2();
     }
 
     /**
@@ -181,8 +161,6 @@ class PlannedMatch
     public function setTeam2(Team $team)
     {
         $this->team2 = $team;
-        $this->team2Player1 = $team->getPlayer1();
-        $this->team2Player2 = $team->getPlayer2();
     }
 
     /**
@@ -190,9 +168,6 @@ class PlannedMatch
      */
     public function getTeam1()
     {
-        if ($this->team1 == null && $this->team1Player1 != null) {
-            $this->team1 = new Team($this->team1Player1, $this->team1Player2);
-        }
         return $this->team1;
     }
 
@@ -201,9 +176,6 @@ class PlannedMatch
      */
     public function getTeam2()
     {
-        if ($this->team2 == null && $this->team2Player1 != null) {
-            $this->team2 = new Team($this->team2Player1, $this->team2Player2);
-        }
         return $this->team2;
     }
 
@@ -296,6 +268,22 @@ class PlannedMatch
     public function getMatchIndexForWinner()
     {
         return $this->winnerPlaysInMatchAt;
+    }
+
+    /**
+     * @param Round $round
+     */
+    public function setRound($round)
+    {
+        $this->round = $round;
+    }
+
+    /**
+     * @return Round
+     */
+    public function getRound()
+    {
+        return $this->round;
     }
 
 }

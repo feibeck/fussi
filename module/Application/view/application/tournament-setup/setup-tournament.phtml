@@ -1,0 +1,38 @@
+<h1>Tournament setup: <?php echo $tournament->getName(); ?></h1>
+
+<?php $ready = (count($tournament->getPlayers()) % 8 == 0 && count($tournament->getPlayers()) > 0); ?>
+
+<?php if (!$ready): ?>
+    <div class="alert">
+        <strong>Player count!</strong> You need a number of players which is divideable by 8.
+    </div>
+<?php endif; ?>
+
+<div class="btn-group" style="margin-bottom: 10px;">
+    <a href="<?= $this->url('tournament/start', array('id' => $tournament->getId())); ?>" class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
+</div>
+
+<h2>Players</h2>
+
+<table class="table table-striped">
+
+    <tr>
+    <th>Name</th>
+    </tr>
+
+    <?php foreach ($tournament->getPlayers() as $player): ?>
+
+    <tr>
+        <td><?= $player->getName(); ?></td>
+    </tr>
+
+    <?php endforeach; ?>
+
+</table>
+
+<?php
+echo $this->form()->openTag($addPlayerForm);
+echo $this->formRow($addPlayerForm->get('player'));
+echo $this->formSubmit($addPlayerForm->get('submit'));
+echo $this->form()->closeTag();
+?>

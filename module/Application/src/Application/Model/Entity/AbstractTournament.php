@@ -92,7 +92,7 @@ abstract class AbstractTournament
      */
     public function getPlayers()
     {
-        return $this->players;
+        return $this->players->toArray();
     }
 
     /**

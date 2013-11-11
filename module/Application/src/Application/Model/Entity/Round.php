@@ -34,7 +34,7 @@ class Round
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Application\Model\Entity\PlannedMatch", mappedBy="planned-match", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\PlannedMatch", mappedBy="round", cascade={"persist"})
      */
     protected $matches;
 
@@ -57,6 +57,10 @@ class Round
     public function addMatch(PlannedMatch $match)
     {
         $this->matches->add($match);
+        $match->setRound($this);
+        if ($this->tournament != null) {
+            $match->setTournament($this->tournament);
+        }
     }
 
     /**
@@ -99,6 +103,9 @@ class Round
     public function setTournament($tournament)
     {
         $this->tournament = $tournament;
+        foreach ($this->matches as $match) {
+            $match->setTournament($tournament);
+        }
     }
 
     /**

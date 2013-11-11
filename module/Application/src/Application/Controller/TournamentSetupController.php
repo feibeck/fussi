@@ -192,4 +192,64 @@ class TournamentSetupController extends AbstractActionController
         );
     }
 
+    public function setupTournamentAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        $tournament = $this->tournamentRepository->find($id);
+        if (!$tournament instanceof \Application\Model\Entity\Tournament) {
+            throw new \RuntimeException('Invalid tournament ID');
+        }
+
+        $form = $this->getAddPlayerForm($tournament);
+
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+
+                $playerId = $form->get('player')->getValue();
+                $player = $this->playerRepository->find($playerId);
+
+                $tournament->addPlayer($player);
+                $this->tournamentRepository->persist($tournament);
+
+                return $this->redirect()->toRoute(
+                    'setup',
+                    array(
+                         'id' => $tournament->getId()
+                    )
+                );
+            }
+        }
+
+        return array(
+            'tournament'    => $tournament,
+            'addPlayerForm' => $form
+        );
+    }
+
+    public function startTournamentAction()
+    {
+        $id = $this->params()->fromRoute('id');
+        /** @var Tournament $tournament */
+        $tournament = $this->tournamentRepository->find($id);
+
+        $teamGenerator = new \Application\Model\TeamGenerator();
+        $teams = $teamGenerator->generateTeams($tournament->getPlayers());
+
+        $plan = new \Application\Model\TournamentPlan\SimplePlan($teams);
+        $rounds = $plan->init();
+
+        $tournament->init($teams, $rounds);
+
+        $this->tournamentRepository->persist($tournament);
+
+        return $this->redirect()->toRoute(
+            'tournament/show-tournament',
+            array(
+                 'id' => $tournament->getId()
+            )
+        );
+    }
+
 }
