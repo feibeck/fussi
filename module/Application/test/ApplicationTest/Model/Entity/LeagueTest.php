@@ -87,10 +87,6 @@ class LeagueTest extends \PHPUnit_Framework_TestCase
     public function testEmptyPlayers()
     {
         $players = $this->tournament->getPlayers();
-        $this->assertInstanceOf(
-            '\Doctrine\Common\Collections\ArrayCollection',
-            $players
-        );
         $this->assertEquals(0, count($players));
     }
 
