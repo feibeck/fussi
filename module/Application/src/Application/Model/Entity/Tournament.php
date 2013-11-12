@@ -86,8 +86,10 @@ class Tournament extends AbstractTournament
      */
     public function exchangeArray($data)
     {
-        $this->id   = (isset($data['id'])) ? $data['id'] : null;
-        $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->id            = (isset($data['id'])) ? $data['id'] : null;
+        $this->name          = (isset($data['name'])) ? $data['name'] : null;
+        $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
+        $this->maxScore      = (isset($data['max-score'])) ? $data['max-score'] : self::MAXSCORE_DEFAULT;
      }
 
     /**
@@ -98,6 +100,8 @@ class Tournament extends AbstractTournament
         return array(
             'id'              => $this->id,
             'name'            => $this->name,
+            'games-per-match' => $this->gamesPerMatch,
+            'max-score'       => $this->maxScore
         );
     }
 

@@ -13,7 +13,8 @@
 
 namespace Application\Form;
 
-use Application\Model\Entity\League;
+use Application\Model\Entity\AbstractTournament;
+use Application\Model\Entity\PlannedMatch;
 use Application\Model\Repository\PlayerRepository;
 
 class Factory
@@ -25,7 +26,7 @@ class Factory
     protected $playerRepostitory;
 
     /**
-     * @param \Application\Model\Repository\PlayerRepository $playerRepository
+     * @param PlayerRepository $playerRepository
      */
     public function __construct(PlayerRepository $playerRepository)
     {
@@ -33,11 +34,12 @@ class Factory
     }
 
     /**
-     * @param League $tournament
+     * @param AbstractTournament $tournament
+     * @param PlannedMatch       $plannedMatch
      *
      * @return MatchForm
      */
-    public function getMatchForm(League $tournament)
+    public function getMatchForm(AbstractTournament $tournament, PlannedMatch $plannedMatch = null)
     {
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 
@@ -49,12 +51,28 @@ class Factory
 
         } else {
 
-            $form = new MatchFormDouble(
-                $this->playerRepository,
-                $tournament->getGamesPerMatch(),
-                $tournament->getMaxScore(),
-                $tournament->getPlayers()
-            );
+            if ($plannedMatch == null) {
+
+                $form = new MatchFormDouble(
+                    $this->playerRepository,
+                    $tournament->getGamesPerMatch(),
+                    $tournament->getMaxScore(),
+                    $tournament->getPlayers()
+                );
+
+            } else {
+
+                $form = new MatchFormDouble(
+                    $this->playerRepository,
+                    $tournament->getGamesPerMatch(),
+                    $tournament->getMaxScore(),
+                    array()
+                );
+
+                $form->setTeamOne($plannedMatch->getTeam1());
+                $form->setTeamTwo($plannedMatch->getTeam2());
+
+            }
 
         }
 

@@ -21,6 +21,12 @@
 
 <?php echo $this->tbsFormRow($form->get('name')); ?>
 
+<?php $form->get('games-per-match')->setAttributes(array('class' => 'input-mini')); ?>
+<?php echo $this->tbsFormRow($form->get('games-per-match')); ?>
+
+<?php $form->get('max-score')->setAttributes(array('class' => 'input-mini')); ?>
+<?php echo $this->tbsFormRow($form->get('max-score')); ?>
+
 <div class="form-actions">
     <?php echo $this->formSubmit($form->get('submit')->setAttribute('class', 'btn btn-primary')); ?>
 </div>

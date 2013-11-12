@@ -40,16 +40,6 @@ class League extends Form
                 'maxlength' => 2
             )
         ));
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Text',
-            'name' => 'games-per-match',
-            'options' => array(
-                'label' => 'Games per match',
-            ),
-            'attributes' => array(
-                'maxlength' => 2
-            )
-        ));
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',

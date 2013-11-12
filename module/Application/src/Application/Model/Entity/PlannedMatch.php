@@ -16,7 +16,7 @@ namespace Application\Model\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\PlannedMatchRepository")
  * @ORM\Table(name="plannedmatch")
  */
 class PlannedMatch
@@ -284,6 +284,14 @@ class PlannedMatch
     public function getRound()
     {
         return $this->round;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlayed()
+    {
+        return $this->match != null;
     }
 
 }

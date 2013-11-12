@@ -41,7 +41,7 @@ abstract class Match
     protected $id;
 
     /**
-     * @var League
+     * @var AbstractTournament
      *
      * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\League")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
@@ -134,15 +134,15 @@ abstract class Match
     }
 
     /**
-     * @param League $tournament
+     * @param AbstractTournament $tournament
      */
-    public function setTournament(League $tournament)
+    public function setTournament(AbstractTournament $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return League
+     * @return AbstractTournament
      */
     public function getTournament()
     {

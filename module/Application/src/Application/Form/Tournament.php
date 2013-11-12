@@ -30,6 +30,28 @@ class Tournament extends Form
         ));
 
         $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'games-per-match',
+            'options' => array(
+                'label' => 'Games per match',
+            ),
+            'attributes' => array(
+                'maxlength' => 2
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'max-score',
+            'options' => array(
+                'label' => 'Max. score to win a game',
+            ),
+            'attributes' => array(
+                'maxlength' => 2
+            )
+        ));
+
+        $this->add(array(
             'type' => 'Zend\Form\Element\Submit',
             'name' => 'submit',
             'options' => array(

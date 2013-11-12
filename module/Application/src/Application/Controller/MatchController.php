@@ -16,8 +16,10 @@ namespace Application\Controller;
 use Application\Model\Repository\TournamentRepository;
 use Application\Model\Entity\League;
 use Application\Model\Entity\Match;
+use Application\Model\Entity\PlannedMatch;
 use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\PlayerRepository;
+use Application\Model\Repository\PlannedMatchRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -43,19 +45,27 @@ class MatchController extends AbstractActionController
     protected $matchRepository;
 
     /**
-     * @param MatchRepository      $matchRepository
-     * @param TournamentRepository $tournamentRepository
-     * @param PlayerRepository     $playerRepository
+     * @var PlannedMatchRepository
+     */
+    protected $plannedMatchRepository;
+
+    /**
+     * @param MatchRepository        $matchRepository
+     * @param TournamentRepository   $tournamentRepository
+     * @param PlayerRepository       $playerRepository
+     * @param PlannedMatchRepository $plannedMatchRepository
      */
     public function __construct(
-        MatchRepository      $matchRepository,
-        TournamentRepository $tournamentRepository,
-        PlayerRepository     $playerRepository
+        MatchRepository        $matchRepository,
+        TournamentRepository   $tournamentRepository,
+        PlayerRepository       $playerRepository,
+        PlannedMatchRepository $plannedMatchRepository
     )
     {
-        $this->matchRepository      = $matchRepository;
-        $this->tournamentRepository = $tournamentRepository;
-        $this->playerRepository     = $playerRepository;
+        $this->matchRepository        = $matchRepository;
+        $this->tournamentRepository   = $tournamentRepository;
+        $this->playerRepository       = $playerRepository;
+        $this->plannedMatchRepository = $plannedMatchRepository;
     }
 
     /**
@@ -87,16 +97,30 @@ class MatchController extends AbstractActionController
     }
 
     /**
-     * @param Match $match
+     * @return ViewModel
+     */
+    public function plannedAction()
+    {
+        $plannedMatchId = $this->params()->fromRoute('pid');
+        $plannedMatch = $this->plannedMatchRepository->find($plannedMatchId);
+        $tournament = $plannedMatch->getTournament();
+
+        $match = $this->matchRepository->getNew($tournament);
+        return $this->handleForm($match, $plannedMatch);
+    }
+
+    /**
+     * @param Match        $match
+     * @param PlannedMatch $plannedMatch
      *
      * @return ViewModel
      */
-    protected function handleForm($match)
+    protected function handleForm($match, $plannedMatch = null)
     {
         $tournament = $match->getTournament();
 
         $factory = new \Application\Form\Factory($this->playerRepository);
-        $form = $factory->getMatchForm($tournament);
+        $form = $factory->getMatchForm($tournament, $plannedMatch);
 
         $form->bind($match);
 

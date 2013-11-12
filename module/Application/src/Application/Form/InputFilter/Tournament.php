@@ -53,6 +53,20 @@ class Tournament extends InputFilter
             ),
         ));
 
+        $this->add(array(
+            'name'     => 'games-per-match',
+            'required' => true,
+            'filters'  => array(
+                array('name' => 'StringTrim'),
+                array('name' => 'StripTags'),
+            ),
+            'validators' => array(
+                array('name' => 'NotEmpty'),
+                array('name' => 'Digits'),
+                new \Zend\Validator\GreaterThan(array('min' => 0))
+            ),
+        ));
+
     }
 
 }

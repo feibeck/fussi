@@ -23,37 +23,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 class League extends AbstractTournament
 {
 
-    const TYPE_SINGLE = 0;
-    const TYPE_TEAM = 1;
-    const MAXSCORE_DEFAULT = 10;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $teamType = self::TYPE_SINGLE;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $gamesPerMatch = 1;
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="date")
      */
     protected $start;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $maxScore = self::MAXSCORE_DEFAULT;
 
     /**
      * @var \DateTime|null
@@ -65,32 +40,6 @@ class League extends AbstractTournament
     public function __construct()
     {
         $this->players = new ArrayCollection();
-    }
-
-    /**
-     * @param int $teamType
-     */
-    public function setTeamType($teamType)
-    {
-        $this->teamType = $teamType;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTeamType()
-    {
-        return $this->teamType;
-    }
-
-    public function isSinglePlayer()
-    {
-        return $this->teamType == self::TYPE_SINGLE;
-    }
-
-    public function isTeams()
-    {
-        return $this->teamType == self::TYPE_TEAM;
     }
 
     /**
@@ -125,21 +74,6 @@ class League extends AbstractTournament
         );
     }
 
-    /**
-     * @param int $gamesPerMatch
-     */
-    public function setGamesPerMatch($gamesPerMatch)
-    {
-        $this->gamesPerMatch = $gamesPerMatch;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGamesPerMatch()
-    {
-        return $this->gamesPerMatch;
-    }
 
     /**
      * @param \DateTime|string $start
@@ -160,21 +94,6 @@ class League extends AbstractTournament
         return $this->start;
     }
 
-    /**
-     * @param int $maxScore
-     */
-    public function setMaxScore($maxScore)
-    {
-        $this->maxScore = $maxScore;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxScore()
-    {
-        return $this->maxScore;
-    }
 
     /*
      * @param \DateTime|null $end Casted to null if not \DateTime

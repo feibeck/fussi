@@ -13,6 +13,7 @@
 
 namespace Application\Model\Repository;
 
+use Application\Model\Entity\AbstractTournament;
 use Application\Model\Entity\Player;
 use Application\Model\Entity\League;
 use Application\Model\Entity\DoubleMatch;
@@ -115,13 +116,13 @@ class MatchRepository extends EntityRepository
     /**
      * Creates a new match
      *
-     * @param \Application\Model\Entity\League $tournament
-     * @param \Application\Model\Entity\Player     $player1
-     * @param Player     $player2
+     * @param AbstractTournament $tournament
+     * @param Player             $player1
+     * @param Player             $player2
      *
      * @return Match
      */
-    public function getNew(League $tournament, $player1 = null, $player2 = null)
+    public function getNew(AbstractTournament $tournament, $player1 = null, $player2 = null)
     {
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 

@@ -204,6 +204,16 @@ return array(
                             )
                         )
                     ),
+                    'planned' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/planned/:pid',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Match',
+                                'action'     => 'planned',
+                            )
+                        )
+                    ),
                 )
             ),
         ),

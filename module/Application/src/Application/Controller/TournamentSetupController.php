@@ -14,6 +14,7 @@
 namespace Application\Controller;
 
 
+use Application\Model\Entity\AbstractTournament;
 use Zend\Mvc\Controller\AbstractActionController;
 
 use Application\Form\League as LeagueForm;
