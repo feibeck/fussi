@@ -167,6 +167,21 @@ abstract class Match
     }
 
     /**
+     * @return int
+     */
+    public function getLooser()
+    {
+        $score = $this->getRawScore();
+        if ($score[0] > $score[1]) {
+            return 2;
+        }
+        if ($score[0] < $score[1]) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
      * @return bool
      */
     public function isTeamOneWinner()

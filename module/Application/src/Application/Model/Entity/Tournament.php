@@ -37,6 +37,22 @@ class Tournament extends AbstractTournament
     protected $rounds;
 
     /**
+     * @var Team
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="winner_id", referencedColumnName="id")
+     */
+    protected $winner;
+
+    /**
+     * @var Team
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="second_id", referencedColumnName="id")
+     */
+    protected $second;
+
+    /**
      * @param Team[]  $teams
      * @param Round[] $rounds
      */
@@ -50,6 +66,7 @@ class Tournament extends AbstractTournament
         foreach ($this->rounds as $round) {
             $round->setTournament($this);
         }
+        $this->start = new \DateTime();
     }
 
     /**
@@ -60,13 +77,39 @@ class Tournament extends AbstractTournament
     {
         $plannedMatch->matchPlayed($match);
 
-        $winner = $match->getWinner();
-        $team = $plannedMatch->getTeam($winner - 1);
+        $winner = $plannedMatch->getTeam($match->getWinner() - 1);
 
-        $plannedMatch->getMatchForWinner()->setTeam(
-            $team,
-            $plannedMatch->getMatchIndexForWinner()
-        );
+        if ($plannedMatch->isFinal()) {
+
+            $this->winner = $winner;
+
+            $second = $plannedMatch->getTeam($match->getLooser() - 1);
+            $this->second = $second;
+
+            $this->end = new \DateTime();
+
+        } else {
+            $plannedMatch->getMatchForWinner()->setTeam(
+                $winner,
+                $plannedMatch->getMatchIndexForWinner()
+            );
+        }
+    }
+
+    /**
+     * @return Team
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @return Team
+     */
+    public function getSecond()
+    {
+        return $this->second;
     }
 
     /**
@@ -114,7 +157,7 @@ class Tournament extends AbstractTournament
      */
     public function isActive()
     {
-        return true;
+        return $this->start != null && $this->end == null;
     }
 
     /**
@@ -125,5 +168,12 @@ class Tournament extends AbstractTournament
         return count($this->rounds) > 0 && count($this->teams) > 0;
     }
 
+    /**
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->winner != null;
+    }
 
 }

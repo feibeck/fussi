@@ -78,6 +78,18 @@ abstract class AbstractTournament
      * @ORM\Column(type="integer")
      */
     protected $maxScore = self::MAXSCORE_DEFAULT;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $start;
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $end;
 
     /**
      * @param int $id
@@ -199,5 +211,52 @@ abstract class AbstractTournament
      * @param PlannedMatch $plannedMatch
      */
     abstract public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null);
+
+    /**
+     * @param \DateTime|string $start
+     */
+    public function setStart($start)
+    {
+        if (!($start instanceof \DateTime)) {
+            $start = new \DateTime($start);
+        }
+        $this->start = $start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param \DateTime|null $end Casted to null if not \DateTime
+     */
+    public function setEnd($end)
+    {
+        if (!$end instanceof \DateTime) {
+            $end = null;
+        }
+
+        $this->end = $end;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->end == null;
+    }
 
 }

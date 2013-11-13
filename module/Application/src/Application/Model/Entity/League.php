@@ -23,19 +23,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class League extends AbstractTournament
 {
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="date")
-     */
-    protected $start;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(type="date", nullable=true)
-     */
-    protected $end;
 
     public function __construct()
     {
@@ -72,55 +59,6 @@ class League extends AbstractTournament
             'games-per-match' => $this->gamesPerMatch,
             'max-score'       => $this->maxScore
         );
-    }
-
-
-    /**
-     * @param \DateTime|string $start
-     */
-    public function setStart($start)
-    {
-        if (!($start instanceof \DateTime)) {
-            $start = new \DateTime($start);
-        }
-        $this->start = $start;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-
-    /*
-     * @param \DateTime|null $end Casted to null if not \DateTime
-     */
-    public function setEnd($end)
-    {
-        if (!$end instanceof \DateTime) {
-            $end = null;
-        }
-
-        $this->end = $end;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->end == null;
     }
 
     /**

@@ -22,6 +22,16 @@
 
 <?php else: ?>
 
+<?php if ($tournament->isFinished()): ?>
+
+        <div class="alert alert-success">
+            <p><strong>Tournament finished!</strong></p>
+            <p>Winner: <?php echo $tournament->getWinner()->getName(); ?></p>
+            <p>Second: <?php echo $tournament->getSecond()->getName(); ?></p>
+        </div>
+
+<?php endif; ?>
+
     <?php foreach ($tournament->getRounds() as $round): ?>
 
         <div>
@@ -35,7 +45,7 @@
 
                     <?php echo $match->getPlayedMatch()->getScore(); ?>
 
-                <?php else: ?>
+                <?php elseif ($match->isReady()): ?>
 
                     <a class="btn btn-mini" href="<?php echo $this->url('match/planned', array('pid' => $match->getId())); ?>">Enter data</a>
 

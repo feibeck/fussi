@@ -312,4 +312,20 @@ class PlannedMatch
         return $this->match != null;
     }
 
+    /**
+     * @return bool
+     */
+    public function isFinal()
+    {
+        return $this->winnerPlaysInMatch == null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReady()
+    {
+        return $this->team1 != null && $this->team2 != null && $this->match == null;
+    }
+
 }

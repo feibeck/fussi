@@ -24,28 +24,6 @@ return array(
                     ),
                 ),
             ),
-            'tournament-test' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/tt',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\PlayTournament',
-                        'action'     => 'index'
-                    ),
-                ),
-                'child_routes' => array(
-                    'list' => array(
-                        'type' => 'Zend\Mvc\Router\Http\Segment',
-                        'options' => array(
-                            'route'    => '/list',
-                            'defaults' => array(
-                                'controller' => 'Application\Controller\PlayTournament',
-                                'action'     => 'list'
-                            ),
-                        ),
-                    ),
-                ),
-            ),
             'tournament' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(

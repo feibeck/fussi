@@ -8,9 +8,15 @@
     </div>
 <?php endif; ?>
 
-<div class="btn-group" style="margin-bottom: 10px;">
-    <a href="<?= $this->url('tournament/start', array('id' => $tournament->getId())); ?>" class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
-</div>
+<?php if ($tournament->isActive()): ?>
+    <div class="alert alert-info">The tournament is currently running</div>
+<?php elseif ($tournament->isFinished()): ?>
+    <div class="alert alert-info">The tournament is finished</div>
+<?php else: ?>
+    <div class="btn-group" style="margin-bottom: 10px;">
+        <a href="<?= $this->url('tournament/start', array('id' => $tournament->getId())); ?>" class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
+    </div>
+<?php endif; ?>
 
 <h2>Players</h2>
 
@@ -29,10 +35,11 @@
     <?php endforeach; ?>
 
 </table>
-
+<?php if (!$tournament->isActive() && !$tournament->isFinished()): ?>
 <?php
 echo $this->form()->openTag($addPlayerForm);
 echo $this->formRow($addPlayerForm->get('player'));
 echo $this->formSubmit($addPlayerForm->get('submit'));
 echo $this->form()->closeTag();
 ?>
+<?php endif; ?>
