@@ -55,7 +55,9 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
      */
     public function findAllWithoutEndDate()
     {
-        $query = $this->_em->createQuery('SELECT l FROM Application\Model\Entity\League l WHERE l.end IS NULL');
+        $query = $this->_em->createQuery(
+            'SELECT l FROM Application\Model\Entity\AbstractTournament l WHERE l.start IS NOT NULL AND l.end IS NULL'
+        );
         $tournaments = $query->getResult();
         return $tournaments;
     }
