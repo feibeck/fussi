@@ -17,20 +17,12 @@ use Zend\Mvc\Controller\ControllerManager;
 
 return array(
     'factories' => array(
-        'Application\Controller\Index' => function(ControllerManager $cm) {
-            $sm = $cm->getServiceLocator();
-            $em = $sm->get("doctrine.entitymanager.orm_default");
-            $controller = new Controller\IndexController(
-                $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\AbstractTournament')
-            );
-            return $controller;
-        },
         'Application\Controller\Tournament' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
             $controller = new Controller\TournamentController(
-                $em->getRepository('Application\Model\Entity\AbstractTournament')
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
+                $em->getRepository('Application\Model\Entity\Match')
             );
             return $controller;
         },

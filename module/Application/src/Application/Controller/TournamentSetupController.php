@@ -246,7 +246,7 @@ class TournamentSetupController extends AbstractActionController
         $this->tournamentRepository->persist($tournament);
 
         return $this->redirect()->toRoute(
-            'tournament/show-tournament',
+            'tournament/show',
             array(
                  'id' => $tournament->getId()
             )

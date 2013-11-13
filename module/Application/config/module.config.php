@@ -33,22 +33,12 @@ return array(
                     'show' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => ':id/[:year/:month]',
-                            'defaults' => array(
-                                'controller' => 'Application\Controller\Index',
-                                'action'     => 'index',
-                                'year'       => date('Y'),
-                                'month'      => date('m')
-                            )
-                        )
-                    ),
-                    'show-tournament' => array(
-                        'type' => 'Zend\Mvc\Router\Http\Segment',
-                        'options' => array(
-                            'route' => 't/:id',
+                            'route' => ':id[/:year/:month]',
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Tournament',
                                 'action'     => 'show',
+                                'year'       => date('Y'),
+                                'month'      => date('m')
                             )
                         )
                     ),
