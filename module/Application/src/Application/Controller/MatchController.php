@@ -129,7 +129,11 @@ class MatchController extends AbstractActionController
 
             if ($form->isValid()) {
 
+                $tournament->matchPlayed($match, $plannedMatch);
                 $this->matchRepository->persist($match);
+                if ($plannedMatch != null) {
+                    $this->plannedMatchRepository->persist($plannedMatch);
+                }
 
                 return $this->redirect()->toRoute(
                     'tournament/show',

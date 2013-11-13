@@ -163,6 +163,16 @@ class PlannedMatch
         $this->team2 = $team;
     }
 
+    public function getTeam($index)
+    {
+        if ($index == 0) {
+            return $this->team1;
+        } else if ($index == 1) {
+            return $this->team2;
+        }
+        throw new \RuntimeException("Invalid team index");
+    }
+
     /**
      * @return Team
      */
@@ -252,6 +262,14 @@ class PlannedMatch
     public function matchPlayed(DoubleMatch $match)
     {
         $this->match = $match;
+    }
+
+    /**
+     * @return DoubleMatch
+     */
+    public function getPlayedMatch()
+    {
+        return $this->match;
     }
 
     /**

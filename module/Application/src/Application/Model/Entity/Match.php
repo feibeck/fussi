@@ -43,7 +43,7 @@ abstract class Match
     /**
      * @var AbstractTournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\League")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\AbstractTournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;

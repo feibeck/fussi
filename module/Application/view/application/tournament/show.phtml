@@ -11,6 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 ?>
+<?php /** @var \Application\Model\Entity\Tournament $tournament */ ?>
 <h1>Tournament: <?php echo $tournament->getName(); ?></h1>
 
 <?php if (!$tournament->isReady()): ?>
@@ -32,7 +33,7 @@
 
                 <?php if ($match->isPlayed()): ?>
 
-
+                    <?php echo $match->getPlayedMatch()->getScore(); ?>
 
                 <?php else: ?>
 

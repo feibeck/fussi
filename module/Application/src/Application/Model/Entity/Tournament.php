@@ -54,13 +54,17 @@ class Tournament extends AbstractTournament
 
     /**
      * @param PlannedMatch $plannedMatch
-     * @param DoubleMatch  $match
+     * @param Match  $match
      */
-    public function matchPlayed(PlannedMatch $plannedMatch, DoubleMatch $match)
+    public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null)
     {
         $plannedMatch->matchPlayed($match);
+
+        $winner = $match->getWinner();
+        $team = $plannedMatch->getTeam($winner - 1);
+
         $plannedMatch->getMatchForWinner()->setTeam(
-            $match->getWinningTeam(),
+            $team,
             $plannedMatch->getMatchIndexForWinner()
         );
     }
@@ -120,5 +124,6 @@ class Tournament extends AbstractTournament
     {
         return count($this->rounds) > 0 && count($this->teams) > 0;
     }
+
 
 }

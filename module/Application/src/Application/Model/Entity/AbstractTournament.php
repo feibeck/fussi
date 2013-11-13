@@ -194,4 +194,10 @@ abstract class AbstractTournament
         return $this->maxScore;
     }
 
+    /**
+     * @param Match        $match
+     * @param PlannedMatch $plannedMatch
+     */
+    abstract public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null);
+
 }
