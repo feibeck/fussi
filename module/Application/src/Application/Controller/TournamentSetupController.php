@@ -238,8 +238,8 @@ class TournamentSetupController extends AbstractActionController
         $teamGenerator = new \Application\Model\TeamGenerator();
         $teams = $teamGenerator->generateTeams($tournament->getPlayers());
 
-        $plan = new \Application\Model\TournamentPlan\SimplePlan($teams);
-        $rounds = $plan->init();
+        $plan = new \Application\Model\TournamentPlan\SingleElimination();
+        $rounds = $plan->init($teams);
 
         $tournament->init($teams, $rounds);
 

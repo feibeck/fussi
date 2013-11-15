@@ -70,7 +70,10 @@ class Round
      */
     public function getMatch($index)
     {
-        return $this->matches->get($index);
+        if (!isset($this->matches[$index])) {
+            return null;
+        }
+        return $this->matches[$index];
     }
 
     /**
@@ -114,6 +117,14 @@ class Round
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        return count($this->matches);
     }
 
 }

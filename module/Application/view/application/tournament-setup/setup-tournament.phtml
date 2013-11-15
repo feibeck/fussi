@@ -1,10 +1,10 @@
 <h1>Tournament setup: <?php echo $tournament->getName(); ?></h1>
 
-<?php $ready = (count($tournament->getPlayers()) % 8 == 0 && count($tournament->getPlayers()) > 0); ?>
+<?php $ready = (count($tournament->getPlayers()) % 2 == 0 && count($tournament->getPlayers()) >= 4); ?>
 
 <?php if (!$ready): ?>
     <div class="alert">
-        <strong>Player count!</strong> You need a number of players which is divideable by 8.
+        <strong>Player count!</strong> You need an even number of players.
     </div>
 <?php endif; ?>
 
