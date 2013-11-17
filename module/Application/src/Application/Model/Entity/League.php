@@ -13,21 +13,13 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Player;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
  */
 class League extends AbstractTournament
 {
-
-
-    public function __construct()
-    {
-        $this->players = new ArrayCollection();
-    }
 
     /**
      * @param $data

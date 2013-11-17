@@ -58,14 +58,14 @@ class Tournament extends AbstractTournament
      */
     public function init($teams, $rounds)
     {
-        $this->teams = new ArrayCollection($teams);
-        foreach ($this->teams as $team) {
+        foreach ($teams as $team) {
             $team->setTournament($this);
         }
-        $this->rounds = new ArrayCollection($rounds);
-        foreach ($this->rounds as $round) {
+        foreach ($rounds as $round) {
             $round->setTournament($this);
         }
+        $this->teams = new ArrayCollection($teams);
+        $this->rounds = new ArrayCollection($rounds);
         $this->start = new \DateTime();
     }
 

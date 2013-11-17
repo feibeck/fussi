@@ -106,6 +106,7 @@ class Round
     public function setTournament($tournament)
     {
         $this->tournament = $tournament;
+        /** @var Match $match */
         foreach ($this->matches as $match) {
             $match->setTournament($tournament);
         }

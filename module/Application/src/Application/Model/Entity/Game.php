@@ -13,7 +13,6 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Match;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -106,8 +105,8 @@ class Game
             return $this->getGoalsTeamTwo();
         }
         throw new \InvalidArgumentException('Invalid team index');
-    }    
-    
+    }
+
     /**
      * @param int $id
      */

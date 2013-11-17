@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of ApplicationTest\Entity\SingleMatchTest
+ * Definition of ApplicationTest\Entity\PlannedMatchTest
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)

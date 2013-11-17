@@ -13,8 +13,6 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Game;
-use Application\Model\Entity\League;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -211,10 +209,10 @@ abstract class Match
      */
     public function setGames($games)
     {
-        $this->games = new ArrayCollection($games);
-        foreach ($this->games as $game) {
+        foreach ($games as $game) {
             $game->setMatch($this);
         }
+        $this->games = new ArrayCollection($games);
     }
 
     /**

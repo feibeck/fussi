@@ -13,6 +13,7 @@
 
 namespace Application\Model\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +51,8 @@ abstract class AbstractTournament
     protected $name;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
      * @ORM\JoinTable(name="tournament_players",
      *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
@@ -78,18 +81,25 @@ abstract class AbstractTournament
      * @ORM\Column(type="integer")
      */
     protected $maxScore = self::MAXSCORE_DEFAULT;
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
      */
     protected $start;
+
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(type="date", nullable=true)
      */
     protected $end;
+
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
 
     /**
      * @param int $id

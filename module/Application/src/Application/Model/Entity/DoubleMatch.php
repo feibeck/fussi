@@ -13,9 +13,7 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Player;
 use Application\Model\Team as TeamModel;
-use Application\Model\Entity\Match;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

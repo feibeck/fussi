@@ -63,9 +63,9 @@ class PlannedMatch
     protected $team2;
 
     /**
-     * @var DoubleMatch
+     * @var Match
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\DoubleMatch")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Match")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     protected $match;
@@ -225,15 +225,15 @@ class PlannedMatch
     }
 
     /**
-     * @param DoubleMatch $match
+     * @param Match $match
      */
-    public function matchPlayed(DoubleMatch $match)
+    public function matchPlayed(Match $match)
     {
         $this->match = $match;
     }
 
     /**
-     * @return DoubleMatch
+     * @return Match
      */
     public function getPlayedMatch()
     {
