@@ -14,6 +14,7 @@
 namespace ApplicationTest\Model\Entity;
 
 use Application\Model\Entity\Player;
+use Application\Model\Entity\Game;
 use Application\Model\Entity\DoubleMatch;
 
 /**
@@ -60,6 +61,48 @@ class DoubleMatchTest extends \PHPUnit_Framework_TestCase
         $team = $this->match->getTeamTwo();
         $this->assertSame($player1, $team->getAttackingPlayer());
         $this->assertSame($player2, $team->getDefendingPlayer());
+    }
+
+    public function testGetWinningTeamOne()
+    {
+        $game = new Game();
+        $game->setGoalsTeamOne(10);
+        $game->setGoalsTeamTwo(5);
+        $this->match->addGame($game);
+
+        $player1 = new Player();
+        $player2 = new Player();
+        $this->match->setTeamOne($player1, $player2);
+
+        $player3 = new Player();
+        $player4 = new Player();
+        $this->match->setTeamTwo($player3, $player4);
+
+        $team = $this->match->getWinningTeam();
+
+        $this->assertSame($player1, $team->getAttackingPlayer());
+        $this->assertSame($player2, $team->getDefendingPlayer());
+    }
+
+    public function testGetWinningTeamTwo()
+    {
+        $game = new Game();
+        $game->setGoalsTeamOne(5);
+        $game->setGoalsTeamTwo(10);
+        $this->match->addGame($game);
+
+        $player1 = new Player();
+        $player2 = new Player();
+        $this->match->setTeamOne($player1, $player2);
+
+        $player3 = new Player();
+        $player4 = new Player();
+        $this->match->setTeamTwo($player3, $player4);
+
+        $team = $this->match->getWinningTeam();
+
+        $this->assertSame($player3, $team->getAttackingPlayer());
+        $this->assertSame($player4, $team->getDefendingPlayer());
     }
 
 }

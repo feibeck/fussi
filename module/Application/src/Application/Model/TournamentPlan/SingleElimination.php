@@ -100,14 +100,12 @@ class SingleElimination
             $matchForTeam2 = $previousRound ? $previousRound->getMatch($i * 2 + 1) : null;
 
             if ($matchForTeam1 != null) {
-                $match->teamOneIsWinnerFrom($matchForTeam1);
                 $matchForTeam1->winnerPlaysInMatchAt($match, 0);
             } else {
                 $match->setTeam1(array_pop($this->teams));
             }
 
             if ($matchForTeam2 != null) {
-                $match->teamTwoIsWinnerFrom($matchForTeam2);
                 $matchForTeam2->winnerPlaysInMatchAt($match, 1);
             } else {
                 $match->setTeam2(array_pop($this->teams));

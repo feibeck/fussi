@@ -210,7 +210,9 @@ abstract class AbstractTournament
      * @param Match        $match
      * @param PlannedMatch $plannedMatch
      */
-    abstract public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null);
+    public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null)
+    {
+    }
 
     /**
      * @param \DateTime|string $start

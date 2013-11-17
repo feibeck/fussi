@@ -74,22 +74,6 @@ class PlannedMatch
      * @var PlannedMatch
      *
      * @ORM\ManyToOne(targetEntity="Application\Model\Entity\PlannedMatch")
-     * @ORM\JoinColumn(name="team1_winner_from_planned_match_id", referencedColumnName="id")
-     */
-    protected $team1WinnerFromMatch = null;
-
-    /**
-     * @var PlannedMatch
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Model\Entity\PlannedMatch")
-     * @ORM\JoinColumn(name="team2_winner_from_planned_match_id", referencedColumnName="id")
-     */
-    protected $team2WinnerFromMatch = null;
-
-    /**
-     * @var PlannedMatch
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Model\Entity\PlannedMatch")
      * @ORM\JoinColumn(name="winner_plays_in_planned_match_id", referencedColumnName="id")
      */
     protected $winnerPlaysInMatch = null;
@@ -228,22 +212,6 @@ class PlannedMatch
         } else {
             throw new \RuntimeException("Inalid team index");
         }
-    }
-
-    /**
-     * @param PlannedMatch $match
-     */
-    public function teamOneIsWinnerFrom(PlannedMatch $match)
-    {
-        $this->team1WinnerFromMatch = $match;
-    }
-
-    /**
-     * @param PlannedMatch $match
-     */
-    public function teamTwoIsWinnerFrom(PlannedMatch $match)
-    {
-        $this->team2WinnerFromMatch = $match;
     }
 
     /**

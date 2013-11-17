@@ -107,7 +107,7 @@ class DoubleMatch extends Match
     public function getWinningTeam()
     {
         $index = $this->getWinner();
-        if ($index == 0) {
+        if ($index == 1) {
             return $this->getTeamOne();
         }
         return $this->getTeamTwo();

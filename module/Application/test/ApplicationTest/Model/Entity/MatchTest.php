@@ -61,6 +61,11 @@ class MatchTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->match->getWinner());
     }
 
+    public function testLooserWithZeroGames()
+    {
+        $this->assertEquals(0, $this->match->getLooser());
+    }
+
     public function testAddingSingleGames()
     {
         $game1 = new Game();
@@ -107,6 +112,18 @@ class MatchTest extends \PHPUnit_Framework_TestCase
     {
         $this->addGameToMatch(2, 5);
         $this->assertEquals(2, $this->match->getWinner());
+    }
+
+    public function testLooserTeamOne()
+    {
+        $this->addGameToMatch(2, 5);
+        $this->assertEquals(1, $this->match->getLooser());
+    }
+
+    public function testLooserTeamTwo()
+    {
+        $this->addGameToMatch(5, 2);
+        $this->assertEquals(2, $this->match->getLooser());
     }
 
     public function testWinnerTeamTwoWithTwoGames()

@@ -61,12 +61,4 @@ class League extends AbstractTournament
         );
     }
 
-    /**
-     * @param Match        $match
-     * @param PlannedMatch $plannedMatch
-     */
-    public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null)
-    {
-    }
-
 }
