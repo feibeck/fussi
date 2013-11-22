@@ -43,7 +43,9 @@
     echo $this->formGame($form->get('games'));
 ?>
 
-<p><a id="add_game_button" class="btn" href="#">Add game</a></p>
+<?php if ($tournament->isMatchModeBestOf()): ?>
+    <p><a id="add_game_button" class="btn" href="#">Add game</a></p>
+<?php endif; ?>
 
 <?php
 
