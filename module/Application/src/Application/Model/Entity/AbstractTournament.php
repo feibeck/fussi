@@ -35,6 +35,9 @@ abstract class AbstractTournament
     const TYPE_TEAM = 1;
     const MAXSCORE_DEFAULT = 10;
 
+    const MODE_EXACTLY = 0;
+    const MODE_BEST_OF = 1;
+
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -74,6 +77,13 @@ abstract class AbstractTournament
      * @ORM\Column(type="integer")
      */
     protected $gamesPerMatch = 1;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $matchMode = self::TYPE_TEAM;
 
     /**
      * @var int
@@ -201,6 +211,20 @@ abstract class AbstractTournament
     }
 
     /**
+     * For best of matches you need to play at least more than half of the maximum game count.
+     *
+     * @return int
+     */
+    public function getMinimumNumberOfGames()
+    {
+        $gamesPerMatch = $this->getGamesPerMatch();
+        if ($this->isMatchModeBestOf()) {
+            $gamesPerMatch = ceil($gamesPerMatch / 2);
+        }
+        return (int) $gamesPerMatch;
+    }
+
+    /**
      * @param int $maxScore
      */
     public function setMaxScore($maxScore)
@@ -269,6 +293,38 @@ abstract class AbstractTournament
     public function isActive()
     {
         return $this->end == null;
+    }
+
+    /**
+     * @param int $matchMode
+     */
+    public function setMatchMode($matchMode)
+    {
+        $this->matchMode = $matchMode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMatchMode()
+    {
+        return $this->matchMode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMatchModeBestOf()
+    {
+        return $this->matchMode == self::MODE_BEST_OF;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMatchModeExactly()
+    {
+        return $this->matchMode == self::MODE_EXACTLY;
     }
 
 }

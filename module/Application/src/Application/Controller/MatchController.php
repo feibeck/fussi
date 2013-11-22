@@ -129,16 +129,24 @@ class MatchController extends AbstractActionController
 
             if ($form->isValid()) {
 
-                $tournament->matchPlayed($match, $plannedMatch);
-                $this->matchRepository->persist($match);
-                if ($plannedMatch != null) {
-                    $this->plannedMatchRepository->persist($plannedMatch);
-                }
+                if ($match->isResultValid()) {
 
-                return $this->redirect()->toRoute(
-                    'tournament/show',
-                    array('id' => $tournament->getId())
-                );
+                    $tournament->matchPlayed($match, $plannedMatch);
+                    $this->matchRepository->persist($match);
+                    if ($plannedMatch != null) {
+                        $this->plannedMatchRepository->persist($plannedMatch);
+                    }
+
+                    return $this->redirect()->toRoute(
+                        'tournament/show',
+                        array('id' => $tournament->getId())
+                    );
+
+                } else {
+
+                    $form->setMessages(array('submit' => array('You need to play more matches')));
+
+                }
 
             }
         }

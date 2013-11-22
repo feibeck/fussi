@@ -223,5 +223,66 @@ abstract class Match
         return $this->games;
     }
 
+    /**
+     * @return bool
+     */
+    public function isResultValid()
+    {
+        $numberOfGames = $this->getTournament()->getGamesPerMatch();
+        $gameMode = $this->getTournament()->getMatchMode();
+
+        if ($gameMode == AbstractTournament::MODE_EXACTLY) {
+
+            return $this->validateResultModeExactly($numberOfGames);
+
+        } else {
+
+            return $this->validateResultModeBestOf($numberOfGames);
+
+        }
+
+    }
+
+    /**
+     * @param $numberOfGames
+     *
+     * @return bool
+     */
+    protected function validateResultModeExactly($numberOfGames)
+    {
+        return count($this->games) == $numberOfGames;
+    }
+
+    /**
+     * @param $numberOfGames
+     *
+     * @return bool
+     */
+    protected function validateResultModeBestOf($numberOfGames)
+    {
+        $minNumbersToWin = $numberOfGames / 2;
+
+        $team1Won = 0;
+        $team2Won = 0;
+
+        foreach ($this->games as $game) {
+
+            if ($game->getGoalsTeamOne() > $game->getGoalsTeamTwo()) {
+                $team1Won++;
+            } else {
+                $team2Won++;
+            }
+
+            if ($team1Won >= $minNumbersToWin || $team2Won >= $minNumbersToWin) {
+                if ($team1Won + $team2Won == count($this->games)) {
+                    return true;
+                } else {
+                    return false; // More games played than needed
+                }
+            }
+        }
+
+        return false;
+    }
 
 }

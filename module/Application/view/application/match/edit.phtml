@@ -41,6 +41,13 @@
 
 <?php
     echo $this->formGame($form->get('games'));
+?>
+
+<p><a id="add_game_button" class="btn" href="#">Add game</a></p>
+
+<?php
+
+
     echo $this->formHidden($form->get('csrf'));
     echo $this->formElement($form->get('submit'));
 
@@ -49,10 +56,41 @@
 ?>
 <?php echo $this->headScript()->prependFile($this->basePath() . '/js/fussiform.js'); ?>
 <script type="text/javascript">
-    $(document).ready(function() {
-        var FuFo = new FussiForm();
+
+    var maxGameCount = <?php echo $tournament->getGamesPerMatch(); ?>;
+   
+    $(document).ready(function() {
+
+        $("#add_game_button").click(add_game);
+       
+        var FuFo = new FussiForm();
         $('.game').each(function() {
             FuFo.connectFields($('.goals0',this),$('.goals1',this), <?php echo $tournament->getMaxScore(); ?>);
         })
     });
+
+    function add_game() {
+        var currentCount = $('#matchform tr.game').length;
+
+        if (currentCount >= maxGameCount) {
+            this.remove();
+            return;
+        }
+
+        var template = $('.game-template').data('template');
+        template = template.replace(/__index__/g, currentCount);
+        template = template.replace(/Game&nbsp;0/g, "Game&nbsp;" + (currentCount + 1));
+
+        var element = $(template).appendTo('#matchform');
+        var FuFo = new FussiForm();
+
+        FuFo.connectFields($('.goals0', element),$('.goals1', element), <?php echo $tournament->getMaxScore(); ?>);
+
+        if (currentCount + 1 == maxGameCount) {
+            this.remove();
+        }
+
+        return false;
+    }
+
 </script>

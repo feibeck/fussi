@@ -12,6 +12,7 @@
  */
 namespace Application\Form;
 
+use Application\Model\Entity\AbstractTournament;
 use Application\Model\Entity\League as LeagueEntity;
 use \Zend\Form\Form;
 
@@ -29,6 +30,21 @@ class League extends Form
                 'label' => 'Name'
             )
         ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'match-mode',
+            'options' => array(
+                'label' => 'Match type',
+            ),
+        ));
+        $this->get('match-mode')->setValueOptions(
+            array(
+                 AbstractTournament::MODE_EXACTLY => 'Play exact number of games',
+                 AbstractTournament::MODE_BEST_OF => 'Best of the number of games'
+            )
+
+        );
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Text',

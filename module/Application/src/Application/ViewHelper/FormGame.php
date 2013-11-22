@@ -19,6 +19,7 @@ use Symfony\Component\Console\Application;
 use Zend\Form\Element;
 use Zend\Form\ElementInterface;
 use Zend\Form\Element\Collection as CollectionElement;
+use Zend\Form\FieldsetInterface;
 use Zend\Form\View\Helper\AbstractHelper;
 
 class FormGame extends AbstractHelper
@@ -44,6 +45,11 @@ class FormGame extends AbstractHelper
         $markup = '';
 
         if ($element instanceof CollectionElement) {
+
+            $templateMarkup = "";
+            if ($element instanceof CollectionElement && $element->shouldCreateTemplate()) {
+                $templateMarkup = $this->renderTemplate($element);
+            }
 
             $match = $this->getMatch($element);
             if ($match == null) {
@@ -72,7 +78,7 @@ class FormGame extends AbstractHelper
                 $markup .= $this->render($fieldsets, $index++);
             }
 
-            $markup .= '</table>';
+            $markup .= '</table>' . $templateMarkup;
 
         } else if ($element instanceof Game) {
 
@@ -94,6 +100,27 @@ class FormGame extends AbstractHelper
         return sprintf(
             '<div class="row"><div class="span5">%s</div></div>',
             $markup
+        );
+    }
+
+    /**
+     * @param \Zend\Form\Element\Collection $collection
+     *
+     * @return string
+     */
+    protected function renderTemplate($collection)
+    {
+        $templateMarkup         = '';
+        $escapeHtmlAttribHelper = $this->getEscapeHtmlAttrHelper();
+        $elementOrFieldset = $collection->getTemplateElement();
+
+        if ($elementOrFieldset instanceof FieldsetInterface) {
+            $templateMarkup .= $this->render($elementOrFieldset);
+        }
+
+        return sprintf(
+            '<span class="game-template" data-template="%s"></span>',
+            $escapeHtmlAttribHelper($templateMarkup)
         );
     }
 

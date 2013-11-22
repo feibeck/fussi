@@ -41,11 +41,13 @@ class Factory
      */
     public function getMatchForm(AbstractTournament $tournament, PlannedMatch $plannedMatch = null)
     {
+        $gamesPerMatch = $tournament->getMinimumNumberOfGames();
+
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 
             $form = new MatchFormSingle(
                 $this->playerRepository,
-                $tournament->getGamesPerMatch(),
+                $gamesPerMatch,
                 $tournament->getMaxScore()
             );
 
@@ -55,7 +57,7 @@ class Factory
 
                 $form = new MatchFormDouble(
                     $this->playerRepository,
-                    $tournament->getGamesPerMatch(),
+                    $gamesPerMatch,
                     $tournament->getMaxScore(),
                     $tournament->getPlayers()
                 );
@@ -64,7 +66,7 @@ class Factory
 
                 $form = new MatchFormDouble(
                     $this->playerRepository,
-                    $tournament->getGamesPerMatch(),
+                    $gamesPerMatch,
                     $tournament->getMaxScore(),
                     array()
                 );

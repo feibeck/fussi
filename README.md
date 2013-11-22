@@ -14,6 +14,12 @@ Fußi is currently in an early stage of development. Current features:
 - View matches of the current and past months
 - View ranking of the current and past months
 
+Requirements
+============
+
+- PHP, PDO, Sqlite (or another database adapter)
+- PHP-Extension intl
+
 Setup
 =====
 

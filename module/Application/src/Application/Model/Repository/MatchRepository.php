@@ -137,7 +137,9 @@ class MatchRepository extends EntityRepository
 
         }
 
-        for ($i = 0; $i < $tournament->getGamesPerMatch(); $i++) {
+        $gamesPerMatch = $tournament->getMinimumNumberOfGames();
+
+        for ($i = 0; $i < $gamesPerMatch; $i++) {
             $match->addGame(new Game());
         }
 
