@@ -13,6 +13,7 @@
 
 namespace Application\Form;
 
+use Application\Model\Entity\Team;
 use Application\Model\Repository\PlayerRepository;
 use Application\Model\Entity\Player;
 use Zend\Form\Element\Select as SelectElement;
@@ -53,6 +54,50 @@ class MatchFormDouble extends MatchForm
         $team2defence->setValueOptions($values);
         $this->add($team2defence);
 
+    }
+
+    /**
+     * @param Team $team
+     */
+    public function setTeamOne(Team $team)
+    {
+        $this->setTeam(1, $team);
+    }
+
+    /**
+     * @param Team $team
+     */
+    public function setTeamTwo(Team $team)
+    {
+        $this->setTeam(2, $team);
+    }
+
+    /**
+     * @param int  $teamNumber
+     * @param Team $team
+     */
+    protected  function setTeam($teamNumber, Team $team)
+    {
+        switch ($teamNumber) {
+            case 1:
+                $fieldAttack  = 'teamOneAttack';
+                $fieldDefence = 'teamOneDefence';
+                break;
+            case 2:
+                $fieldAttack  = 'teamTwoAttack';
+                $fieldDefence = 'teamTwoDefence';
+                break;
+        }
+
+        $options = array(
+            $team->getPlayer1()->getId() => $team->getPlayer1()->getName(),
+            $team->getPlayer2()->getId() => $team->getPlayer2()->getName()
+        );
+        $this->get($fieldAttack)->setValueOptions($options);
+        $this->get($fieldAttack)->setValue($team->getPlayer1()->getId());
+
+        $this->get($fieldDefence)->setValueOptions($options);
+        $this->get($fieldDefence)->setValue($team->getPlayer2()->getId());
     }
 
 }

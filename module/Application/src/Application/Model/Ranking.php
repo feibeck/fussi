@@ -14,7 +14,8 @@
 namespace Application\Model;
 
 use \Application\Model\PlayerRanking;
-use Application\Model\Entity\Match;
+use \Application\Model\Entity\Match;
+use \Application\Model\Entity\Game;
 
 class Ranking
 {
@@ -50,32 +51,46 @@ class Ranking
                 $team2Player1 = $this->getPlayerRanking($team2->getAttackingPlayer());
                 $team2Player2 = $this->getPlayerRanking($team2->getDefendingPlayer());
 
-                $team1Player1->addGoals($match->getGoalsGame1Player1());
-                $team1Player1->addGoals($match->getGoalsGame2Player1());
-                $team1Player1->addPoints($this->getPointsPlayer1($match));
-                $team1Player2->addGoals($match->getGoalsGame1Player1());
-                $team1Player2->addGoals($match->getGoalsGame2Player1());
-                $team1Player2->addPoints($this->getPointsPlayer1($match));
+                foreach ($match->getGames() as $game) {
 
-                $team2Player1->addGoals($match->getGoalsGame1Player2());
-                $team2Player1->addGoals($match->getGoalsGame2Player2());
-                $team2Player1->addPoints($this->getPointsPlayer2($match));
-                $team2Player2->addGoals($match->getGoalsGame1Player2());
-                $team2Player2->addGoals($match->getGoalsGame2Player2());
-                $team2Player2->addPoints($this->getPointsPlayer2($match));
+                    $this->setRankingForTeam(
+                        $team1Player1,
+                        $team1Player2,
+                        Game::TEAM_ONE,
+                        $game
+                    );
+
+                    $this->setRankingForTeam(
+                        $team2Player1,
+                        $team2Player2,
+                        Game::TEAM_TWO,
+                        $game
+                    );
+
+                }
 
             } else {
 
                 $player1 = $this->getPlayerRanking($match->getPlayer1());
                 $player2 = $this->getPlayerRanking($match->getPlayer2());
 
-                $player1->addGoals($match->getGoalsGame1Player1());
-                $player1->addGoals($match->getGoalsGame2Player1());
-                $player1->addPoints($this->getPointsPlayer1($match));
+                foreach ($match->getGames() as $game) {
 
-                $player2->addGoals($match->getGoalsGame1Player2());
-                $player2->addGoals($match->getGoalsGame2Player2());
-                $player2->addPoints($this->getPointsPlayer2($match));
+                    $this->setRankingForPlayer(
+                        $player1,
+                        Game::TEAM_ONE,
+                        Game::TEAM_TWO,
+                        $game
+                    );
+
+                    $this->setRankingForPlayer(
+                        $player2,
+                        Game::TEAM_TWO,
+                        Game::TEAM_ONE,
+                        $game
+                    );
+
+                }
 
             }
 
@@ -111,7 +126,9 @@ class Ranking
         $potential = 0;
         foreach($playersRanking as $playerid => $rank) {
             $playerPotential = $rank->getScore() + ($maxMatchesPerPlayer - $rank->getMatchCount()) * 2;
-            $this->playerRankings[$playerid]->potential = $playerPotential;
+            if (isset($this->playerRankings[$playerid])) {
+                $this->playerRankings[$playerid]->potential = $playerPotential;
+            }
             if ($playerPotential > $potential) {
                 $potential = $playerPotential;
             }
@@ -136,39 +153,74 @@ class Ranking
     }
 
     /**
-     * @param \Application\Model\Entity\Match $match
-     * 
-     * @return int
-     */
-    protected function getPointsPlayer1(Match $match)
-    {
-        $won1 = $match->getGoalsGame1Player1() > $match->getGoalsGame1Player2();
-        $won2 = $match->getGoalsGame2Player1() > $match->getGoalsGame2Player2();
-
-        if ($won1 && $won2) {
-            return 2;
-        } else if ($won1 || $won2) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * @param \Application\Model\Entity\Match $match
+     * @param Game $game
+     * @param int  $teamIndex
      *
      * @return int
      */
-    protected function getPointsPlayer2(Match $match)
+    protected function getPointsForPlayer(Game $game, $teamIndex)
     {
-        $won1 = $match->getGoalsGame1Player2() > $match->getGoalsGame1Player1();
-        $won2 = $match->getGoalsGame2Player2() > $match->getGoalsGame2Player1();
+        $goalsPlayer = $game->getGoalsForTeam($teamIndex);
+        $goalsOpponent = $game->getGoalsForTeam($this->getOpponentIndex($teamIndex));
 
-        if ($won1 && $won2) {
-            return 2;
-        } else if ($won1 || $won2) {
-            return 1;
-        }
-        return 0;
+        return $goalsPlayer > $goalsOpponent ? 1 : 0;
+    }
+
+    /**
+     * @param \Application\Model\PlayerRanking $player1
+     * @param \Application\Model\PlayerRanking $player2
+     * @param int                              $teamIndex
+     * @param \Application\Model\Entity\Game   $game
+     */
+    protected function setRankingForTeam(
+        $player1,
+        $player2,
+        $teamIndex,
+        $game
+    ) {
+        $opponentIndex = $this->getOpponentIndex($teamIndex);
+
+        $this->setRankingForPlayer(
+            $player1,
+            $teamIndex,
+            $opponentIndex,
+            $game
+        );
+
+        $this->setRankingForPlayer(
+            $player2,
+            $teamIndex,
+            $opponentIndex,
+            $game
+        );
+    }
+
+    /**
+     * @param \Application\Model\PlayerRanking $player
+     * @param int                              $teamIndex
+     * @param int                              $opponentIndex
+     * @param \Application\Model\Entity\Game   $game
+     */
+    protected function setRankingForPlayer(
+        $player,
+        $teamIndex,
+        $opponentIndex,
+        $game
+    ) {
+        $player->addGoals($game->getGoalsForTeam($teamIndex));
+        $player->addGoalsAgainst($game->getGoalsForTeam($opponentIndex));
+
+        $player->addPoints($this->getPointsForPlayer($game, $teamIndex));
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return int
+     */
+    protected function getOpponentIndex($index)
+    {
+        return ($index % 2) + 1;
     }
 
 }

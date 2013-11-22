@@ -13,8 +13,6 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Game;
-use Application\Model\Entity\Tournament;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,9 +39,9 @@ abstract class Match
     protected $id;
 
     /**
-     * @var Tournament
+     * @var AbstractTournament
      *
-     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Tournament")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\AbstractTournament")
      * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
@@ -81,114 +79,6 @@ abstract class Match
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * @param int $goalsGame1Player1
-     *
-     * @deprecated Use the game instances
-     */
-    public function setGoalsGame1Player1($goalsGame1Player1)
-    {
-        if (!isset($this->games[0])) {
-            $this->games[0] = new Game();
-            $this->games[0]->setMatch($this);
-        }
-        $this->games[0]->setGoalsTeamOne($goalsGame1Player1);
-    }
-
-    /**
-     * @return int
-     *
-     * @deprecated Use the game instances, @see getGames()
-     */
-    public function getGoalsGame1Player1()
-    {
-        if (!isset($this->games[0])) {
-            return 0;
-        }
-        return $this->games[0]->getGoalsTeamOne();
-    }
-
-    /**
-     * @param int $goalsGame1Player2
-     *
-     * @deprecated Use the game instances
-     */
-    public function setGoalsGame1Player2($goalsGame1Player2)
-    {
-        if (!isset($this->games[0])) {
-            $this->games[0] = new Game();
-            $this->games[0]->setMatch($this);
-        }
-        $this->games[0]->setGoalsTeamTwo($goalsGame1Player2);
-    }
-
-    /**
-     * @return int
-     *
-     * @deprecated Use the game instances
-     */
-    public function getGoalsGame1Player2()
-    {
-        if (!isset($this->games[0])) {
-            return 0;
-        }
-        return $this->games[0]->getGoalsTeamTwo();
-    }
-
-    /**
-     * @param int $goalsGame2Player1
-     *
-     * @deprecated Use the game instances
-     */
-    public function setGoalsGame2Player1($goalsGame2Player1)
-    {
-        if (!isset($this->games[1])) {
-            $this->games[1] = new Game();
-            $this->games[1]->setMatch($this);
-        }
-        $this->games[1]->setGoalsTeamOne($goalsGame2Player1);
-    }
-
-    /**
-     * @return int
-     *
-     * @deprecated Use the game instances
-     */
-    public function getGoalsGame2Player1()
-    {
-        if (!isset($this->games[1])) {
-            return 0;
-        }
-        return $this->games[1]->getGoalsTeamOne();
-    }
-
-    /**
-     * @param int $goalsGame2Player2
-     *
-     * @deprecated Use the game instances
-     */
-    public function setGoalsGame2Player2($goalsGame2Player2)
-    {
-        if (!isset($this->games[1])) {
-            $this->games[1] = new Game();
-            $this->games[1]->setMatch($this);
-        }
-        $this->games[1]->setGoalsTeamTwo($goalsGame2Player2);
-    }
-
-    /**
-     * @return int
-     *
-     * @deprecated Use the game instances
-     */
-    public function getGoalsGame2Player2()
-    {
-        if (!isset($this->games[1])) {
-            return 0;
-        }
-        return $this->games[1]->getGoalsTeamTwo();
     }
 
     /**
@@ -242,15 +132,15 @@ abstract class Match
     }
 
     /**
-     * @param Tournament $tournament
+     * @param AbstractTournament $tournament
      */
-    public function setTournament(Tournament $tournament)
+    public function setTournament(AbstractTournament $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return Tournament
+     * @return AbstractTournament
      */
     public function getTournament()
     {
@@ -270,6 +160,21 @@ abstract class Match
         }
         if ($score[0] < $score[1]) {
             return 2;
+        }
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLooser()
+    {
+        $score = $this->getRawScore();
+        if ($score[0] > $score[1]) {
+            return 2;
+        }
+        if ($score[0] < $score[1]) {
+            return 1;
         }
         return 0;
     }
@@ -304,10 +209,10 @@ abstract class Match
      */
     public function setGames($games)
     {
-        $this->games = new ArrayCollection($games);
-        foreach ($this->games as $game) {
+        foreach ($games as $game) {
             $game->setMatch($this);
         }
+        $this->games = new ArrayCollection($games);
     }
 
     /**
@@ -318,5 +223,66 @@ abstract class Match
         return $this->games;
     }
 
+    /**
+     * @return bool
+     */
+    public function isResultValid()
+    {
+        $numberOfGames = $this->getTournament()->getGamesPerMatch();
+        $gameMode = $this->getTournament()->getMatchMode();
+
+        if ($gameMode == AbstractTournament::MODE_EXACTLY) {
+
+            return $this->validateResultModeExactly($numberOfGames);
+
+        } else {
+
+            return $this->validateResultModeBestOf($numberOfGames);
+
+        }
+
+    }
+
+    /**
+     * @param $numberOfGames
+     *
+     * @return bool
+     */
+    protected function validateResultModeExactly($numberOfGames)
+    {
+        return count($this->games) == $numberOfGames;
+    }
+
+    /**
+     * @param $numberOfGames
+     *
+     * @return bool
+     */
+    protected function validateResultModeBestOf($numberOfGames)
+    {
+        $minNumbersToWin = $numberOfGames / 2;
+
+        $team1Won = 0;
+        $team2Won = 0;
+
+        foreach ($this->games as $game) {
+
+            if ($game->getGoalsTeamOne() > $game->getGoalsTeamTwo()) {
+                $team1Won++;
+            } else {
+                $team2Won++;
+            }
+
+            if ($team1Won >= $minNumbersToWin || $team2Won >= $minNumbersToWin) {
+                if ($team1Won + $team2Won == count($this->games)) {
+                    return true;
+                } else {
+                    return false; // More games played than needed
+                }
+            }
+        }
+
+        return false;
+    }
 
 }

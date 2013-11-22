@@ -72,7 +72,15 @@
                 <div class="span3">
                     <h4><?php echo $tournament->getName(); ?></h4>
 
-                    <?php echo $this->ranking($tournament, 999, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
+                    <?php if ($tournament instanceof \Application\Model\Entity\League): ?>
+
+                        <?php echo $this->ranking($tournament, 999, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
+
+                    <?php else: ?>
+
+                        <p>The tournament is running</p>
+
+                    <?php endif; ?>
 
                     <p>
                         <a href="<?php echo $this->url("tournament/show", array('id' => $tournament->getId())); ?>" class="btn btn-small">

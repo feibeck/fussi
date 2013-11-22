@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Form\Tournament
+ * Definition of Application\Form\League
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,14 +13,15 @@
 namespace Application\Form;
 
 use Application\Model\Entity\AbstractTournament;
+use Application\Model\Entity\League as LeagueEntity;
 use \Zend\Form\Form;
 
-class Tournament extends Form
+class League extends Form
 {
 
     public function __construct()
     {
-        parent::__construct('Tournament');
+        parent::__construct('League');
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Text',
@@ -57,6 +58,18 @@ class Tournament extends Form
         ));
 
         $this->add(array(
+            'type' => 'Zend\Form\Element\Radio',
+            'name' => 'team-type',
+            'options' => array(
+                'label' => 'Match-Type',
+                'value_options' => array(
+                    LeagueEntity::TYPE_TEAM   => 'Team',
+                    LeagueEntity::TYPE_SINGLE => 'Single Player',
+                ),
+            )
+        ));
+
+        $this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'max-score',
             'options' => array(
@@ -64,6 +77,14 @@ class Tournament extends Form
             ),
             'attributes' => array(
                 'maxlength' => 2
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Date',
+            'name' => 'start-date',
+            'options' => array(
+                'label' => 'Start date'
             )
         ));
 

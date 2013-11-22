@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of ApplicationTest\Entity\InputFilter\TournamentTest
+ * Definition of ApplicationTest\Form\InputFilter\LeagueTest
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,19 +13,22 @@
 
 namespace ApplicationTest\Form\InputFilter;
 
-class TournamentTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers Application\Form\InputFilter\Tournament
+ */
+class LeagueTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $validData = array(
         'name' => 'Foobar',
         'games-per-match' => 1,
-        'team-type' => \Application\Model\Entity\Tournament::TYPE_SINGLE,
+        'team-type' => \Application\Model\Entity\League::TYPE_SINGLE,
         'start-date' => '2013-01-01'
     );
 
     public function testDate()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -36,7 +39,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidMatchType()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -47,7 +50,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyValuesIsInvalid()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository()
         );
 
@@ -57,7 +60,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testValidDataPasses()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository()
         );
 
@@ -67,7 +70,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testNameNeedsToBeUnique()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $inputFilter->setData($this->validData);
@@ -76,7 +79,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testThereNeedsToBeAtLeastOneGame()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -87,7 +90,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testGamesPerMatchIsNumber()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $data = $this->validData;
@@ -98,7 +101,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
 
     public function testGamesPerMatchRequired()
     {
-        $inputFilter = new \Application\Form\InputFilter\Tournament(
+        $inputFilter = new \Application\Form\InputFilter\League(
             $this->getRepository(false)
         );
         $data = $this->validData;

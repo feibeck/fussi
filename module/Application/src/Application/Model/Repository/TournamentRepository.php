@@ -14,7 +14,7 @@
 namespace Application\Model\Repository;
 
 use Application\Model\Repository\UniqueNameInterface;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -33,7 +33,7 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     public function isUniqueName($name)
     {
         $query = $this->_em->createQuery(
-            'SELECT COUNT(t.id) FROM Application\Model\Entity\Tournament t WHERE t.name = :name'
+            'SELECT COUNT(t.id) FROM Application\Model\Entity\AbstractTournament t WHERE t.name = :name'
         );
         $query->setParameter('name', $name);
         $count = $query->getSingleScalarResult();
@@ -42,7 +42,7 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     }
 
     /**
-     * @param Tournament $tournament
+     * @param League $tournament
      */
     public function persist($tournament)
     {
@@ -51,21 +51,19 @@ class TournamentRepository extends EntityRepository implements UniqueNameInterfa
     }
 
     /**
-     * @return Tournament[]
+     * @return League[]
      */
     public function findAllWithoutEndDate()
     {
-        $qb = $this->createQueryBuilder('t');
-        $qb->where('t.end IS NULL');
-
-        /** @var $tournaments Tournament[] */
-        $tournaments = $qb->getQuery()->getResult();
-
+        $query = $this->_em->createQuery(
+            'SELECT l FROM Application\Model\Entity\AbstractTournament l WHERE l.start IS NOT NULL AND l.end IS NULL'
+        );
+        $tournaments = $query->getResult();
         return $tournaments;
     }
 
     /**
-     * @return \Application\Model\Entity\Tournament[]
+     * @return \Application\Model\Entity\League[]
      */
     public function findAllActive()
     {

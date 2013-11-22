@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Model\Entity\Tournament
+ * Definition of Application\Model\Tournament
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,138 +13,119 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Player;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Application\Model\Repository\TournamentRepository")
- * @ORM\Table(name="tournament")
+ * @ORM\Entity
  */
-class Tournament
+class Tournament extends AbstractTournament
 {
 
-    const TYPE_SINGLE = 0;
-    const TYPE_TEAM = 1;
-    const MAXSCORE_DEFAULT = 10;
-
     /**
-     * @var int
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\Team", mappedBy="tournament", cascade={"persist"})
      *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var Team[]
      */
-    protected $id;
+    protected $teams;
 
     /**
-     * @var string
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\Round", mappedBy="tournament", cascade={"persist"})
      *
-     * @ORM\Column(type="string", length=150)
+     * @var Round[]
      */
-    protected $name;
+    protected $rounds;
 
     /**
-     * @var int
+     * @var Team
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="winner_id", referencedColumnName="id")
      */
-    protected $teamType = self::TYPE_SINGLE;
+    protected $winner;
 
     /**
-     * @var int
+     * @var Team
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Team")
+     * @ORM\JoinColumn(name="second_id", referencedColumnName="id")
      */
-    protected $gamesPerMatch = 1;
+    protected $second;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="date")
+     * @param Team[]  $teams
+     * @param Round[] $rounds
      */
-    protected $start;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $maxScore = self::MAXSCORE_DEFAULT;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(type="date", nullable=true)
-     */
-    protected $end;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Application\Model\Entity\Player")
-     * @ORM\JoinTable(name="tournament_players",
-     *      joinColumns={@ORM\JoinColumn(name="tournament_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $players;
-
-    public function __construct()
+    public function init($teams, $rounds)
     {
-        $this->players = new ArrayCollection();
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
+        foreach ($teams as $team) {
+            $team->setTournament($this);
+        }
+        foreach ($rounds as $round) {
+            $round->setTournament($this);
+        }
+        $this->teams = new ArrayCollection($teams);
+        $this->rounds = new ArrayCollection($rounds);
+        $this->start = new \DateTime();
     }
 
     /**
-     * @param int $teamType
+     * @param PlannedMatch $plannedMatch
+     * @param Match  $match
      */
-    public function setTeamType($teamType)
+    public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null)
     {
-        $this->teamType = $teamType;
+        $plannedMatch->matchPlayed($match);
+
+        $winner = $plannedMatch->getTeam($match->getWinner() - 1);
+
+        if ($plannedMatch->isFinal()) {
+
+            $this->winner = $winner;
+
+            $second = $plannedMatch->getTeam($match->getLooser() - 1);
+            $this->second = $second;
+
+            $this->end = new \DateTime();
+
+        } else {
+            $plannedMatch->getMatchForWinner()->setTeam(
+                $winner,
+                $plannedMatch->getMatchIndexForWinner()
+            );
+        }
     }
 
     /**
-     * @return int
+     * @return Team
      */
-    public function getTeamType()
+    public function getWinner()
     {
-        return $this->teamType;
-    }
-
-    public function isSinglePlayer()
-    {
-        return $this->teamType == self::TYPE_SINGLE;
-    }
-
-    public function isTeams()
-    {
-        return $this->teamType == self::TYPE_TEAM;
+        return $this->winner;
     }
 
     /**
-     * @return Player[]
+     * @return Team
      */
-    public function getPlayers()
+    public function getSecond()
     {
-        return $this->players;
+        return $this->second;
+    }
+
+    /**
+     * @return Team[]
+     */
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @return Round[]
+     */
+    public function getRounds()
+    {
+        return $this->rounds;
     }
 
     /**
@@ -154,13 +135,7 @@ class Tournament
     {
         $this->id            = (isset($data['id'])) ? $data['id'] : null;
         $this->name          = (isset($data['name'])) ? $data['name'] : null;
-        $this->teamType      = (isset($data['team-type'])) ? $data['team-type'] : self::TYPE_SINGLE;
         $this->gamesPerMatch = (isset($data['games-per-match'])) ? $data['games-per-match'] : 1;
-        if (isset($data['start-date'])) {
-            $this->setStart($data['start-date']);
-        } else {
-            $this->setStart(new \DateTime());
-        }
         $this->maxScore      = (isset($data['max-score'])) ? $data['max-score'] : self::MAXSCORE_DEFAULT;
      }
 
@@ -172,87 +147,9 @@ class Tournament
         return array(
             'id'              => $this->id,
             'name'            => $this->name,
-            'team-type'       => $this->teamType,
-            'start-date'      => $this->start,
             'games-per-match' => $this->gamesPerMatch,
             'max-score'       => $this->maxScore
         );
-    }
-
-    public function addPlayer(Player $player)
-    {
-        $this->players->add($player);
-    }
-
-    /**
-     * @param int $gamesPerMatch
-     */
-    public function setGamesPerMatch($gamesPerMatch)
-    {
-        $this->gamesPerMatch = $gamesPerMatch;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGamesPerMatch()
-    {
-        return $this->gamesPerMatch;
-    }
-
-    /**
-     * @param \DateTime|string $start
-     */
-    public function setStart($start)
-    {
-        if (!($start instanceof \DateTime)) {
-            $start = new \DateTime($start);
-        }
-        $this->start = $start;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
-     * @param int $maxScore
-     */
-    public function setMaxScore($maxScore)
-    {
-        $this->maxScore = $maxScore;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxScore()
-    {
-        return $this->maxScore;
-    }
-
-    /*
-     * @param \DateTime|null $end Casted to null if not \DateTime
-     */
-    public function setEnd($end)
-    {
-        if (!$end instanceof \DateTime) {
-            $end = null;
-        }
-
-        $this->end = $end;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
-    {
-        return $this->end;
     }
 
     /**
@@ -260,7 +157,23 @@ class Tournament
      */
     public function isActive()
     {
-        return $this->end == null;
+        return $this->start != null && $this->end == null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReady()
+    {
+        return count($this->rounds) > 0 && count($this->teams) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->winner != null;
     }
 
 }

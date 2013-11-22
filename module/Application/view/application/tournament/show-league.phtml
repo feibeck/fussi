@@ -31,7 +31,7 @@
                     Maximum Points
                 </th>
                 <td>
-                    <?php echo (count($players) - 1) * 2; ?>
+                    <?php echo $infoMaxPoints; ?>
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@
                     Maximum Matches
                 </th>
                 <td>
-                    <?php echo (count($players) - 1); ?>
+                    <?php echo $infoMaxMatches; ?>
                 </td>
             </tr>
             <tr>
@@ -47,8 +47,7 @@
                     Current Potential
                 </th>
                 <td>
-                   <?php $tournamentPotential =  $ranking->getPotential(count($players)-1);
-                         echo $tournamentPotential; ?>
+                   <?php echo $tournamentPotential; ?>
                 </td>
             </tr>
 
@@ -67,7 +66,7 @@
 
             <?php
                 echo $this->partial(
-                    'application/index/single-league-matches.phtml',
+                    'application/tournament/single-league-matches.phtml',
                     array(
                         'tournament'    => $tournament,
                         'players'       => $players,
@@ -84,7 +83,7 @@
 
             <?php
                 echo $this->partial(
-                    'application/index/double-league-matches.phtml',
+                    'application/tournament/double-league-matches.phtml',
                     array(
                         'tournament'          => $tournament,
                         'players'             => $players,
@@ -105,8 +104,6 @@
 
 <script>
     $(document).ready(function() {
-        //$('.match').popover({html: true});
-
         $('.match').click( function() {
             if( $('.popover').length > 0 ) {
                 $('.popover').remove();

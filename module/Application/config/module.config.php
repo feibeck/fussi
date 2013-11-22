@@ -33,22 +33,32 @@ return array(
                     'show' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => ':id/[:year/:month]',
+                            'route' => ':id[/:year/:month]',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Index',
-                                'action'     => 'index',
+                                'controller' => 'Application\Controller\Tournament',
+                                'action'     => 'show',
                                 'year'       => date('Y'),
                                 'month'      => date('m')
                             )
                         )
                     ),
-                    'add' => array(
+                    'add-league' => array(
                         'type' => 'Zend\Mvc\Router\Http\Segment',
                         'options' => array(
-                            'route' => 'tournament/add',
+                            'route' => 'tournament/add-league',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
-                                'action'     => 'add',
+                                'controller' => 'Application\Controller\TournamentSetup',
+                                'action'     => 'addLeague',
+                            )
+                        )
+                    ),
+                    'add-tournament' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/add-tournament',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\TournamentSetup',
+                                'action'     => 'addTournament',
                             )
                         )
                     ),
@@ -57,7 +67,7 @@ return array(
                         'options' => array(
                             'route' => 'tournament/:id/players',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action' => 'players'
                             )
                         )
@@ -67,8 +77,18 @@ return array(
                         'options' => array(
                             'route' => 'tournament/:id/addplayer',
                             'defaults' => array(
-                                'controller' => 'Application\Controller\Tournament',
+                                'controller' => 'Application\Controller\TournamentSetup',
                                 'action' => 'addplayer'
+                            )
+                        )
+                    ),
+                    'start' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => 'tournament/start/:id',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\TournamentSetup',
+                                'action' => 'startTournament'
                             )
                         )
                     )
@@ -79,8 +99,18 @@ return array(
                 'options' => array(
                     'route' => '/tournaments',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Tournament',
+                        'controller' => 'Application\Controller\TournamentSetup',
                         'action' => 'list'
+                    )
+                )
+            ),
+            'setup' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/setup/:id',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\TournamentSetup',
+                        'action' => 'setupTournament'
                     )
                 )
             ),
@@ -139,6 +169,16 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Application\Controller\Match',
                                 'action'     => 'edit',
+                            )
+                        )
+                    ),
+                    'planned' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => array(
+                            'route' => '/planned/:pid',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Match',
+                                'action'     => 'planned',
                             )
                         )
                     ),

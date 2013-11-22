@@ -40,8 +40,8 @@ abstract class MatchForm extends Form
             'options' => array(
                 'label' => 'Games',
                 'count' => $gameCount,
-                'should_create_template' => false,
-                'allow_add' => false,
+                'should_create_template' => true,
+                'allow_add' => true,
                 'target_element' => array(
                     'type' => 'Application\Form\Fieldset\Game',
                     'options' => array(

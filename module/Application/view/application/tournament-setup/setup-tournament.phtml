@@ -1,0 +1,45 @@
+<h1>Tournament setup: <?php echo $tournament->getName(); ?></h1>
+
+<?php $ready = (count($tournament->getPlayers()) % 2 == 0 && count($tournament->getPlayers()) >= 4); ?>
+
+<?php if (!$ready): ?>
+    <div class="alert">
+        <strong>Player count!</strong> You need an even number of players.
+    </div>
+<?php endif; ?>
+
+<?php if ($tournament->isActive()): ?>
+    <div class="alert alert-info">The tournament is currently running</div>
+<?php elseif ($tournament->isFinished()): ?>
+    <div class="alert alert-info">The tournament is finished</div>
+<?php else: ?>
+    <div class="btn-group" style="margin-bottom: 10px;">
+        <a href="<?= $this->url('tournament/start', array('id' => $tournament->getId())); ?>" class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
+    </div>
+<?php endif; ?>
+
+<h2>Players</h2>
+
+<table class="table table-striped">
+
+    <tr>
+    <th>Name</th>
+    </tr>
+
+    <?php foreach ($tournament->getPlayers() as $player): ?>
+
+    <tr>
+        <td><?= $player->getName(); ?></td>
+    </tr>
+
+    <?php endforeach; ?>
+
+</table>
+<?php if (!$tournament->isActive() && !$tournament->isFinished()): ?>
+<?php
+echo $this->form()->openTag($addPlayerForm);
+echo $this->formRow($addPlayerForm->get('player'));
+echo $this->formSubmit($addPlayerForm->get('submit'));
+echo $this->form()->closeTag();
+?>
+<?php endif; ?>

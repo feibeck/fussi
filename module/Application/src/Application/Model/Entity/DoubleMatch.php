@@ -13,9 +13,7 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Player;
-use Application\Model\Team;
-use Application\Model\Entity\Match;
+use Application\Model\Team as TeamModel;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,25 +78,37 @@ class DoubleMatch extends Match
     }
 
     /**
-     * @return Team
+     * @return TeamModel
      */
     public function getTeamOne()
     {
         if ($this->teamOneAttack == null || $this->teamOneDefence == null) {
             return null;
         }
-        return new Team($this->teamOneAttack, $this->teamOneDefence);
+        return new TeamModel($this->teamOneAttack, $this->teamOneDefence);
     }
 
     /**
-     * @return \Application\Model\Team
+     * @return TeamModel
      */
     public function getTeamTwo()
     {
         if ($this->teamTwoAttack == null || $this->teamTwoDefence == null) {
             return null;
         }
-        return new Team($this->teamTwoAttack, $this->teamTwoDefence);
+        return new TeamModel($this->teamTwoAttack, $this->teamTwoDefence);
+    }
+
+    /**
+     * @return TeamModel
+     */
+    public function getWinningTeam()
+    {
+        $index = $this->getWinner();
+        if ($index == 1) {
+            return $this->getTeamOne();
+        }
+        return $this->getTeamTwo();
     }
 
 }

@@ -13,9 +13,11 @@
 
 namespace ApplicationTest\Model\Entity;
 
+use Application\Model\Entity\AbstractTournament;
 use Application\Model\Entity\Game;
 use Application\Model\Entity\Player;
 use Application\Model\Entity\Match;
+use Application\Model\Entity\League;
 use Application\Model\Entity\Tournament;
 
 /**
@@ -51,7 +53,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
 
     public function testTournamentProperty()
     {
-        $tournament = new Tournament();
+        $tournament = new League();
         $this->match->setTournament($tournament);
         $this->assertEquals($tournament, $this->match->getTournament());
     }
@@ -59,6 +61,11 @@ class MatchTest extends \PHPUnit_Framework_TestCase
     public function testWinnerWithZeroGames()
     {
         $this->assertEquals(0, $this->match->getWinner());
+    }
+
+    public function testLooserWithZeroGames()
+    {
+        $this->assertEquals(0, $this->match->getLooser());
     }
 
     public function testAddingSingleGames()
@@ -109,6 +116,18 @@ class MatchTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $this->match->getWinner());
     }
 
+    public function testLooserTeamOne()
+    {
+        $this->addGameToMatch(2, 5);
+        $this->assertEquals(1, $this->match->getLooser());
+    }
+
+    public function testLooserTeamTwo()
+    {
+        $this->addGameToMatch(5, 2);
+        $this->assertEquals(2, $this->match->getLooser());
+    }
+
     public function testWinnerTeamTwoWithTwoGames()
     {
         $this->addGameToMatch(2, 5);
@@ -121,6 +140,72 @@ class MatchTest extends \PHPUnit_Framework_TestCase
         $this->addGameToMatch(1, 10);
         $this->addGameToMatch(10, 1);
         $this->assertEquals('1 / 1', $this->match->getScore());
+    }
+
+    public function testValidateResultExactlyTheNumberOfGamesPlayed()
+    {
+        $this->addGameToMatch(1, 10);
+        $this->addGameToMatch(1, 10);
+        $this->addTournamentToMatch(2, AbstractTournament::MODE_EXACTLY);
+        $this->assertTrue($this->match->isResultValid());
+    }
+
+    public function testValidateResultTooFewTheNumberOfGamesPlayed()
+    {
+        $this->addGameToMatch(1, 10);
+        $this->addTournamentToMatch(2, AbstractTournament::MODE_EXACTLY);
+        $this->assertFalse($this->match->isResultValid());
+    }
+
+    public function testValidateResultTooManyTheNumberOfGamesPlayed()
+    {
+        $this->addGameToMatch(1, 10);
+        $this->addGameToMatch(1, 10);
+        $this->addGameToMatch(1, 10);
+        $this->addTournamentToMatch(2, AbstractTournament::MODE_EXACTLY);
+        $this->assertFalse($this->match->isResultValid());
+    }
+
+    public function testValidateResultPlayedFullBestOf()
+    {
+        $this->addGameToMatch(1, 10);
+        $this->addGameToMatch(10, 1);
+        $this->addGameToMatch(1, 10);
+        $this->addTournamentToMatch(3, AbstractTournament::MODE_BEST_OF);
+        $this->assertTrue($this->match->isResultValid());
+    }
+
+    public function testValidateResultBestOfNotEnough()
+    {
+        $this->addGameToMatch(1, 10);
+        $this->addGameToMatch(10, 1);
+        $this->addTournamentToMatch(3, AbstractTournament::MODE_BEST_OF);
+        $this->assertFalse($this->match->isResultValid());
+    }
+
+    public function testValidateResultBestOfEarlyWinner()
+    {
+        $this->addGameToMatch(10, 1);
+        $this->addGameToMatch(10, 1);
+        $this->addTournamentToMatch(3, AbstractTournament::MODE_BEST_OF);
+        $this->assertTrue($this->match->isResultValid());
+    }
+
+    public function testValidateResultBestOfTooManyGames()
+    {
+        $this->addGameToMatch(10, 1);
+        $this->addGameToMatch(10, 1);
+        $this->addGameToMatch(1, 10);
+        $this->addTournamentToMatch(3, AbstractTournament::MODE_BEST_OF);
+        $this->assertFalse($this->match->isResultValid());
+    }
+
+    protected function addTournamentToMatch($gamesPerMatch, $matchMode)
+    {
+        $tournament = new Tournament();
+        $tournament->setGamesPerMatch($gamesPerMatch);
+        $tournament->setMatchMode($matchMode);
+        $this->match->setTournament($tournament);
     }
 
     /**

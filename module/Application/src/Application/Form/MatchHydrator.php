@@ -46,13 +46,20 @@ class MatchHydrator implements HydratorInterface
             $teamOne = $match->getTeamOne();
             $teamTwo = $match->getTeamTwo();
 
-            return array(
-                'games'          => $match->getGames(),
-                'teamOneAttack'  => ($teamOne ? $teamOne->getAttackingPlayer()->getId() : null),
-                'teamOneDefence' => ($teamOne ? $teamOne->getDefendingPlayer()->getId() : null),
-                'teamTwoAttack'  => ($teamTwo ? $teamTwo->getAttackingPlayer()->getId() : null),
-                'teamTwoDefence' => ($teamTwo ? $teamTwo->getDefendingPlayer()->getId() : null),
+            $out = array(
+                'games' => $match->getGames()
             );
+
+            if ($teamOne) {
+                $out['teamOneAttack']  = $teamOne->getAttackingPlayer()->getId();
+                $out['teamOneDefence'] = $teamOne->getDefendingPlayer()->getId();
+            }
+            if ($teamTwo) {
+                $out['teamTwoAttack']  = $teamTwo->getAttackingPlayer()->getId();
+                $out['teamTwoDefence'] = $teamTwo->getDefendingPlayer()->getId();
+            }
+
+            return $out;
 
         } else if ($match instanceof SingleMatch) {
 

@@ -17,12 +17,12 @@ use Zend\Mvc\Controller\ControllerManager;
 
 return array(
     'factories' => array(
-        'Application\Controller\Index' => function(ControllerManager $cm) {
+        'Application\Controller\Tournament' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
-            $controller = new Controller\IndexController(
-                $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament')
+            $controller = new Controller\TournamentController(
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
+                $em->getRepository('Application\Model\Entity\Match')
             );
             return $controller;
         },
@@ -33,11 +33,11 @@ return array(
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },
-        'Application\Controller\Tournament' => function(ControllerManager $cm) {
+        'Application\Controller\TournamentSetup' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
-            return new Controller\TournamentController(
-                $em->getRepository('Application\Model\Entity\Tournament'),
+            return new Controller\TournamentSetupController(
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },
@@ -47,7 +47,7 @@ return array(
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\DashboardController(
                 $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament')
+                $em->getRepository('Application\Model\Entity\AbstractTournament')
             );
         },
         'Application\Controller\Match' => function(ControllerManager $cm) {
@@ -55,8 +55,9 @@ return array(
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\MatchController(
                 $em->getRepository('Application\Model\Entity\Match'),
-                $em->getRepository('Application\Model\Entity\Tournament'),
-                $em->getRepository('Application\Model\Entity\Player')
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
+                $em->getRepository('Application\Model\Entity\Player'),
+                $em->getRepository('Application\Model\Entity\PlannedMatch')
             );
         },
     )

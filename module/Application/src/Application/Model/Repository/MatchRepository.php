@@ -13,8 +13,9 @@
 
 namespace Application\Model\Repository;
 
+use Application\Model\Entity\AbstractTournament;
 use Application\Model\Entity\Player;
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\Game;
 use Application\Model\Entity\Match;
@@ -49,12 +50,12 @@ class MatchRepository extends EntityRepository
     /**
      * Returns all matches for tournament in a given month
      *
-     * @param \Application\Model\Entity\Tournament $tournament
+     * @param \Application\Model\Entity\League $tournament
      * @param \Application\Model\LeaguePeriod
      *
      * @return Match[]
      */
-    public function findForPeriod(Tournament $tournament, LeaguePeriod $period)
+    public function findForPeriod(League $tournament, LeaguePeriod $period)
     {
         $query = $this->_em->createQuery(
             'SELECT m FROM Application\Model\Entity\Match m
@@ -115,13 +116,13 @@ class MatchRepository extends EntityRepository
     /**
      * Creates a new match
      *
-     * @param \Application\Model\Entity\Tournament $tournament
-     * @param \Application\Model\Entity\Player     $player1
-     * @param Player     $player2
+     * @param AbstractTournament $tournament
+     * @param Player             $player1
+     * @param Player             $player2
      *
      * @return Match
      */
-    public function getNew(Tournament $tournament, $player1 = null, $player2 = null)
+    public function getNew(AbstractTournament $tournament, $player1 = null, $player2 = null)
     {
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 
@@ -136,7 +137,9 @@ class MatchRepository extends EntityRepository
 
         }
 
-        for ($i = 0; $i < $tournament->getGamesPerMatch(); $i++) {
+        $gamesPerMatch = $tournament->getMinimumNumberOfGames();
+
+        for ($i = 0; $i < $gamesPerMatch; $i++) {
             $match->addGame(new Game());
         }
 

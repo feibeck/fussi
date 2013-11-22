@@ -17,6 +17,7 @@
         <th><small>Player</small></th>
         <th><small>Points</small></th>
         <th><small>Matches</small></th>
+        <th><small>Goals</small></th>
     </tr>
     <?php
     $i = 0;
@@ -29,6 +30,7 @@
                 }?>"><?= $rank->getPlayer()->getName()?></td>
             <td><span class="badge badge-warning"><?= $rank->getScore(); ?></span></td>
             <td><span class="badge"><?= $rank->getMatchCount(); ?></span></td>
+            <td><span><?= $rank->getGoals(); ?> : <?= $rank->getGoalsAgainst(); ?></span></td>
         </tr>
     <?php endforeach; ?>
 </table>

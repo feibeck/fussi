@@ -13,7 +13,7 @@
 
 namespace Application\ViewHelper;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\League;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Entity\Player;
 use Application\Model\LeaguePeriod;
@@ -24,7 +24,7 @@ class Match extends AbstractHelper
 
     /**
      * @param LeaguePeriod  $period
-     * @param Tournament    $tournament
+     * @param League    $tournament
      * @param SingleMatch[] $matches
      * @param Player        $player1
      * @param Player        $player2
@@ -33,7 +33,7 @@ class Match extends AbstractHelper
      */
     public function __invoke(
         LeaguePeriod $period,
-        Tournament $tournament,
+        League $tournament,
         array $matches,
         Player $player1,
         Player $player2
@@ -56,12 +56,14 @@ class Match extends AbstractHelper
                 if ($match->isPlayedBy($player1, $player2)) {
 
                     $title = $player1->getName() . " vs. " . $player2->getName();
-                    $content = sprintf("Game 1: %s / %s<br>Game 2: %s / %s",
-                        $match->getGoalsGame1Player1(),
-                        $match->getGoalsGame1Player2(),
-                        $match->getGoalsGame2Player1(),
-                        $match->getGoalsGame2Player2()
-                    );
+
+                    $results = array();
+                    $counter = 1;
+                    foreach ($match->getGames() as $game) {
+                        $results[] = "Game " . $counter . ": " . $game->getGoalsTeamOne() . ' / ' . $game->getGoalsTeamTwo();
+                        $counter++;
+                    }
+                    $content = implode("<br>", $results);
 
                     if ($allow) {
                         $content .= "<br><br><a href='" . $url . "' class='btn btn-small'>Edit</a>";
@@ -76,10 +78,8 @@ class Match extends AbstractHelper
             }
 
             if (!$ok && $allow) {
-
-                $url = $this->getView()->url('match/new/', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
+                $url = $this->getView()->url('match/new', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
                 $out .= '<a href="' . $url . '" class="btn btn-small">Edit</a>';
-
             }
 
         }

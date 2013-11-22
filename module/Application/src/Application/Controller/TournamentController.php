@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Controller\TournamentController
+ * Definition of Application\Controller\IndexController
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,16 +13,17 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-
-use Application\Form\Tournament as TournamentForm;
-use Application\Form\PlayerToTournament as AddPlayerForm;
-use Application\Model\Entity\Tournament as Tournament;
+use Application\Model\Entity\League;
+use Application\Model\Entity\Tournament;
+use Application\Model\LeaguePeriod;
+use Application\Model\Ranking;
+use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\TournamentRepository;
-use Application\Model\Repository\PlayerRepository;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 /**
- * Managing tournaments
+ * Controller displaying the monthly view of a league tournament
  */
 class TournamentController extends AbstractActionController
 {
@@ -33,131 +34,97 @@ class TournamentController extends AbstractActionController
     protected $tournamentRepository;
 
     /**
-     * @var PlayerRepository
+     * @var MatchRepository
      */
-    protected $playerRepository;
+    protected $matchRepository;
 
     /**
      * @param TournamentRepository $tournamentRepository
-     * @param PlayerRepository     $playerRepository
+     * @param MatchRepository      $matchRepository
      */
-    public function __construct(
-        TournamentRepository $tournamentRepository,
-        PlayerRepository     $playerRepository
-    )
+    public function __construct(TournamentRepository $tournamentRepository, MatchRepository $matchRepository)
     {
         $this->tournamentRepository = $tournamentRepository;
-        $this->playerRepository     = $playerRepository;
+        $this->matchRepository = $matchRepository;
     }
 
-    /**
-     * @return array
-     */
-    public function listAction()
-    {
-        $tournaments = $this->tournamentRepository->findAll();
-        return array(
-            'tournaments' => $tournaments
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function playersAction()
+    public function showAction()
     {
         $id = $this->params()->fromRoute('id');
+
+        /** @var $tournament \Application\Model\Entity\League */
         $tournament = $this->tournamentRepository->find($id);
 
-        $addForm = $this->getAddPlayerForm($tournament);
-        $action = $this->url()->fromRoute('tournament/addplayer', array('id' => $id));
-        $addForm->setAttribute('action', $action);
+        if ($tournament instanceof League) {
+            return $this->handleLeague($tournament);
+        } elseif ($tournament instanceof Tournament) {
+            return $this->handleTournament($tournament);
+        }
+    }
 
-        return array(
+    /**
+     * @param League $tournament
+     *
+     * @return array
+     */
+    protected function handleLeague(League $tournament)
+    {
+        $year  = $this->params()->fromRoute('year');
+        $month = $this->params()->fromRoute('month');
+
+        $leaguePeriod = new LeaguePeriod($tournament->getStart(), $year, $month);
+        if ($leaguePeriod->isOutOfBounds()) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $matches = $this->matchRepository->findForPeriod($tournament, $leaguePeriod);
+
+        $players = $tournament->getPlayers();
+        $activePlayers = $this->matchRepository->getActivePlayers($tournament, $leaguePeriod);
+
+        if (!$leaguePeriod->inCurrentMonth()) {
+            $players = $activePlayers;
+        }
+
+        $ranking = new Ranking($matches);
+
+        $infoMaxPoints = (count($players) - 1) * 2;
+        $infoMaxMatches = (count($players) - 1);
+        $tournamentPotential =  $ranking->getPotential(count($players)-1);
+
+        $infoMaxPoints = ($infoMaxPoints >= 0) ? $infoMaxPoints : 0;
+        $infoMaxMatches = ($infoMaxMatches >= 0) ? $infoMaxMatches : 0;
+
+        $viewData = array(
+            'period'        => $leaguePeriod,
+            'players'       => $players,
+            'activePlayers' => $activePlayers,
+            'matches'       => $matches,
+            'ranking'       => $ranking,
             'tournament'    => $tournament,
-            'addPlayerForm' => $addForm
+            'infoMaxPoints'       => $infoMaxPoints,
+            'infoMaxMatches'      => $infoMaxMatches,
+            'tournamentPotential' => $tournamentPotential
         );
+
+        $viewModel = new ViewModel($viewData);
+        $viewModel->setTemplate('application/tournament/show-league');
+
+        return $viewModel;
     }
 
     /**
-     * @return \Zend\Http\Response
+     * @param Tournament $tournament
      *
-     * @throws \Exception
+     * @return array
      */
-    public function addPlayerAction()
+    protected function handleTournament(Tournament $tournament)
     {
-        $id = $this->params()->fromRoute('id');
+        $viewModel = new ViewModel(array('tournament' => $tournament));
+        $viewModel->setTemplate('application/tournament/show-tournament');
 
-        $tournament = $this->tournamentRepository->find($id);
-
-        $form = $this->getAddPlayerForm($tournament);
-
-        if ($this->request->isPost()) {
-            $form->setData($this->request->getPost());
-            if ($form->isValid()) {
-
-                $playerId = $form->get('player')->getValue();
-                $player = $this->playerRepository->find($playerId);
-
-                $tournament->addPlayer($player);
-                $this->tournamentRepository->persist($tournament);
-
-                return $this->redirect()->toRoute(
-                    'tournament/players',
-                    array(
-                         'id' => $tournament->getId()
-                    )
-                );
-            }
-        }
-
-        throw new \Exception();
-
-    }
-
-    /**
-     * @param $tournament
-     *
-     * @return \Application\Form\PlayerToTournament
-     */
-    protected function getAddPlayerForm($tournament)
-    {
-        $players = $this->playerRepository->getPlayersNotInTournament(
-            $tournament
-        );
-        $addForm = new AddPlayerForm($players);
-        return $addForm;
-    }
-
-    /**
-     * @return array|\Zend\Http\Response
-     */
-    public function addAction()
-    {
-        $form = new TournamentForm();
-
-        $tournament = new Tournament();
-        $tournament->setStart(new \DateTime());
-
-        $form->bind($tournament);
-
-        $form->setInputFilter(
-            new \Application\Form\InputFilter\Tournament(
-                $this->tournamentRepository
-            )
-        );
-
-        if ($this->request->isPost()) {
-            $form->setData($this->request->getPost());
-            if ($form->isValid()) {
-                $this->tournamentRepository->persist($tournament);
-                return $this->redirect()->toRoute('tournaments');
-            }
-        }
-
-        return array(
-            'form' => $form
-        );
+        return $viewModel;
     }
 
 }

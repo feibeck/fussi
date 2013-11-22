@@ -21,16 +21,13 @@
 
 <?php echo $this->tbsFormRow($form->get('name')); ?>
 
-<?php echo $this->tbsFormRow($form->get('team-type')); ?>
+<?php echo $this->tbsFormRow($form->get('match-mode')); ?>
 
 <?php $form->get('games-per-match')->setAttributes(array('class' => 'input-mini')); ?>
 <?php echo $this->tbsFormRow($form->get('games-per-match')); ?>
 
 <?php $form->get('max-score')->setAttributes(array('class' => 'input-mini')); ?>
 <?php echo $this->tbsFormRow($form->get('max-score')); ?>
-
-<?php $form->get('start-date')->setAttributes(array('class' => 'input-small')); ?>
-<?php echo $this->tbsFormRow($form->get('start-date')); ?>
 
 <div class="form-actions">
     <?php echo $this->formSubmit($form->get('submit')->setAttribute('class', 'btn btn-primary')); ?>

@@ -13,7 +13,6 @@
 
 namespace Application\Model\Entity;
 
-use Application\Model\Entity\Match;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,6 +23,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+
+    const TEAM_ONE = 1;
+
+    const TEAM_TWO = 2;
 
     /**
      * @var int
@@ -85,6 +88,23 @@ class Game
     public function getGoalsTeamTwo()
     {
         return $this->goalsTeamTwo;
+    }
+
+    /**
+     * @param int $team Index of the team (TEAM_ONE or TEAM_TWO)
+     *
+     * @return int Number of goals for the given team
+     *
+     * @throws \InvalidArgumentException in case of an invalid team index
+     */
+    public function getGoalsForTeam($team)
+    {
+        if ($team == self::TEAM_ONE) {
+            return $this->getGoalsTeamOne();
+        } else if ($team == self::TEAM_TWO) {
+            return $this->getGoalsTeamTwo();
+        }
+        throw new \InvalidArgumentException('Invalid team index');
     }
 
     /**

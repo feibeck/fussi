@@ -50,10 +50,31 @@ class GameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->game->getGoalsTeamOne());
     }
 
+    public function testGoalsForTeamOne()
+    {
+        $this->game->setGoalsTeamOne(1);
+        $this->assertEquals(1, $this->game->getGoalsForTeam(Game::TEAM_ONE));
+    }
+
     public function testGoalsTeamTwoProperty()
     {
         $this->game->setGoalsTeamTwo(2);
         $this->assertEquals(2, $this->game->getGoalsTeamTwo());
+    }
+
+    public function testGoalsForTeamTwo()
+    {
+        $this->game->setGoalsTeamTwo(2);
+        $this->assertEquals(2, $this->game->getGoalsForTeam(Game::TEAM_TWO));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGoalsForTeamWithInvalidIndex()
+    {
+        $this->game->setGoalsTeamTwo(3);
+        $this->game->getGoalsForTeam(3);
     }
 
 }

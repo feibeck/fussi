@@ -36,6 +36,11 @@ class PlayerRanking
     /**
      * @var int
      */
+    protected $goalsAgainst = 0;
+
+    /**
+     * @var int
+     */
     protected $matches = 0;
 
     /**
@@ -62,6 +67,16 @@ class PlayerRanking
     }
 
     /**
+     * @param int $goalsAgainst
+     *
+     * @return void
+     */
+    public function addGoalsAgainst($goalsAgainst)
+    {
+        $this->goalsAgainst += $goalsAgainst;
+    }
+
+    /**
      * @param int $points
      * 
      * @return void
@@ -70,6 +85,22 @@ class PlayerRanking
     {
         $this->matches++;
         $this->score += $points;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGoals()
+    {
+        return $this->goals;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGoalsAgainst()
+    {
+        return $this->goalsAgainst;
     }
 
     /**

@@ -1,0 +1,61 @@
+<?php
+/**
+ * View script
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
+?>
+<?php /** @var \Application\Model\Entity\Tournament $tournament */ ?>
+<h1>Tournament: <?php echo $tournament->getName(); ?></h1>
+
+<?php if (!$tournament->isReady()): ?>
+
+    <div class="alert">
+        <strong>Not ready!</strong> The tournament has not been started yet!
+    </div>
+
+<?php else: ?>
+
+<?php if ($tournament->isFinished()): ?>
+
+        <div class="alert alert-success">
+            <p><strong>Tournament finished!</strong></p>
+            <p>Winner: <?php echo $tournament->getWinner()->getName(); ?></p>
+            <p>Second: <?php echo $tournament->getSecond()->getName(); ?></p>
+        </div>
+
+<?php endif; ?>
+
+    <?php foreach ($tournament->getRounds() as $round): ?>
+
+        <div>
+        <?php foreach ($round->getMatches() as $match): ?>
+            <div style="float: left; width: 150px; border: 1px solid grey; height: 100px; padding: 4px; margin-right: 4px; margin-bottom: 4px;">
+
+                <div><?php echo $match->getTeam1Name(); ?></div>
+                <div><?php echo $match->getTeam2Name(); ?></div>
+
+                <?php if ($match->isPlayed()): ?>
+
+                    <?php echo $match->getPlayedMatch()->getScore(); ?>
+
+                <?php elseif ($match->isReady()): ?>
+
+                    <a class="btn btn-mini" href="<?php echo $this->url('match/planned', array('pid' => $match->getId())); ?>">Enter data</a>
+
+                <?php endif; ?>
+
+            </div>
+        <?php endforeach; ?>
+        </div>
+        <div class="clearfix"></div>
+
+    <?php endforeach; ?>
+
+<?php endif; ?>

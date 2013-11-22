@@ -13,10 +13,11 @@
 
 namespace Application\Form;
 
-use Application\Model\Entity\Tournament;
+use Application\Model\Entity\AbstractTournament;
+use Application\Model\Entity\PlannedMatch;
 use Application\Model\Repository\PlayerRepository;
 
-class Factory 
+class Factory
 {
 
     /**
@@ -25,7 +26,7 @@ class Factory
     protected $playerRepostitory;
 
     /**
-     * @param \Application\Model\Repository\PlayerRepository $playerRepository
+     * @param PlayerRepository $playerRepository
      */
     public function __construct(PlayerRepository $playerRepository)
     {
@@ -33,28 +34,47 @@ class Factory
     }
 
     /**
-     * @param Tournament $tournament
+     * @param AbstractTournament $tournament
+     * @param PlannedMatch       $plannedMatch
      *
      * @return MatchForm
      */
-    public function getMatchForm(Tournament $tournament)
+    public function getMatchForm(AbstractTournament $tournament, PlannedMatch $plannedMatch = null)
     {
+        $gamesPerMatch = $tournament->getMinimumNumberOfGames();
+
         if ($tournament->getTeamType() == $tournament::TYPE_SINGLE) {
 
             $form = new MatchFormSingle(
                 $this->playerRepository,
-                $tournament->getGamesPerMatch(),
+                $gamesPerMatch,
                 $tournament->getMaxScore()
             );
 
         } else {
 
-            $form = new MatchFormDouble(
-                $this->playerRepository,
-                $tournament->getGamesPerMatch(),
-                $tournament->getMaxScore(),
-                $tournament->getPlayers()
-            );
+            if ($plannedMatch == null) {
+
+                $form = new MatchFormDouble(
+                    $this->playerRepository,
+                    $gamesPerMatch,
+                    $tournament->getMaxScore(),
+                    $tournament->getPlayers()
+                );
+
+            } else {
+
+                $form = new MatchFormDouble(
+                    $this->playerRepository,
+                    $gamesPerMatch,
+                    $tournament->getMaxScore(),
+                    array()
+                );
+
+                $form->setTeamOne($plannedMatch->getTeam1());
+                $form->setTeamTwo($plannedMatch->getTeam2());
+
+            }
 
         }
 
