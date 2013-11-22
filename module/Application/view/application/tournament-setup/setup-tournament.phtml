@@ -14,7 +14,8 @@
     <div class="alert alert-info">The tournament is finished</div>
 <?php else: ?>
     <div class="btn-group" style="margin-bottom: 10px;">
-        <a href="<?= $this->url('tournament/start', array('id' => $tournament->getId())); ?>" class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
+        <?php $url = $this->url('tournament/start', array('id' => $tournament->getId())); ?>
+        <a <?php if ($ready) echo 'href="' . $url . '"'; ?> class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
     </div>
 <?php endif; ?>
 
