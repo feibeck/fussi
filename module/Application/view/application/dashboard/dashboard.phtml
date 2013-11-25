@@ -13,7 +13,7 @@
 ?>
 <div class="row">
 
-    <div class="span5">
+    <div class="col-md-5">
 
         <h2>Recent Matches</h2>
 
@@ -61,7 +61,7 @@
 
     </div>
 
-    <div class="span6 offset1">
+    <div class="col-md-6 col-md-offset-1">
 
         <h1>Tournaments</h1>
 
@@ -69,7 +69,7 @@
 
             <?php foreach ($tournaments as $tournament): ?>
 
-                <div class="span3">
+                <div class="col-md-3">
                     <h4><?php echo $tournament->getName(); ?></h4>
 
                     <?php if ($tournament instanceof \Application\Model\Entity\League): ?>
