@@ -34,6 +34,16 @@ class Player
     protected $name;
 
     /**
+     * @var int
+     */
+    protected $points = 1000;
+
+    /**
+     * @var int
+     */
+    protected $matchCount = 0;
+
+    /**
      * @param $data
      */
     public function exchangeArray($data)
@@ -86,6 +96,38 @@ class Player
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param int $points
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param int $matchCount
+     */
+    public function setMatchCount($matchCount)
+    {
+        $this->matchCount = $matchCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMatchCount()
+    {
+        return $this->matchCount;
     }
 
 }

@@ -41,6 +41,16 @@ return array(
                 $em->getRepository('Application\Model\Entity\Player')
             );
         },
+        'Application\Controller\Ranking' => function(ControllerManager $cm) {
+            $sm = $cm->getServiceLocator();
+            /** @var $em EntityManager */
+            $em = $sm->get("doctrine.entitymanager.orm_default");
+            return new Controller\RankingController(
+                $em->getRepository('Application\Model\Entity\Match'),
+                $em->getRepository('Application\Model\Entity\AbstractTournament'),
+                $sm->get('console')
+            );
+        },
         'Application\Controller\Dashboard' => function(ControllerManager $cm) {
             $sm = $cm->getServiceLocator();
             /** @var $em EntityManager */

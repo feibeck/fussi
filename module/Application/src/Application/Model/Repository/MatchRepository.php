@@ -74,6 +74,22 @@ class MatchRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findForTournament(AbstractTournament $tournament)
+    {
+        $query = $this->_em->createQuery(
+            'SELECT m FROM Application\Model\Entity\Match m
+            WHERE m.tournament = :tournament'
+        );
+
+        $query->setParameters(
+            array(
+                 'tournament' => $tournament
+            )
+        );
+
+        return $query->getResult();
+    }
+
     /**
      * Get all players who have played a match (yet) in the tournament
      *

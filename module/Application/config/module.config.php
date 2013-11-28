@@ -20,7 +20,7 @@ return array(
                     'route'    => '/',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Dashboard',
-                        'action'     => 'dashboard'
+                        'action'     => 'index'
                     ),
                 ),
             ),
@@ -185,6 +185,21 @@ return array(
                 )
             ),
         ),
+    ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'elo' => array(
+                    'options' => array(
+                        'route'    => 'elo',
+                        'defaults' => array(
+                            'controller' => 'Application\Controller\Ranking',
+                            'action'     => 'elo'
+                        )
+                    )
+                )
+            )
+        )
     ),
     'doctrine' => array(
         'driver' => array(
