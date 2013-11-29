@@ -13,12 +13,15 @@
 
 namespace Application\Controller;
 
-use Application\Model\Elo;
+use Application\Model\Entity\DoubleMatch;
+use Application\Model\Entity\SingleMatch;
+use Application\Model\Ranking\EloPlayer;
+use Application\Model\Ranking\EloTeam;
 use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\TournamentRepository;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Console\Request as ConsoleRequest;
 use Zend\Console\Adapter\AdapterInterface as Console;
+use Zend\Console\Request as ConsoleRequest;
+use Zend\Mvc\Controller\AbstractActionController;
 
 class RankingController extends AbstractActionController
 {
@@ -37,6 +40,8 @@ class RankingController extends AbstractActionController
      * @var \Zend\Console\Adapter\AdapterInterface
      */
     protected $console;
+
+    protected $ranking = array();
 
     /**
      * @param \Application\Model\Repository\MatchRepository      $matchRepository
@@ -65,39 +70,46 @@ class RankingController extends AbstractActionController
         }
 
         /** @var \Application\Model\Entity\League $tournament */
-        $tournament = $this->tournamentRepository->find(1);
+        $tournament = $this->tournamentRepository->find(3);
 
-        $eloRankings = array();
+        //$matches = $this->matchRepository->findForTournament($tournament);
+        $matches = $this->matchRepository->findAll();
 
-        $matches = $this->matchRepository->findForTournament($tournament);
-
-        /** @var \Application\Model\Entity\SingleMatch $match */
         foreach ($matches as $match) {
 
-            if (!in_array($match->getPlayer1(), $eloRankings)) {
-                $eloRankings[] = $match->getPlayer1();
-            }
-            if (!in_array($match->getPlayer2(), $eloRankings)) {
-                $eloRankings[] = $match->getPlayer2();
+            foreach ($match->getPlayer() as $player) {
+                $this->addPlayerToRanking($player);
             }
 
-            $oldRanking1 = $match->getPlayer1()->getPoints();
-            $oldRanking2 = $match->getPlayer2()->getPoints();
+            if ($match instanceof SingleMatch) {
 
-            $ranking = new Elo($match);
-            $ranking->updatePlayers();
+                $ranking = new EloPlayer($match);
+                $ranking->updatePlayers();
+
+                $participant1 = $match->getPlayer1();
+                $participant2 = $match->getPlayer2();
+
+            } else if ($match instanceof DoubleMatch) {
+
+                $ranking = new EloTeam($match);
+                $ranking->updatePlayers();
+
+                $participant1 = $match->getTeamOne();
+                $participant2 = $match->getTeamTwo();
+
+            }
 
             $this->console->writeLine(
                 sprintf(
                     '%s vs. %s - Chances %s%%/%s%%. Points %d (%+d) / %d (%+d)',
-                    $match->getPlayer1()->getName(),
-                    $match->getPlayer2()->getName(),
+                    $participant1->getName(),
+                    $participant2->getName(),
                     $ranking->getChance1(),
                     $ranking->getChance2(),
-                    $match->getPlayer1()->getPoints(),
-                    $match->getPlayer1()->getPoints() - $oldRanking1,
-                    $match->getPlayer2()->getPoints(),
-                    $match->getPlayer2()->getPoints() - $oldRanking2
+                    $ranking->getNewElo1(),
+                    $ranking->getDiffPlayer1(),
+                    $ranking->getNewElo2(),
+                    $ranking->getDiffPlayer2()
                 )
             );
 
@@ -105,22 +117,30 @@ class RankingController extends AbstractActionController
 
         $this->console->writeLine(str_repeat("-", $this->console->getWidth() / 2));
 
-        usort($eloRankings, array($this, 'compareRanking'));
+        usort($this->ranking, array($this, 'compareRanking'));
 
         $this->console->writeLine("Rankings:");
 
         $i = 1;
-        foreach ($eloRankings as $player) {
+        foreach ($this->ranking as $player) {
             $this->console->writeLine(
                 sprintf(
-                    "%d: %d - %s",
+                    "%d: %d - %s (%d matches)",
                     $i++,
                     $player->getPoints(),
-                    $player->getName()
+                    $player->getName(),
+                    $player->getMatchCount()
                 )
             );
         }
 
+    }
+
+    protected function addPlayerToRanking($player)
+    {
+        if (!in_array($player, $this->ranking)) {
+            $this->ranking[] = $player;
+        }
     }
 
     public function compareRanking($player1, $player2)

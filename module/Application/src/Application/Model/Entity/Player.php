@@ -122,6 +122,11 @@ class Player
         $this->matchCount = $matchCount;
     }
 
+    public function incrementMatchCount()
+    {
+        $this->matchCount++;
+    }
+
     /**
      * @return int
      */

@@ -285,4 +285,23 @@ abstract class Match
         return false;
     }
 
+    /**
+     * Returns a list of all players involved in a match.
+     *
+     * @return Player[]
+     */
+    public function getPlayer()
+    {
+        if ($this instanceof SingleMatch) {
+            return array($this->getPlayer1(), $this->getPlayer2());
+        } elseif ($this instanceof DoubleMatch) {
+            return array(
+                $this->getTeamOne()->getAttackingPlayer(),
+                $this->getTeamOne()->getDefendingPlayer(),
+                $this->getTeamTwo()->getAttackingPlayer(),
+                $this->getTeamTwo()->getDefendingPlayer(),
+            );
+        }
+    }
+
 }
