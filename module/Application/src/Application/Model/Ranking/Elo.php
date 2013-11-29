@@ -23,42 +23,42 @@ abstract class Elo
     /**
      * @var int
      */
-    protected $elo1;
+    protected $currentPoints1;
 
     /**
      * @var int
      */
-    protected $elo2;
+    protected $currentPoints2;
 
     /**
      * @var int
      */
-    protected $newElo1;
+    protected $newPoints1;
 
     /**
      * @var int
      */
-    protected $newElo2;
+    protected $newPoints2;
 
     /**
      * @var float
      */
-    protected $expectedValue1;
+    protected $expectedScore1;
 
     /**
      * @var float
      */
-    protected $expectedValue2;
+    protected $expectedScore2;
 
     /**
      * @var int
      */
-    protected $diffPlayer1;
+    protected $difference1;
 
     /**
      * @var int
      */
-    protected $diffPlayer2;
+    protected $difference2;
 
     /**
      * @var SingleMatch|DoubleMatch
@@ -82,42 +82,42 @@ abstract class Elo
     {
         $this->match = $match;
 
-        $this->elo1 = $this->getPointsParticipant1($match);
-        $this->elo2 = $this->getPointsParticipant2($match);
+        $this->currentPoints1 = $this->getPointsParticipant1($match);
+        $this->currentPoints2 = $this->getPointsParticipant2($match);
 
-        $this->expectedValue1 = $this->_calculateExpectedValue($this->elo1, $this->elo2);
-        $this->expectedValue2 = $this->_calculateExpectedValue($this->elo2, $this->elo1);
+        $this->expectedScore1 = $this->calculateExpectedScore($this->currentPoints1, $this->currentPoints2);
+        $this->expectedScore2 = $this->calculateExpectedScore($this->currentPoints2, $this->currentPoints1);
 
-        $this->newElo1 = $this->_newElo(
-            $this->elo1,
-            $this->expectedValue1,
+        $this->newPoints1 = $this->calculateNewPoints(
+            $this->currentPoints1,
+            $this->expectedScore1,
             $this->getPointsFormMatch(1)
         );
 
-        $this->newElo2 = $this->_newElo(
-            $this->elo2,
-            $this->expectedValue2,
+        $this->newPoints2 = $this->calculateNewPoints(
+            $this->currentPoints2,
+            $this->expectedScore2,
             $this->getPointsFormMatch(2)
         );
 
-        $this->diffPlayer1 = $this->newElo1 - $this->elo1;
-        $this->diffPlayer2 = $this->newElo2 - $this->elo2;
+        $this->difference1 = $this->newPoints1 - $this->currentPoints1;
+        $this->difference2 = $this->newPoints2 - $this->currentPoints2;
     }
 
     /**
      * @return int
      */
-    public function getDiffPlayer1()
+    public function getDifference1()
     {
-        return $this->diffPlayer1;
+        return $this->difference1;
     }
 
     /**
      * @return int
      */
-    public function getDiffPlayer2()
+    public function getDifference2()
     {
-        return $this->diffPlayer2;
+        return $this->difference2;
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class Elo
      */
     public function getChance1()
     {
-        return round($this->expectedValue1 * 100);
+        return round($this->expectedScore1 * 100);
     }
 
     /**
@@ -133,39 +133,39 @@ abstract class Elo
      */
     public function getChance2()
     {
-        return round($this->expectedValue2 * 100);
+        return round($this->expectedScore2 * 100);
     }
 
     /**
      * @return int
      */
-    public function getNewElo1()
+    public function getNewPoints1()
     {
-        return $this->newElo1;
+        return $this->newPoints1;
     }
 
     /**
      * @return int
      */
-    public function getNewElo2()
+    public function getNewPoints2()
     {
-        return $this->newElo2;
+        return $this->newPoints2;
     }
 
     /**
      * @return int
      */
-    public function getCurrentElo1()
+    public function getCurrentPoints1()
     {
-        return $this->elo1;
+        return $this->currentPoints1;
     }
 
     /**
      * @return int
      */
-    public function getCurrentElo2()
+    public function getCurrentPoints2()
     {
-        return $this->elo2;
+        return $this->currentPoints2;
     }
 
     /**
@@ -187,9 +187,9 @@ abstract class Elo
     /**
      * @return int
      */
-    protected function kFactor()
+    protected function getKFactor()
     {
-        if ($this->elo1 > 2400 && $this->elo2 > 2400) {
+        if ($this->currentPoints1 > 2400 && $this->currentPoints2 > 2400) {
             return 10;
         }
         if ($this->matchHasNewPlayer()) {
@@ -205,9 +205,9 @@ abstract class Elo
      *
      * @return int
      */
-    public function _newElo($elo, $expectedValue, $points)
+    protected function calculateNewPoints($elo, $expectedValue, $points)
     {
-        return $elo + $this->kFactor() * ($points - $expectedValue);
+        return $elo + $this->getKFactor() * ($points - $expectedValue);
     }
 
     /**
@@ -216,7 +216,7 @@ abstract class Elo
      *
      * @return float
      */
-    protected function _calculateExpectedValue($points1, $points2)
+    protected function calculateExpectedScore($points1, $points2)
     {
         $difference = $points2 - $points1;
         $difference = $difference < -400 ? -400 : $difference;

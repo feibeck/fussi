@@ -20,8 +20,8 @@ class EloPlayer extends Elo
 
     public function updatePlayers()
     {
-        $this->match->getPlayer1()->setPoints($this->newElo1);
-        $this->match->getPlayer2()->setPoints($this->newElo2);
+        $this->match->getPlayer1()->setPoints($this->newPoints1);
+        $this->match->getPlayer2()->setPoints($this->newPoints2);
 
         $this->match->getPlayer1()->incrementMatchCount();
         $this->match->getPlayer2()->incrementMatchCount();

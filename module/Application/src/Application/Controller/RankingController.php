@@ -106,10 +106,10 @@ class RankingController extends AbstractActionController
                     $participant2->getName(),
                     $ranking->getChance1(),
                     $ranking->getChance2(),
-                    $ranking->getNewElo1(),
-                    $ranking->getDiffPlayer1(),
-                    $ranking->getNewElo2(),
-                    $ranking->getDiffPlayer2()
+                    $ranking->getNewPoints1(),
+                    $ranking->getDifference1(),
+                    $ranking->getNewPoints2(),
+                    $ranking->getDifference2()
                 )
             );
 

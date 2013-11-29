@@ -21,8 +21,8 @@ class EloTeam extends Elo
 
     public function updatePlayers()
     {
-        $this->updateTeam($this->match->getTeamOne(), $this->diffPlayer1);
-        $this->updateTeam($this->match->getTeamTwo(), $this->diffPlayer2);
+        $this->updateTeam($this->match->getTeamOne(), $this->difference1);
+        $this->updateTeam($this->match->getTeamTwo(), $this->difference2);
     }
 
     /**
