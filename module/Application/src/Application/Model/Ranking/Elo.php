@@ -15,50 +15,11 @@ namespace Application\Model\Ranking;
 
 use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\Match;
+use Application\Model\Entity\PointLog;
 use Application\Model\Entity\SingleMatch;
 
-abstract class Elo
+class Elo
 {
-
-    /**
-     * @var int
-     */
-    protected $currentPoints1;
-
-    /**
-     * @var int
-     */
-    protected $currentPoints2;
-
-    /**
-     * @var int
-     */
-    protected $newPoints1;
-
-    /**
-     * @var int
-     */
-    protected $newPoints2;
-
-    /**
-     * @var float
-     */
-    protected $expectedScore1;
-
-    /**
-     * @var float
-     */
-    protected $expectedScore2;
-
-    /**
-     * @var int
-     */
-    protected $difference1;
-
-    /**
-     * @var int
-     */
-    protected $difference2;
 
     /**
      * @var SingleMatch|DoubleMatch
@@ -66,148 +27,91 @@ abstract class Elo
     protected $match;
 
     /**
-     * @var float
+     * @var PointLog
      */
-    protected $points1;
-
-    /**
-     * @var float
-     */
-    protected $points2;
+    protected $pointLog;
 
     /**
      * @param Match $match
+     *
+     * @return PointLog
      */
-    public function __construct(Match $match)
+    public function calculateMatch(Match $match)
     {
-        $this->match = $match;
+        $pointLog = new PointLog($match);
 
-        $this->currentPoints1 = $this->getPointsParticipant1($match);
-        $this->currentPoints2 = $this->getPointsParticipant2($match);
+        $pointLog->setExpectedScore1($this->calculateExpectedScore($pointLog->getCurrentPoints1(), $pointLog->getCurrentPoints2()));
+        $pointLog->setExpectedScore2($this->calculateExpectedScore($pointLog->getCurrentPoints2(), $pointLog->getCurrentPoints1()));
 
-        $this->expectedScore1 = $this->calculateExpectedScore($this->currentPoints1, $this->currentPoints2);
-        $this->expectedScore2 = $this->calculateExpectedScore($this->currentPoints2, $this->currentPoints1);
-
-        $this->newPoints1 = $this->calculateNewPoints(
-            $this->currentPoints1,
-            $this->expectedScore1,
-            $this->getPointsFormMatch(1)
+        $pointLog->setNewPoints1(
+            $this->calculateNewPoints(
+                $match,
+                $pointLog,
+                $pointLog->getCurrentPoints1(),
+                $pointLog->getExpectedScore1(),
+                $this->getPointsFormMatch($match, 1)
+            )
         );
 
-        $this->newPoints2 = $this->calculateNewPoints(
-            $this->currentPoints2,
-            $this->expectedScore2,
-            $this->getPointsFormMatch(2)
+        $pointLog->setNewPoints2(
+            $this->calculateNewPoints(
+                $match,
+                $pointLog,
+                $pointLog->getCurrentPoints2(),
+                $pointLog->getExpectedScore2(),
+                $this->getPointsFormMatch($match, 2)
+            )
         );
 
-        $this->difference1 = $this->newPoints1 - $this->currentPoints1;
-        $this->difference2 = $this->newPoints2 - $this->currentPoints2;
+        return $pointLog;
     }
 
     /**
-     * @return int
-     */
-    public function getDifference1()
-    {
-        return $this->difference1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDifference2()
-    {
-        return $this->difference2;
-    }
-
-    /**
-     * @return int
-     */
-    public function getChance1()
-    {
-        return round($this->expectedScore1 * 100);
-    }
-
-    /**
-     * @return int
-     */
-    public function getChance2()
-    {
-        return round($this->expectedScore2 * 100);
-    }
-
-    /**
-     * @return int
-     */
-    public function getNewPoints1()
-    {
-        return $this->newPoints1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNewPoints2()
-    {
-        return $this->newPoints2;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCurrentPoints1()
-    {
-        return $this->currentPoints1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCurrentPoints2()
-    {
-        return $this->currentPoints2;
-    }
-
-    /**
-     * @param $participantIndex
+     * @param Match $match
+     * @param int   $participantIndex
      *
      * @return float
      */
-    protected function getPointsFormMatch($participantIndex)
+    protected function getPointsFormMatch($match, $participantIndex)
     {
-        $winner = $this->match->getWinner();
+        $winner = $match->getWinner();
         if ($winner == $participantIndex) {
             return 1;
-        } else if ($this->match->getWinner() == 0) {
+        } else if ($match->getWinner() == 0) {
             return 0.5;
         }
         return 0;
     }
 
     /**
+     * @param Match    $match
+     * @param PointLog $pointLog
+     *
      * @return int
      */
-    protected function getKFactor()
+    protected function getKFactor($match, $pointLog)
     {
-        if ($this->currentPoints1 > 2400 && $this->currentPoints2 > 2400) {
+        if ($pointLog->getCurrentPoints1() > 2400 && $pointLog->getCurrentPoints2() > 2400) {
             return 10;
         }
-        if ($this->matchHasNewPlayer()) {
+        if ($this->matchHasNewPlayer($match)) {
             return 30;
         }
         return 15;
     }
 
     /**
-     * @param int   $elo
-     * @param float $expectedValue
-     * @param float $points
+     * @param Match    $match
+     * @param PointLog $pointLog
+     * @param int      $points
+     * @param float    $expectedValue
+     * @param float    $matchResult
      *
      * @return int
      */
-    protected function calculateNewPoints($elo, $expectedValue, $points)
+    protected function calculateNewPoints($match, $pointLog, $points, $expectedValue, $matchResult)
     {
-        return $elo + $this->getKFactor() * ($points - $expectedValue);
+        return $points + $this->getKFactor($match, $pointLog) * ($matchResult - $expectedValue);
     }
 
     /**
@@ -226,32 +130,18 @@ abstract class Elo
     }
 
     /**
+     * @param Match $match
+     *
      * @return bool
      */
-    protected function matchHasNewPlayer()
+    protected function matchHasNewPlayer(Match $match)
     {
-        foreach ($this->match->getPlayer() as $player) {
+        foreach ($match->getPlayer() as $player) {
             if ($player->getMatchCount() < 30) {
                 return true;
             }
         }
         return false;
     }
-
-    /**
-     * @param Match $match
-     *
-     * @return int
-     */
-    abstract protected function getPointsParticipant1($match);
-
-    /**
-     * @param Match $match
-     *
-     * @return int
-     */
-    abstract protected function getPointsParticipant2($match);
-
-    abstract public function updatePlayers();
 
 }

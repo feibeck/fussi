@@ -15,8 +15,7 @@ namespace Application\Controller;
 
 use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\SingleMatch;
-use Application\Model\Ranking\EloPlayer;
-use Application\Model\Ranking\EloTeam;
+use Application\Model\Ranking\Elo;
 use Application\Model\Repository\MatchRepository;
 use Application\Model\Repository\TournamentRepository;
 use Zend\Console\Adapter\AdapterInterface as Console;
@@ -81,18 +80,24 @@ class RankingController extends AbstractActionController
                 $this->addPlayerToRanking($player);
             }
 
+            $ranking = new Elo();
+            $log = $ranking->calculateMatch($match);
+
             if ($match instanceof SingleMatch) {
 
-                $ranking = new EloPlayer($match);
-                $ranking->updatePlayers();
+                $match->getPlayer1()->setPoints($log->getNewPoints1());
+                $match->getPlayer2()->setPoints($log->getNewPoints2());
+
+                $match->getPlayer1()->incrementMatchCount();
+                $match->getPlayer2()->incrementMatchCount();
 
                 $participant1 = $match->getPlayer1();
                 $participant2 = $match->getPlayer2();
 
             } else if ($match instanceof DoubleMatch) {
 
-                $ranking = new EloTeam($match);
-                $ranking->updatePlayers();
+                $this->updateTeam($match->getTeamOne(), $log->getDifference1());
+                $this->updateTeam($match->getTeamTwo(), $log->getDifference2());
 
                 $participant1 = $match->getTeamOne();
                 $participant2 = $match->getTeamTwo();
@@ -104,12 +109,12 @@ class RankingController extends AbstractActionController
                     '%s vs. %s - Chances %s%%/%s%%. Points %d (%+d) / %d (%+d)',
                     $participant1->getName(),
                     $participant2->getName(),
-                    $ranking->getChance1(),
-                    $ranking->getChance2(),
-                    $ranking->getNewPoints1(),
-                    $ranking->getDifference1(),
-                    $ranking->getNewPoints2(),
-                    $ranking->getDifference2()
+                    $log->getChance1(),
+                    $log->getChance2(),
+                    $log->getNewPoints1(),
+                    $log->getDifference1(),
+                    $log->getNewPoints2(),
+                    $log->getDifference2()
                 )
             );
 
@@ -146,6 +151,26 @@ class RankingController extends AbstractActionController
     public function compareRanking($player1, $player2)
     {
         return $player2->getPoints() - $player1->getPoints();
+    }
+
+    /**
+     * @param $team
+     * @param $diff
+     */
+    protected function updateTeam($team, $diff)
+    {
+        $this->_updatePlayer($diff, $team->getAttackingPlayer());
+        $this->_updatePlayer($diff, $team->getDefendingPlayer());
+    }
+
+    /**
+     * @param $diff
+     * @param $player
+     */
+    protected function _updatePlayer($diff, $player)
+    {
+        $player->setPoints($player->getPoints() + $diff);
+        $player->incrementMatchCount();
     }
 
 }
