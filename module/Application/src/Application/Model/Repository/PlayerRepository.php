@@ -58,11 +58,22 @@ class PlayerRepository extends EntityRepository implements \Application\Model\Re
 
     /**
      * @param Player $player
+     * @param bool   $flush
      */
-    public function persist(Player $player)
+    public function persist(Player $player, $flush = true)
     {
         $this->_em->persist($player);
-        $this->_em->flush();
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    public function resetRankings()
+    {
+        $query = $this->_em->createQuery(
+            'UPDATE Application\Model\Entity\Player p SET p.points = 1000, p.matchCount = 0'
+        );
+        $query->execute();
     }
 
 }

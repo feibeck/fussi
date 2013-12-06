@@ -17,6 +17,7 @@ use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Ranking\Elo;
 use Application\Model\Repository\MatchRepository;
+use Application\Model\Repository\PlayerRepository;
 use Application\Model\Repository\PointLogRepository;
 use Application\Model\Repository\TournamentRepository;
 use Zend\Console\Adapter\AdapterInterface as Console;
@@ -42,6 +43,11 @@ class RankingController extends AbstractActionController
     protected $pointLogRepository;
 
     /**
+     * @var \Application\Model\Repository\PlayerRepository
+     */
+    protected $playerRepository;
+
+    /**
      * @var \Zend\Console\Adapter\AdapterInterface
      */
     protected $console;
@@ -58,12 +64,14 @@ class RankingController extends AbstractActionController
         MatchRepository $matchRepository,
         TournamentRepository $tournamentRepository,
         PointLogRepository $pointLogRepository,
+        PlayerRepository $playerRepository,
         Console $console
     )
     {
         $this->matchRepository      = $matchRepository;
         $this->tournamentRepository = $tournamentRepository;
         $this->pointLogRepository   = $pointLogRepository;
+        $this->playerRepository     = $playerRepository;
         $this->console              = $console;
     }
 
@@ -77,13 +85,10 @@ class RankingController extends AbstractActionController
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
-        /** @var \Application\Model\Entity\League $tournament */
-        $tournament = $this->tournamentRepository->find(3);
-
-        //$matches = $this->matchRepository->findForTournament($tournament);
         $matches = $this->matchRepository->findAll();
 
         $this->pointLogRepository->reset();
+        $this->playerRepository->resetRankings();
 
         foreach ($matches as $match) {
 
@@ -102,6 +107,9 @@ class RankingController extends AbstractActionController
                 $match->getPlayer1()->incrementMatchCount();
                 $match->getPlayer2()->incrementMatchCount();
 
+                $this->playerRepository->persist($match->getPlayer1(), false);
+                $this->playerRepository->persist($match->getPlayer2(), false);
+
                 $participant1 = $match->getPlayer1();
                 $participant2 = $match->getPlayer2();
 
@@ -109,6 +117,11 @@ class RankingController extends AbstractActionController
 
                 $this->updateTeam($match->getTeamOne(), $log->getDifference1());
                 $this->updateTeam($match->getTeamTwo(), $log->getDifference2());
+
+                $this->playerRepository->persist($match->getTeamOne()->getAttackingPlayer(), false);
+                $this->playerRepository->persist($match->getTeamOne()->getDefendingPlayer(), false);
+                $this->playerRepository->persist($match->getTeamTwo()->getAttackingPlayer(), false);
+                $this->playerRepository->persist($match->getTeamTwo()->getDefendingPlayer(), false);
 
                 $participant1 = $match->getTeamOne();
                 $participant2 = $match->getTeamTwo();

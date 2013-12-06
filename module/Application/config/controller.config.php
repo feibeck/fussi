@@ -49,6 +49,7 @@ return array(
                 $em->getRepository('Application\Model\Entity\Match'),
                 $em->getRepository('Application\Model\Entity\AbstractTournament'),
                 $em->getRepository('Application\Model\Entity\PointLog'),
+                $em->getRepository('Application\Model\Entity\Player'),
                 $sm->get('console')
             );
         },

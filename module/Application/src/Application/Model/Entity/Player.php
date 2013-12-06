@@ -35,11 +35,15 @@ class Player
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $points = 1000;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $matchCount = 0;
 
