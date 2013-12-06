@@ -20,7 +20,7 @@ return array(
                     'route'    => '/',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Dashboard',
-                        'action'     => 'index'
+                        'action'     => 'dashboard'
                     ),
                 ),
             ),
