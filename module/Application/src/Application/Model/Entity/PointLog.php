@@ -16,7 +16,7 @@ namespace Application\Model\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\PointLogRepository")
  * @ORM\Table(name="pointlog")
  */
 class PointLog

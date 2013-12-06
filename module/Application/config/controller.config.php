@@ -48,6 +48,7 @@ return array(
             return new Controller\RankingController(
                 $em->getRepository('Application\Model\Entity\Match'),
                 $em->getRepository('Application\Model\Entity\AbstractTournament'),
+                $em->getRepository('Application\Model\Entity\PointLog'),
                 $sm->get('console')
             );
         },

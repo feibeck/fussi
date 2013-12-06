@@ -17,6 +17,7 @@ use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\SingleMatch;
 use Application\Model\Ranking\Elo;
 use Application\Model\Repository\MatchRepository;
+use Application\Model\Repository\PointLogRepository;
 use Application\Model\Repository\TournamentRepository;
 use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\Request as ConsoleRequest;
@@ -36,6 +37,11 @@ class RankingController extends AbstractActionController
     protected $tournamentRepository;
 
     /**
+     * @var \Application\Model\Repository\PointLogRepository
+     */
+    protected $pointLogRepository;
+
+    /**
      * @var \Zend\Console\Adapter\AdapterInterface
      */
     protected $console;
@@ -45,17 +51,20 @@ class RankingController extends AbstractActionController
     /**
      * @param \Application\Model\Repository\MatchRepository      $matchRepository
      * @param \Application\Model\Repository\TournamentRepository $tournamentRepository
+     * @param \Application\Model\Repository\PointLogRepository   $pointLogRepository
      * @param \Zend\Console\Adapter\AdapterInterface             $console
      */
     public function __construct(
         MatchRepository $matchRepository,
         TournamentRepository $tournamentRepository,
+        PointLogRepository $pointLogRepository,
         Console $console
     )
     {
-        $this->matchRepository = $matchRepository;
+        $this->matchRepository      = $matchRepository;
         $this->tournamentRepository = $tournamentRepository;
-        $this->console = $console;
+        $this->pointLogRepository   = $pointLogRepository;
+        $this->console              = $console;
     }
 
     public function eloAction()
@@ -73,6 +82,8 @@ class RankingController extends AbstractActionController
 
         //$matches = $this->matchRepository->findForTournament($tournament);
         $matches = $this->matchRepository->findAll();
+
+        $this->pointLogRepository->reset();
 
         foreach ($matches as $match) {
 
@@ -104,6 +115,8 @@ class RankingController extends AbstractActionController
 
             }
 
+            $this->pointLogRepository->persist($log, false);
+
             $this->console->writeLine(
                 sprintf(
                     '%s vs. %s - Chances %s%%/%s%%. Points %d (%+d) / %d (%+d)',
@@ -119,6 +132,8 @@ class RankingController extends AbstractActionController
             );
 
         }
+
+        $this->pointLogRepository->flush();
 
         $this->console->writeLine(str_repeat("-", $this->console->getWidth() / 2));
 
