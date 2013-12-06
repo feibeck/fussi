@@ -49,7 +49,7 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
         $this->player->setId(2);
         $this->player->setName("Bar");
         $this->assertEquals(
-            array('id' => 2, 'name' => 'Bar'),
+            array('id' => 2, 'name' => 'Bar', 'points' => 1000, 'matchCount' => 0),
             $this->player->getArrayCopy()
         );
     }
