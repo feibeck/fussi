@@ -13,64 +13,75 @@
 
 namespace Application\Model\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="pointlog")
+ */
 class PointLog
 {
 
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $currentPoints1;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $currentPoints2;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $newPoints1;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
     protected $newPoints2;
 
     /**
-     * @var float
+     * @var int
+     *
+     * @ORM\Column(type="integer")
      */
-    protected $expectedScore1;
-
-    /**
-     * @var float
-     */
-    protected $expectedScore2;
+    protected $chance1;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
-    protected $difference1;
-
-    /**
-     * @var int
-     */
-    protected $difference2;
+    protected $chance2;
 
     /**
      * @var SingleMatch|DoubleMatch
+     *
+     * @ORM\ManyToOne(targetEntity="\Application\Model\Entity\Match")
+     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     protected $match;
 
     /**
-     * @var float
+     * @param Match $match
      */
-    protected $points1;
-
-    /**
-     * @var float
-     */
-    protected $points2;
-
     public function __construct(Match $match)
     {
         $this->match = $match;
@@ -125,38 +136,6 @@ class PointLog
     public function getDifference2()
     {
         return $this->getNewPoints2() - $this->getCurrentPoints2();
-    }
-
-    /**
-     * @param float $expectedScore1
-     */
-    public function setExpectedScore1($expectedScore1)
-    {
-        $this->expectedScore1 = $expectedScore1;
-    }
-
-    /**
-     * @return float
-     */
-    public function getExpectedScore1()
-    {
-        return $this->expectedScore1;
-    }
-
-    /**
-     * @param float $expectedScore2
-     */
-    public function setExpectedScore2($expectedScore2)
-    {
-        $this->expectedScore2 = $expectedScore2;
-    }
-
-    /**
-     * @return float
-     */
-    public function getExpectedScore2()
-    {
-        return $this->expectedScore2;
     }
 
     /**
@@ -216,35 +195,19 @@ class PointLog
     }
 
     /**
-     * @param float $points1
+     * @param int $chance1
      */
-    public function setPoints1($points1)
+    public function setChance1($chance1)
     {
-        $this->points1 = $points1;
+        $this->chance1 = $chance1;
     }
 
     /**
-     * @return float
+     * @param int $chance2
      */
-    public function getPoints1()
+    public function setChance2($chance2)
     {
-        return $this->points1;
-    }
-
-    /**
-     * @param float $points2
-     */
-    public function setPoints2($points2)
-    {
-        $this->points2 = $points2;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPoints2()
-    {
-        return $this->points2;
+        $this->chance2 = $chance2;
     }
 
     /**
@@ -252,7 +215,7 @@ class PointLog
      */
     public function getChance1()
     {
-        return round($this->getExpectedScore1() * 100);
+        return $this->chance1;
     }
 
     /**
@@ -260,7 +223,7 @@ class PointLog
      */
     public function getChance2()
     {
-        return round($this->getExpectedScore2() * 100);
+        return $this->chance2;
     }
 
     /**

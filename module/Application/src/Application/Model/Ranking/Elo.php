@@ -40,15 +40,18 @@ class Elo
     {
         $pointLog = new PointLog($match);
 
-        $pointLog->setExpectedScore1($this->calculateExpectedScore($pointLog->getCurrentPoints1(), $pointLog->getCurrentPoints2()));
-        $pointLog->setExpectedScore2($this->calculateExpectedScore($pointLog->getCurrentPoints2(), $pointLog->getCurrentPoints1()));
+        $expectedScore1 = $this->calculateExpectedScore($pointLog->getCurrentPoints1(), $pointLog->getCurrentPoints2());
+        $expectedScore2 = $this->calculateExpectedScore($pointLog->getCurrentPoints2(), $pointLog->getCurrentPoints1());
+
+        $pointLog->setChance1($this->calculateChance($expectedScore1));
+        $pointLog->setChance2($this->calculateChance($expectedScore2));
 
         $pointLog->setNewPoints1(
             $this->calculateNewPoints(
                 $match,
                 $pointLog,
                 $pointLog->getCurrentPoints1(),
-                $pointLog->getExpectedScore1(),
+                $expectedScore1,
                 $this->getPointsFormMatch($match, 1)
             )
         );
@@ -58,7 +61,7 @@ class Elo
                 $match,
                 $pointLog,
                 $pointLog->getCurrentPoints2(),
-                $pointLog->getExpectedScore2(),
+                $expectedScore2,
                 $this->getPointsFormMatch($match, 2)
             )
         );
@@ -142,6 +145,16 @@ class Elo
             }
         }
         return false;
+    }
+
+    /**
+     * @param float $expectedScore
+     *
+     * @return int
+     */
+    protected function calculateChance($expectedScore)
+    {
+        return round($expectedScore * 100);
     }
 
 }
