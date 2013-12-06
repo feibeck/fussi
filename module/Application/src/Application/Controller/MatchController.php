@@ -13,6 +13,8 @@
 
 namespace Application\Controller;
 
+use Application\Model\Ranking\Elo;
+use Application\Model\Repository\PointLogRepository;
 use Application\Model\Repository\TournamentRepository;
 use Application\Model\Entity\League;
 use Application\Model\Entity\Match;
@@ -50,22 +52,30 @@ class MatchController extends AbstractActionController
     protected $plannedMatchRepository;
 
     /**
+     * @var \Application\Model\Repository\PointLogRepository
+     */
+    protected $pointLogRepository;
+
+    /**
      * @param MatchRepository        $matchRepository
      * @param TournamentRepository   $tournamentRepository
      * @param PlayerRepository       $playerRepository
      * @param PlannedMatchRepository $plannedMatchRepository
+     * @param PointLogRepository     $pointLogRepository
      */
     public function __construct(
         MatchRepository        $matchRepository,
         TournamentRepository   $tournamentRepository,
         PlayerRepository       $playerRepository,
-        PlannedMatchRepository $plannedMatchRepository
+        PlannedMatchRepository $plannedMatchRepository,
+        PointLogRepository     $pointLogRepository
     )
     {
         $this->matchRepository        = $matchRepository;
         $this->tournamentRepository   = $tournamentRepository;
         $this->playerRepository       = $playerRepository;
         $this->plannedMatchRepository = $plannedMatchRepository;
+        $this->pointLogRepository     = $pointLogRepository;
     }
 
     /**
@@ -135,6 +145,16 @@ class MatchController extends AbstractActionController
                     $this->matchRepository->persist($match);
                     if ($plannedMatch != null) {
                         $this->plannedMatchRepository->persist($plannedMatch);
+                    }
+
+                    $ranking = new Elo();
+                    $log = $ranking->calculateMatch($match);
+                    $this->pointLogRepository->persist($log);
+
+                    $match->updateRanking($log);    
+
+                    foreach ($match->getPlayer() as $player) {
+                        $this->playerRepository->persist($player);
                     }
 
                     return $this->redirect()->toRoute(

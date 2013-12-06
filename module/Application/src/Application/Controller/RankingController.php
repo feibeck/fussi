@@ -99,29 +99,18 @@ class RankingController extends AbstractActionController
             $ranking = new Elo();
             $log = $ranking->calculateMatch($match);
 
+            $match->updateRanking($log);
+
+            foreach ($match->getPlayer() as $player) {
+                $this->playerRepository->persist($player, false);
+            }
+
             if ($match instanceof SingleMatch) {
-
-                $match->getPlayer1()->setPoints($log->getNewPoints1());
-                $match->getPlayer2()->setPoints($log->getNewPoints2());
-
-                $match->getPlayer1()->incrementMatchCount();
-                $match->getPlayer2()->incrementMatchCount();
-
-                $this->playerRepository->persist($match->getPlayer1(), false);
-                $this->playerRepository->persist($match->getPlayer2(), false);
 
                 $participant1 = $match->getPlayer1();
                 $participant2 = $match->getPlayer2();
 
             } else if ($match instanceof DoubleMatch) {
-
-                $this->updateTeam($match->getTeamOne(), $log->getDifference1());
-                $this->updateTeam($match->getTeamTwo(), $log->getDifference2());
-
-                $this->playerRepository->persist($match->getTeamOne()->getAttackingPlayer(), false);
-                $this->playerRepository->persist($match->getTeamOne()->getDefendingPlayer(), false);
-                $this->playerRepository->persist($match->getTeamTwo()->getAttackingPlayer(), false);
-                $this->playerRepository->persist($match->getTeamTwo()->getDefendingPlayer(), false);
 
                 $participant1 = $match->getTeamOne();
                 $participant2 = $match->getTeamTwo();
@@ -179,26 +168,6 @@ class RankingController extends AbstractActionController
     public function compareRanking($player1, $player2)
     {
         return $player2->getPoints() - $player1->getPoints();
-    }
-
-    /**
-     * @param $team
-     * @param $diff
-     */
-    protected function updateTeam($team, $diff)
-    {
-        $this->_updatePlayer($diff, $team->getAttackingPlayer());
-        $this->_updatePlayer($diff, $team->getDefendingPlayer());
-    }
-
-    /**
-     * @param $diff
-     * @param $player
-     */
-    protected function _updatePlayer($diff, $player)
-    {
-        $player->setPoints($player->getPoints() + $diff);
-        $player->incrementMatchCount();
     }
 
 }

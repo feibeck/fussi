@@ -85,4 +85,16 @@ class SingleMatch extends Match
 
     }
 
+    /**
+     * @param PointLog $log
+     */
+    public function updateRanking(PointLog $log)
+    {
+        $this->getPlayer1()->setPoints($log->getNewPoints1());
+        $this->getPlayer2()->setPoints($log->getNewPoints2());
+
+        $this->getPlayer1()->incrementMatchCount();
+        $this->getPlayer2()->incrementMatchCount();
+    }
+
 }

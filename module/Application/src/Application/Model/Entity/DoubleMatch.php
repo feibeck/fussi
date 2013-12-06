@@ -111,4 +111,33 @@ class DoubleMatch extends Match
         return $this->getTeamTwo();
     }
 
+    /**
+     * @param PointLog $log
+     */
+    public function updateRanking(PointLog $log)
+    {
+         $this->updateTeam($this->getTeamOne(), $log->getDifference1());
+         $this->updateTeam($this->getTeamTwo(), $log->getDifference2());
+    }
+
+    /**
+     * @param $team
+     * @param $diff
+     */
+    protected function updateTeam($team, $diff)
+    {
+        $this->updatePlayer($diff, $team->getAttackingPlayer());
+        $this->updatePlayer($diff, $team->getDefendingPlayer());
+    }
+
+    /**
+     * @param $diff
+     * @param $player
+     */
+    protected function updatePlayer($diff, $player)
+    {
+        $player->setPoints($player->getPoints() + $diff);
+        $player->incrementMatchCount();
+    }
+
 }
