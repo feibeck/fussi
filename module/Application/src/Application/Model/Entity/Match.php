@@ -304,4 +304,11 @@ abstract class Match
         }
     }
 
+    /**
+     * @param Player $player
+     *
+     * @return int
+     */
+    abstract public function getSideForPlayer(Player $player);
+
 }

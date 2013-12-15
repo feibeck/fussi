@@ -1,0 +1,76 @@
+<?php
+/**
+ * View script
+ *
+ * @copyright Copyright (c) 2013 The Fußi-Team
+ * @license   THE BEER-WARE LICENSE (Revision 42)
+ *
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * The Fußi-Team wrote this software. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy us a beer in return.
+ */
+?>
+<h1>Player <?php echo $player->getName(); ?></h1>
+
+<dl>
+    <dt>Points</dt>
+    <dd><?php echo $player->getPoints(); ?></dd>
+    <dt>Number of matches played</dt>
+    <dd><?php echo $player->getMatchCount(); ?></dd>
+</dl>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Datum</th>
+        <th>Players</th>
+        <th>Result</th>
+        <th>Chance to win</th>
+        <th>Points</th>
+    </tr>
+    <?php /** @var $log Application\Model\Entity\PointLogPlayer  */ ?>
+    <?php foreach ($logs as $matchIndex => $log): ?>
+
+        <tr>
+            <td class="right"><?php echo ($player->getMatchCount() - $matchIndex); ?></td>
+            <td><?php echo $log->getPointLog()->getMatch()->getDate()->format('d.m.Y H:i'); ?></td>
+            <td>
+                <?php $match = $log->getPointLog()->getMatch(); ?>
+                <?php if ($match instanceof \Application\Model\Entity\SingleMatch): ?>
+
+                    <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
+                        <?php echo $match->getPlayer1()->getName(); ?>
+                        (<?php echo $log->getPointLog()->getCurrentPoints1(); ?>)
+                    </span>
+                    <span class="muted">vs.</span>
+                    <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
+                        <?php echo $match->getPlayer2()->getName(); ?>
+                        (<?php echo $log->getPointLog()->getCurrentPoints2(); ?>)
+                    </span>
+
+                <?php elseif ($match instanceof \Application\Model\Entity\DoubleMatch): ?>
+
+                    <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
+                        <?php echo $match->getTeamOne()->getName(); ?>
+                        (<?php echo $log->getPointLog()->getCurrentPoints1(); ?>)
+                    </span>
+                    <span class="muted">vs.</span>
+                    <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
+                        <?php echo $match->getTeamTwo()->getName(); ?>
+                        (<?php echo $log->getPointLog()->getCurrentPoints2(); ?>)
+                    </span>
+
+                <?php endif; ?>
+                <br>
+                <small><span class="muted">Tournament:</span> <a href="<?php echo $this->url('tournament/show', array('id' => $match->getTournament()->getId())); ?>"><?php echo $match->getTournament()->getName(); ?></a></small>
+            </td>
+            <td>
+                <?php echo $this->matchResult($match); ?>
+            </td>
+            <td class="right"><?php echo $log->getPointLog()->getChance($player); ?> %</td>
+            <td class="right"><?php echo $log->getPointsAfter(); ?> (<?php echo sprintf("%+d", $log->getPointLog()->getDifference($player)); ?>)</td>
+        </tr>
+
+    <?php endforeach; ?>
+</table>

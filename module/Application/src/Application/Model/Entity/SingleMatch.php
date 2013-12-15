@@ -86,15 +86,20 @@ class SingleMatch extends Match
     }
 
     /**
-     * @param PointLog $log
+     * @param Player $player
+     *
+     * @return int
+     *
+     * @throws \RuntimeException
      */
-    public function updateRanking(PointLog $log)
+    public function getSideForPlayer(Player $player)
     {
-        $this->getPlayer1()->setPoints($log->getNewPoints1());
-        $this->getPlayer2()->setPoints($log->getNewPoints2());
-
-        $this->getPlayer1()->incrementMatchCount();
-        $this->getPlayer2()->incrementMatchCount();
+        if ($player == $this->player1) {
+            return 1;
+        } else if ($player == $this->player2) {
+            return 2;
+        }
+        throw new \RuntimeException('Player did not play in this match');
     }
 
 }

@@ -141,6 +141,15 @@ return array(
                                 'action' => 'add'
                             ),
                         ),
+                    ),
+                    'view' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/view/:id',
+                            'defaults' => array(
+                                'action' => 'view'
+                            ),
+                        ),
                     )
                 )
             ),

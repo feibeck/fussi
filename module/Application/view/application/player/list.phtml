@@ -20,14 +20,14 @@
 <table class="table table-striped">
 
     <tr>
-	<th>Name</th>
+        <th>Name</th>
     </tr>
 
     <?php foreach ($players as $player): ?>
 
-	<tr>
-	    <td><?= $player->getName(); ?></td>
-	</tr>
+    <tr>
+        <td><a href="<?php echo $this->url('player/view', array('id' => $player->getId())); ?>"><?= $player->getName(); ?></a></td>
+    </tr>
 
     <?php endforeach; ?>
 

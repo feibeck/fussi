@@ -30,7 +30,8 @@ return array(
             $sm = $cm->getServiceLocator();
             $em = $sm->get("doctrine.entitymanager.orm_default");
             return new Controller\PlayerController(
-                $em->getRepository('Application\Model\Entity\Player')
+                $em->getRepository('Application\Model\Entity\Player'),
+                $em->getRepository('Application\Model\Entity\PointLogPlayer')
             );
         },
         'Application\Controller\TournamentSetup' => function(ControllerManager $cm) {

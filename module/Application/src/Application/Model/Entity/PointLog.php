@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Model\Entity\Player
+ * Definition of Application\Model\Entity\PointLog
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,6 +13,7 @@
 
 namespace Application\Model\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,10 +81,19 @@ class PointLog
     protected $match;
 
     /**
+     * @var PointLogPlayer[]
+     *
+     * @ORM\OneToMany(targetEntity="Application\Model\Entity\PointLogPlayer", mappedBy="pointlog", cascade={"persist"})
+     */
+    protected $playerPointLogs;
+
+    /**
      * @param Match $match
      */
     public function __construct(Match $match)
     {
+        $this->playerPointLogs = new ArrayCollection();
+
         $this->match = $match;
 
         $this->currentPoints1 = $this->getPointsParticipant1($match);
@@ -123,6 +133,21 @@ class PointLog
     }
 
     /**
+     * @param Player $player
+     *
+     * @return int
+     */
+    public function getNewPoints(Player $player)
+    {
+        $side = $this->match->getSideForPlayer($player);
+        if ($side == 1) {
+            return $this->getNewPoints1();
+        } else {
+            return $this->getNewPoints2();
+        }
+    }
+
+    /**
      * @return int
      */
     public function getDifference1()
@@ -136,6 +161,21 @@ class PointLog
     public function getDifference2()
     {
         return $this->getNewPoints2() - $this->getCurrentPoints2();
+    }
+
+    /**
+     * @param Player $player
+     *
+     * @return int
+     */
+    public function getDifference(Player $player)
+    {
+        $side = $this->match->getSideForPlayer($player);
+        if ($side == 1) {
+            return $this->getDifference1();
+        } else {
+            return $this->getDifference2();
+        }
     }
 
     /**
@@ -227,6 +267,21 @@ class PointLog
     }
 
     /**
+     * @param Player $player
+     *
+     * @return int
+     */
+    public function getChance(Player $player)
+    {
+        $side = $this->match->getSideForPlayer($player);
+        if ($side == 1) {
+            return $this->chance1;
+        } else {
+            return $this->chance2;
+        }
+    }
+
+    /**
      * @return int
      */
     protected function getPointsParticipant1()
@@ -259,6 +314,14 @@ class PointLog
     {
         $sum = $team->getAttackingPlayer()->getPoints() + $team->getDefendingPlayer()->getPoints();
         return round($sum / 2);
+    }
+
+    /**
+     * @param PointLogPlayer $playerLog
+     */
+    public function addPlayerLog(PointLogPlayer $playerLog)
+    {
+        $this->playerPointLogs[] = $playerLog;
     }
 
 }

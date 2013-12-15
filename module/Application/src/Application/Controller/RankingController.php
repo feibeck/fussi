@@ -85,7 +85,7 @@ class RankingController extends AbstractActionController
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
-        $matches = $this->matchRepository->findAll();
+        $matches = $this->matchRepository->getAllOrderedByDate();
 
         $this->pointLogRepository->reset();
         $this->playerRepository->resetRankings();
@@ -98,8 +98,6 @@ class RankingController extends AbstractActionController
 
             $ranking = new Elo();
             $log = $ranking->calculateMatch($match);
-
-            $match->updateRanking($log);
 
             foreach ($match->getPlayer() as $player) {
                 $this->playerRepository->persist($player, false);

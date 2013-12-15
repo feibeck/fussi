@@ -48,6 +48,18 @@ class MatchRepository extends EntityRepository
     }
 
     /**
+     * @return Match[]
+     */
+    public function getAllOrderedByDate()
+    {
+        $query = $this->_em->createQuery(
+            'SELECT m FROM Application\Model\Entity\Match m
+            ORDER BY m.date ASC'
+        );
+        return $query->getResult();
+    }
+
+    /**
      * Returns all matches for tournament in a given month
      *
      * @param \Application\Model\Entity\League $tournament

@@ -16,6 +16,7 @@ namespace Application\Model\Ranking;
 use Application\Model\Entity\DoubleMatch;
 use Application\Model\Entity\Match;
 use Application\Model\Entity\PointLog;
+use Application\Model\Entity\PointLogPlayer;
 use Application\Model\Entity\SingleMatch;
 
 class Elo
@@ -66,6 +67,27 @@ class Elo
             )
         );
 
+        foreach ($match->getPlayer() as $player) {
+
+            $playerLog = new PointLogPlayer();
+            $playerLog->setPlayer($player);
+            $playerLog->setPointLog($pointLog);
+            $playerLog->setPointsBefore($player->getPoints());
+
+            if ($match->getSideForPlayer($player) == 1) {
+                $newPoints = $player->getPoints() + $pointLog->getDifference1();
+            } else {
+                $newPoints = $player->getPoints() + $pointLog->getDifference2();
+            }
+
+            $player->setPoints($newPoints);
+            $player->incrementMatchCount();
+
+            $playerLog->setPointsAfter($newPoints);
+
+            $pointLog->addPlayerLog($playerLog);
+        }
+
         return $pointLog;
     }
 
@@ -114,7 +136,7 @@ class Elo
      */
     protected function calculateNewPoints($match, $pointLog, $points, $expectedValue, $matchResult)
     {
-        return $points + $this->getKFactor($match, $pointLog) * ($matchResult - $expectedValue);
+        return round($points + $this->getKFactor($match, $pointLog) * ($matchResult - $expectedValue));
     }
 
     /**

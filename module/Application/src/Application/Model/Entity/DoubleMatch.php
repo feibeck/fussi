@@ -112,32 +112,20 @@ class DoubleMatch extends Match
     }
 
     /**
-     * @param PointLog $log
+     * @param Player $player
+     *
+     * @return int
+     *
+     * @throws \RuntimeException
      */
-    public function updateRanking(PointLog $log)
+    public function getSideForPlayer(Player $player)
     {
-         $this->updateTeam($this->getTeamOne(), $log->getDifference1());
-         $this->updateTeam($this->getTeamTwo(), $log->getDifference2());
-    }
-
-    /**
-     * @param $team
-     * @param $diff
-     */
-    protected function updateTeam($team, $diff)
-    {
-        $this->updatePlayer($diff, $team->getAttackingPlayer());
-        $this->updatePlayer($diff, $team->getDefendingPlayer());
-    }
-
-    /**
-     * @param $diff
-     * @param $player
-     */
-    protected function updatePlayer($diff, $player)
-    {
-        $player->setPoints($player->getPoints() + $diff);
-        $player->incrementMatchCount();
+        if ($player == $this->teamOneAttack || $player == $this->teamOneDefence) {
+            return 1;
+        } else if ($player == $this->teamTwoAttack || $player == $this->teamTwoDefence) {
+            return 2;
+        }
+        throw new \RuntimeException('Player did not play in this match');
     }
 
 }

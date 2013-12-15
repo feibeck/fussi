@@ -151,8 +151,6 @@ class MatchController extends AbstractActionController
                     $log = $ranking->calculateMatch($match);
                     $this->pointLogRepository->persist($log);
 
-                    $match->updateRanking($log);    
-
                     foreach ($match->getPlayer() as $player) {
                         $this->playerRepository->persist($player);
                     }

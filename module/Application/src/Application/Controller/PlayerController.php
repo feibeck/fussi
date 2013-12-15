@@ -15,6 +15,7 @@ namespace Application\Controller;
 
 use Application\Form\InputFilter\Player as PlayerInputFilter;
 use Application\Model\Repository\PlayerRepository;
+use Application\Model\Repository\PointLogPlayerRepository;
 use \Zend\Mvc\Controller\AbstractActionController;
 
 use \Doctrine\ORM\EntityManager;
@@ -34,11 +35,18 @@ class PlayerController extends AbstractActionController
     protected $playerRepository;
 
     /**
-     * @param PlayerRepository $playerRepository
+     * @var PointLogPlayerRepository
      */
-    public function __construct(PlayerRepository $playerRepository)
+    protected $pointLogPlayerRepository;
+
+    /**
+     * @param PlayerRepository         $playerRepository
+     * @param PointLogPlayerRepository $pointLogPlayerRepository
+     */
+    public function __construct(PlayerRepository $playerRepository, PointLogPlayerRepository $pointLogPlayerRepository)
     {
-        $this->playerRepository = $playerRepository;
+        $this->playerRepository         = $playerRepository;
+        $this->pointLogPlayerRepository = $pointLogPlayerRepository;
     }
 
     /**
@@ -75,6 +83,14 @@ class PlayerController extends AbstractActionController
         return array(
             'form' => $form
         );
+    }
+
+    public function viewAction()
+    {
+        $id = $this->params()->fromRoute('id');
+        $player = $this->playerRepository->find($id);
+        $pointLogs = $this->pointLogPlayerRepository->getForPlayer($player);
+        return array('player' => $player, 'logs' => $pointLogs);
     }
 
 }

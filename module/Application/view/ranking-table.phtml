@@ -27,7 +27,7 @@
             <td class="playerName <?php
                 if ($rank->potential >= $tournamentPotential) {
                     echo "eligible";
-                }?>"><?= $rank->getPlayer()->getName()?></td>
+                }?>"><a href="<?php echo $this->url('player/view', array('id' => $rank->getPlayer()->getId())); ?>"><?= $rank->getPlayer()->getName()?></a></td>
             <td><span class="badge badge-warning"><?= $rank->getScore(); ?></span></td>
             <td><span class="badge"><?= $rank->getMatchCount(); ?></span></td>
             <td><span><?= $rank->getGoals(); ?> : <?= $rank->getGoalsAgainst(); ?></span></td>
