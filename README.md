@@ -28,7 +28,7 @@ Setup
 3. Run composer update to fetch all PHP dependencies
 4. Get Bower if you do not already have it (http://bower.io/)
 5. Run bower install to fetch all Frontend dependencies
-6. Create a database (vendor/bin/doctrine-module orm:schema-tool:create)
+6. Create a database (vendor/bin/doctrine-module migrations:migrate)
 7. Chown/chmod ./data/db and ./data/db/db.sqlite for the webserver user to be writable
 8. Set up a webserver (e.g. php -S localhost:8080 -t public from project root)
 9. Make sure php.ini has short_open_tags set to On
