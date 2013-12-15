@@ -21,6 +21,11 @@ return array(
                     'path'    => __DIR__ . '/../../data/db/db.sqlite',
                 )
             )
-        )
+        ),
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => 'data/Migrations',
+            ),
+        ),
     )
 );
