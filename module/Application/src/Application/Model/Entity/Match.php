@@ -290,19 +290,7 @@ abstract class Match
      *
      * @return Player[]
      */
-    public function getPlayer()
-    {
-        if ($this instanceof SingleMatch) {
-            return array($this->getPlayer1(), $this->getPlayer2());
-        } elseif ($this instanceof DoubleMatch) {
-            return array(
-                $this->getTeamOne()->getAttackingPlayer(),
-                $this->getTeamOne()->getDefendingPlayer(),
-                $this->getTeamTwo()->getAttackingPlayer(),
-                $this->getTeamTwo()->getDefendingPlayer(),
-            );
-        }
-    }
+    abstract public function getPlayer();
 
     /**
      * @param Player $player

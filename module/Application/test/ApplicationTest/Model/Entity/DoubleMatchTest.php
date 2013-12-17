@@ -105,4 +105,73 @@ class DoubleMatchTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($player4, $team->getDefendingPlayer());
     }
 
+    public function testGetPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+            $this->createPlayer(3),
+            $this->createPlayer(4),
+        );
+        $match = new DoubleMatch();
+        $match->setTeamOne($player[0], $player[1]);
+        $match->setTeamTwo($player[2], $player[3]);
+        $this->assertEquals($player, $match->getPlayer());
+    }
+
+    public function testGetSideForPlayer1()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+            $this->createPlayer(3),
+            $this->createPlayer(4),
+        );
+
+        $this->match->setTeamOne($player[0], $player[1]);
+        $this->match->setTeamTwo($player[2], $player[3]);
+
+        $this->assertEquals(1, $this->match->getSideForPlayer($player[1]));
+    }
+
+    public function testGetSideForPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+            $this->createPlayer(3),
+            $this->createPlayer(4),
+        );
+
+        $this->match->setTeamOne($player[0], $player[1]);
+        $this->match->setTeamTwo($player[2], $player[3]);
+
+        $this->assertEquals(2, $this->match->getSideForPlayer($player[3]));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetSideForInvalidPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+            $this->createPlayer(3),
+            $this->createPlayer(4),
+        );
+
+        $this->match->setTeamOne($player[0], $player[1]);
+        $this->match->setTeamTwo($player[2], $player[3]);
+
+        $this->match->getSideForPlayer($this->createPlayer(5));
+    }
+
+    public function createPlayer($id)
+    {
+        $player = new Player();
+        $player->setId($id);
+        return $player;
+    }
+
 }

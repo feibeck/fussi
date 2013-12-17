@@ -112,6 +112,21 @@ class DoubleMatch extends Match
     }
 
     /**
+     * Returns a list of all players involved in a match.
+     *
+     * @return Player[]
+     */
+    public function getPlayer()
+    {
+        return array(
+            $this->getTeamOne()->getAttackingPlayer(),
+            $this->getTeamOne()->getDefendingPlayer(),
+            $this->getTeamTwo()->getAttackingPlayer(),
+            $this->getTeamTwo()->getDefendingPlayer(),
+        );
+    }
+
+    /**
      * @param Player $player
      *
      * @return int

@@ -86,6 +86,16 @@ class SingleMatch extends Match
     }
 
     /**
+     * Returns a list of all players involved in a match.
+     *
+     * @return Player[]
+     */
+    public function getPlayer()
+    {
+        return array($this->getPlayer1(), $this->getPlayer2());
+    }
+
+    /**
      * @param Player $player
      *
      * @return int

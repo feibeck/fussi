@@ -74,4 +74,67 @@ class SingleMatchTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->match->isPlayedBy($player1, $player3));
     }
 
+    public function testGetPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+        );
+        $match = new SingleMatch();
+        $match->setPlayer1($player[0]);
+        $match->setPlayer2($player[1]);
+        $this->assertEquals($player, $match->getPlayer());
+    }
+
+    public function testGetSideForPlayer1()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+        );
+
+        $this->match->setPlayer1($player[0]);
+        $this->match->setPlayer2($player[1]);
+
+        $this->assertEquals(1, $this->match->getSideForPlayer($player[0]));
+    }
+
+    public function testGetSideForPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+            $this->createPlayer(3),
+            $this->createPlayer(4),
+        );
+
+        $this->match->setPlayer1($player[0]);
+        $this->match->setPlayer2($player[1]);
+
+        $this->assertEquals(2, $this->match->getSideForPlayer($player[1]));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGetSideForInvalidPlayer()
+    {
+        $player = array(
+            $this->createPlayer(1),
+            $this->createPlayer(2),
+        );
+
+        $this->match->setPlayer1($player[0]);
+        $this->match->setPlayer2($player[1]);
+
+        $this->match->getSideForPlayer($this->createPlayer(5));
+    }
+
+    public function createPlayer($id)
+    {
+        $player = new Player();
+        $player->setId($id);
+        return $player;
+    }
+
 }
