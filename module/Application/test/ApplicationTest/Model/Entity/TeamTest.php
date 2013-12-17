@@ -13,8 +13,8 @@
 
 namespace ApplicationTest\Model\Entity;
 
-use Application\Model\Entity\Player;
 use Application\Model\Entity\Team;
+use ApplicationTest\Model\Entity\Helper\PlayerHelper;
 use \PHPUnit_Framework_TestCase as TestCase;
 
 /**
@@ -23,58 +23,56 @@ use \PHPUnit_Framework_TestCase as TestCase;
 class TeamTest extends TestCase
 {
 
+    /**
+     * @var Team
+     */
+    protected $team;
+
+    /**
+     * @var PlayerHelper
+     */
+    protected $player;
+
+    public function setUp()
+    {
+        $this->team = new Team();
+
+        $this->player = new PlayerHelper();
+        $this->player->createPlayer();
+        $this->player->createPlayer();
+
+        $this->team->setPlayer1($this->player[0]);
+        $this->team->setPlayer2($this->player[1]);
+    }
+
     public function testIdProperty()
     {
-        $team = new Team();
-        $team->setId(4);
-        $this->assertEquals(4, $team->getId());
+        $this->team->setId(4);
+        $this->assertEquals(4, $this->team->getId());
     }
 
     public function testPlayer1Property()
     {
-        $team = new Team();
-        $player = $this->createPlayer(2);
-        $team->setPlayer1($player);
-        $this->assertSame($player, $team->getPlayer1());
+        $this->assertSame($this->player[0], $this->team->getPlayer1());
     }
 
     public function testPlayer2Property()
     {
-        $team = new Team();
-        $player = $this->createPlayer(2);
-        $team->setPlayer2($player);
-        $this->assertSame($player, $team->getPlayer2());
+        $this->assertSame($this->player[1], $this->team->getPlayer2());
     }
 
     public function testGetName()
     {
-        $team = new Team();
-        $team->setPlayer1($this->createPlayer(1));
-        $team->setPlayer2($this->createPlayer(2));
-        $team->getPlayer1()->setName('Foo');
-        $team->getPlayer2()->setName('Bar');
-        $this->assertEquals('Foo / Bar', $team->getName());
+        $this->player[0]->setName('Foo');
+        $this->player[1]->setName('Bar');
+        $this->assertEquals('Foo / Bar', $this->team->getName());
     }
 
     public function testTournamentProperty()
     {
-        $team = new Team();
         $tournament = $this->getMock('\Application\Model\Entity\Tournament', array(), array(), '', false);
-        $team->setTournament($tournament);
-        $this->assertSame($tournament, $team->getTournament());
+        $this->team->setTournament($tournament);
+        $this->assertSame($tournament, $this->team->getTournament());
     }
-
-    /**
-     * @param int $id
-     *
-     * @return Player
-     */
-    protected function createPlayer($id)
-    {
-        $player = new Player();
-        $player->setId($id);
-        return $player;
-    }
-
 
 }

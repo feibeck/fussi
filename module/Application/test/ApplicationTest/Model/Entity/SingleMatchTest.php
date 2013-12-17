@@ -13,8 +13,8 @@
 
 namespace ApplicationTest\Model\Entity;
 
-use Application\Model\Entity\Player;
 use Application\Model\Entity\SingleMatch;
+use ApplicationTest\Model\Entity\Helper\PlayerHelper;
 
 /**
  * @covers Application\Model\Entity\SingleMatch
@@ -27,91 +27,62 @@ class SingleMatchTest extends \PHPUnit_Framework_TestCase
      */
     protected $match;
 
+    /**
+     * @var PlayerHelper
+     */
+    protected $player;
+
     public function setUp()
     {
         $this->match = new SingleMatch();
+
+        $this->player = new PlayerHelper();
+        $this->player->createPlayer();
+        $this->player->createPlayer();
+
+        $this->match->setPlayer1($this->player[0]);
+        $this->match->setPlayer2($this->player[1]);
     }
 
     public function testPlayer1Property()
     {
-        $player = new Player();
-        $this->match->setPlayer1($player);
-        $this->assertSame($player, $this->match->getPlayer1());
+        $this->assertSame($this->player[0], $this->match->getPlayer1());
     }
 
     public function testPlayer2Property()
     {
-        $player = new Player();
-        $this->match->setPlayer2($player);
-        $this->assertSame($player, $this->match->getPlayer2());
+        $this->assertSame($this->player[1], $this->match->getPlayer2());
     }
 
     public function testPlayedBy()
     {
-        $player1 = new Player();
-        $player2 = new Player();
-        $this->match->setPlayer1($player1);
-        $this->match->setPlayer2($player2);
-        $this->assertTrue($this->match->isPlayedBy($player1, $player2));
+        $this->assertTrue($this->match->isPlayedBy($this->player[0], $this->player[1]));
     }
 
     public function testPlayedByReversed()
     {
-        $player1 = new Player();
-        $player2 = new Player();
-        $this->match->setPlayer1($player1);
-        $this->match->setPlayer2($player2);
-        $this->assertTrue($this->match->isPlayedBy($player2, $player1));
+        $this->assertTrue($this->match->isPlayedBy($this->player[1], $this->player[0]));
     }
 
     public function testNotPlayedBy()
     {
-        $player1 = new Player();
-        $player2 = new Player();
-        $player3 = new Player();
-        $this->match->setPlayer1($player1);
-        $this->match->setPlayer2($player2);
-        $this->assertFalse($this->match->isPlayedBy($player1, $player3));
+        $this->player->createPlayer();
+        $this->assertFalse($this->match->isPlayedBy($this->player[0], $this->player[2]));
     }
 
     public function testGetPlayer()
     {
-        $player = array(
-            $this->createPlayer(1),
-            $this->createPlayer(2),
-        );
-        $match = new SingleMatch();
-        $match->setPlayer1($player[0]);
-        $match->setPlayer2($player[1]);
-        $this->assertEquals($player, $match->getPlayer());
+        $this->assertEquals($this->player->player, $this->match->getPlayer());
     }
 
     public function testGetSideForPlayer1()
     {
-        $player = array(
-            $this->createPlayer(1),
-            $this->createPlayer(2),
-        );
-
-        $this->match->setPlayer1($player[0]);
-        $this->match->setPlayer2($player[1]);
-
-        $this->assertEquals(1, $this->match->getSideForPlayer($player[0]));
+        $this->assertEquals(1, $this->match->getSideForPlayer($this->player[0]));
     }
 
     public function testGetSideForPlayer()
     {
-        $player = array(
-            $this->createPlayer(1),
-            $this->createPlayer(2),
-            $this->createPlayer(3),
-            $this->createPlayer(4),
-        );
-
-        $this->match->setPlayer1($player[0]);
-        $this->match->setPlayer2($player[1]);
-
-        $this->assertEquals(2, $this->match->getSideForPlayer($player[1]));
+        $this->assertEquals(2, $this->match->getSideForPlayer($this->player[1]));
     }
 
     /**
@@ -119,22 +90,7 @@ class SingleMatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSideForInvalidPlayer()
     {
-        $player = array(
-            $this->createPlayer(1),
-            $this->createPlayer(2),
-        );
-
-        $this->match->setPlayer1($player[0]);
-        $this->match->setPlayer2($player[1]);
-
-        $this->match->getSideForPlayer($this->createPlayer(5));
-    }
-
-    public function createPlayer($id)
-    {
-        $player = new Player();
-        $player->setId($id);
-        return $player;
+        $this->match->getSideForPlayer($this->player->createPlayer());
     }
 
 }
