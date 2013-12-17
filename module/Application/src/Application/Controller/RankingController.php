@@ -103,34 +103,7 @@ class RankingController extends AbstractActionController
                 $this->playerRepository->persist($player, false);
             }
 
-            if ($match instanceof SingleMatch) {
-
-                $participant1 = $match->getPlayer1();
-                $participant2 = $match->getPlayer2();
-
-            } else if ($match instanceof DoubleMatch) {
-
-                $participant1 = $match->getTeamOne();
-                $participant2 = $match->getTeamTwo();
-
-            }
-
             $this->pointLogRepository->persist($log, false);
-
-            $this->console->writeLine(
-                sprintf(
-                    '%s vs. %s - Chances %s%%/%s%%. Points %d (%+d) / %d (%+d)',
-                    $participant1->getName(),
-                    $participant2->getName(),
-                    $log->getChance1(),
-                    $log->getChance2(),
-                    $log->getNewPoints1(),
-                    $log->getDifference1(),
-                    $log->getNewPoints2(),
-                    $log->getDifference2()
-                )
-            );
-
         }
 
         $this->pointLogRepository->flush();
