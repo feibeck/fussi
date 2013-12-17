@@ -74,7 +74,7 @@
 
                     <?php if ($tournament instanceof \Application\Model\Entity\League): ?>
 
-                        <?php echo $this->ranking($tournament, 999, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
+                        <?php echo $this->ranking($tournament, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
 
                     <?php else: ?>
 
