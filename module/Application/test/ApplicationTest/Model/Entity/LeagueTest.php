@@ -32,75 +32,6 @@ class LeagueTest extends \PHPUnit_Framework_TestCase
         $this->tournament = new League();
     }
 
-    public function testIdProperty()
-    {
-        $this->tournament->setId(1);
-        $this->assertEquals(1, $this->tournament->getId());
-    }
-
-    public function testNameProperty()
-    {
-        $this->tournament->setName('Foo');
-        $this->assertEquals('Foo', $this->tournament->getName());
-    }
-
-    public function testMaxScoreProperty()
-    {
-        $this->tournament->setMaxScore(5);
-        $this->assertEquals(5, $this->tournament->getMaxScore());
-    }
-
-    public function testTeamTypeProperty()
-    {
-        $this->tournament->setTeamType(League::TYPE_TEAM);
-        $this->assertEquals(
-            \Application\Model\Entity\League::TYPE_TEAM, $this->tournament->getTeamType());
-    }
-
-    public function testIsSinglePlayer()
-    {
-        $this->tournament->setTeamType(\Application\Model\Entity\League::TYPE_SINGLE);
-        $this->assertTrue($this->tournament->isSinglePlayer());
-        $this->assertFalse($this->tournament->isTeams());
-    }
-
-    public function testIsTeams()
-    {
-        $this->tournament->setTeamType(League::TYPE_TEAM);
-        $this->assertFalse($this->tournament->isSinglePlayer());
-        $this->assertTrue($this->tournament->isTeams());
-    }
-
-    public function testGamesPerMatchProperty()
-    {
-        $this->tournament->setGamesPerMatch(3);
-        $this->assertEquals(3, $this->tournament->getGamesPerMatch());
-    }
-
-    public function testStartProperty()
-    {
-        $date = new \DateTime('1994-04-05');
-        $this->tournament->setStart($date);
-        $this->assertSame($date, $this->tournament->getStart());
-    }
-
-    public function testEmptyPlayers()
-    {
-        $players = $this->tournament->getPlayers();
-        $this->assertEquals(0, count($players));
-    }
-
-    public function testPlayers()
-    {
-        $player1 = $this->getMock('\Application\Model\Entity\Player');
-        $player2 = $this->getMock('\Application\Model\Entity\Player');
-        $this->tournament->addPlayer($player1);
-        $this->tournament->addPlayer($player2);
-        $players = $this->tournament->getPlayers();
-        $this->assertSame($player1, $players[0]);
-        $this->assertSame($player2, $players[1]);
-    }
-
     public function testGetArrayCopy()
     {
         $this->tournament->setId(1);
@@ -147,29 +78,9 @@ class LeagueTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testEndProperty()
+    public function testTournamentTypeName()
     {
-        $dateTime = new \DateTime();
-
-        $this->tournament->setEnd($dateTime);
-        $this->assertSame($dateTime, $this->tournament->getEnd());
-
-        $this->tournament->setEnd(null);
-        $this->assertNull($this->tournament->getEnd());
-
-        $this->tournament->setEnd('aString');
-        $this->assertNull($this->tournament->getEnd());
-    }
-
-    public function testIsActive()
-    {
-        $this->assertTrue($this->tournament->isActive());
-    }
-
-    public function testIsInactive()
-    {
-        $this->tournament->setEnd(new \DateTime("2013-01-31"));
-        $this->assertFalse($this->tournament->isActive());
+        $this->assertEquals('League', $this->tournament->getType());
     }
 
 }

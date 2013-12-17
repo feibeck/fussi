@@ -176,4 +176,12 @@ class Tournament extends AbstractTournament
         return $this->winner != null;
     }
 
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return "Tournament";
+    }
+
 }

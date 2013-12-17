@@ -102,7 +102,7 @@ class DoubleMatchTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPlayer()
     {
-        $this->assertEquals($this->player->player, $this->match->getPlayer());
+        $this->assertEquals($this->player->players, $this->match->getPlayer());
     }
 
     public function testGetSideForPlayer1()

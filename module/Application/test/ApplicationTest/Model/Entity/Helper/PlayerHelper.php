@@ -21,7 +21,7 @@ class PlayerHelper implements \ArrayAccess
     /**
      * @var Player[]
      */
-    public $player = array();
+    public $players = array();
 
     /**
      * @param int $id
@@ -35,7 +35,7 @@ class PlayerHelper implements \ArrayAccess
         }
         $player = new Player();
         $player->setId($id);
-        $this->player[] = $player;
+        $this->players[] = $player;
         return $player;
     }
 
@@ -46,7 +46,7 @@ class PlayerHelper implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->player[$offset]);
+        return isset($this->players[$offset]);
     }
 
     /**
@@ -56,7 +56,7 @@ class PlayerHelper implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->player[$offset];
+        return $this->players[$offset];
     }
 
     /**
@@ -67,7 +67,7 @@ class PlayerHelper implements \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->player[$offset] = $value;
+        $this->players[$offset] = $value;
     }
 
     /**
@@ -77,7 +77,7 @@ class PlayerHelper implements \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->player[$offset]);
+        unset($this->players[$offset]);
     }
 
 }
