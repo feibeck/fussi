@@ -101,27 +101,11 @@ class PointLog
     }
 
     /**
-     * @param int $currentPoints1
-     */
-    public function setCurrentPoints1($currentPoints1)
-    {
-        $this->currentPoints1 = $currentPoints1;
-    }
-
-    /**
      * @return int
      */
     public function getCurrentPoints1()
     {
         return $this->currentPoints1;
-    }
-
-    /**
-     * @param int $currentPoints2
-     */
-    public function setCurrentPoints2($currentPoints2)
-    {
-        $this->currentPoints2 = $currentPoints2;
     }
 
     /**
@@ -133,26 +117,11 @@ class PointLog
     }
 
     /**
-     * @param Player $player
-     *
-     * @return int
-     */
-    public function getNewPoints(Player $player)
-    {
-        $side = $this->match->getSideForPlayer($player);
-        if ($side == 1) {
-            return $this->getNewPoints1();
-        } else {
-            return $this->getNewPoints2();
-        }
-    }
-
-    /**
      * @return int
      */
     public function getDifference1()
     {
-        return $this->getNewPoints1() - $this->getCurrentPoints1();
+        return $this->newPoints1 - $this->getCurrentPoints1();
     }
 
     /**
@@ -160,7 +129,7 @@ class PointLog
      */
     public function getDifference2()
     {
-        return $this->getNewPoints2() - $this->getCurrentPoints2();
+        return $this->newPoints2 - $this->getCurrentPoints2();
     }
 
     /**
@@ -211,27 +180,11 @@ class PointLog
     }
 
     /**
-     * @return int
-     */
-    public function getNewPoints1()
-    {
-        return $this->newPoints1;
-    }
-
-    /**
      * @param int $newPoints2
      */
     public function setNewPoints2($newPoints2)
     {
         $this->newPoints2 = $newPoints2;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNewPoints2()
-    {
-        return $this->newPoints2;
     }
 
     /**
