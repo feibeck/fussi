@@ -89,13 +89,6 @@ class TournamentController extends AbstractActionController
 
         $ranking = new Ranking($matches);
 
-        $infoMaxPoints = (count($players) - 1) * 2;
-        $infoMaxMatches = (count($players) - 1);
-        $tournamentPotential =  $ranking->getPotential(count($players)-1);
-
-        $infoMaxPoints = ($infoMaxPoints >= 0) ? $infoMaxPoints : 0;
-        $infoMaxMatches = ($infoMaxMatches >= 0) ? $infoMaxMatches : 0;
-
         $viewData = array(
             'period'        => $leaguePeriod,
             'players'       => $players,
@@ -103,9 +96,6 @@ class TournamentController extends AbstractActionController
             'matches'       => $matches,
             'ranking'       => $ranking,
             'tournament'    => $tournament,
-            'infoMaxPoints'       => $infoMaxPoints,
-            'infoMaxMatches'      => $infoMaxMatches,
-            'tournamentPotential' => $tournamentPotential
         );
 
         $viewModel = new ViewModel($viewData);
