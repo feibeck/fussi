@@ -13,85 +13,82 @@
 ?>
 <div class="row">
 
-    <div class="col-md-5">
+    <div class="col-md-6">
 
-        <h2>Recent Matches</h2>
+        <div class="panel panel-primary">
 
-        <table class="table table-striped">
+            <div class="panel-heading">
+                <h1 class="panel-title">Recent Matches</h1>
+            </div>
 
-        <?php foreach ($matches as $match): ?>
-            <tr>
-                <td><?php echo $match->getDate()->format("d.m. H:i"); ?></td>
-                <td>
+            <table class="table table-striped">
 
-                    <?php if ($match instanceof \Application\Model\Entity\SingleMatch): ?>
+            <?php foreach ($matches as $match): ?>
+                <tr>
+                    <td><?php echo $match->getDate()->format("d.m. H:i"); ?></td>
+                    <td>
 
-                        <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
-                            <?php echo $match->getPlayer1()->getName(); ?>
-                        </span>
-                        <span class="muted">vs.</span>
-                        <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
-                            <?php echo $match->getPlayer2()->getName(); ?>
-                        </span>
+                        <?php if ($match instanceof \Application\Model\Entity\SingleMatch): ?>
 
-                    <?php elseif ($match instanceof \Application\Model\Entity\DoubleMatch): ?>
+                            <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>"><?php echo $match->getPlayer1()->getName(); ?></span>
+                            <span class="muted">vs.</span>
+                            <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>"><?php echo $match->getPlayer2()->getName(); ?></span>
 
-                        <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>">
-                            <?php echo $match->getTeamOne()->getName(); ?>
-                        </span>
-                        <span class="muted">vs.</span>
-                        <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>">
-                            <?php echo $match->getTeamTwo()->getName(); ?>
-                        </span>
+                        <?php elseif ($match instanceof \Application\Model\Entity\DoubleMatch): ?>
 
-                    <?php endif; ?>
+                            <span class="<?php echo ($match->isTeamOneWinner() ? 'label label-success' : '') ?>"><?php echo $match->getTeamOne()->getName(); ?></span>
+                            <span class="muted">vs.</span>
+                            <span class="<?php echo ($match->isTeamTwoWinner() ? 'label label-success' : '') ?>"><?php echo $match->getTeamTwo()->getName(); ?></span>
 
-                    <br>
+                        <?php endif; ?>
 
-                    <small><span class="muted">Tournament:</span> <a href="<?php echo $this->url('tournament/show', array('id' => $match->getTournament()->getId())); ?>"><?php echo $match->getTournament()->getName(); ?></a></small>
+                        <br>
 
-                </td>
-                <td>
-                    <?php echo $this->matchResult($match); ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+                        <small><span class="muted">Tournament:</span> <a href="<?php echo $this->url('tournament/show', array('id' => $match->getTournament()->getId())); ?>"><?php echo $match->getTournament()->getName(); ?></a></small>
 
-        </table>
+                    </td>
+                    <td>
+                        <?php echo $this->matchResult($match); ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+
+            </table>
+
+        </div>
 
     </div>
 
-    <div class="col-md-6 col-md-offset-1">
+    <div class="col-md-6">
 
-        <h1>Tournaments</h1>
+        <?php foreach ($tournaments as $tournament): ?>
 
-        <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title"><?php echo $tournament->getName(); ?></h1>
+            </div>
 
-            <?php foreach ($tournaments as $tournament): ?>
+                <?php if ($tournament instanceof \Application\Model\Entity\League): ?>
 
-                <div class="col-md-3">
-                    <h4><?php echo $tournament->getName(); ?></h4>
+                    <?php echo $this->ranking($tournament, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
 
-                    <?php if ($tournament instanceof \Application\Model\Entity\League): ?>
+                <?php else: ?>
 
-                        <?php echo $this->ranking($tournament, new \Application\Model\LeaguePeriod($tournament->getStart(), date('Y'), date('m')), 3); ?>
-
-                    <?php else: ?>
-
+                    <div class="panel-body">
                         <p>The tournament is running</p>
+                    </div>
 
-                    <?php endif; ?>
+                <?php endif; ?>
 
-                    <p>
-                        <a href="<?php echo $this->url("tournament/show", array('id' => $tournament->getId())); ?>" class="btn btn-small">
-                            Show
-                        </a>
-                    </p>
-                </div>
+            <div class="panel-footer">
 
-            <?php endforeach; ?>
+                <a href="<?php echo $this->url("tournament/show", array('id' => $tournament->getId())); ?>" class="btn btn-default btn-sm" role="button">Show</a>
+
+            </div>
 
         </div>
+
+        <?php endforeach; ?>
 
     </div>
 
