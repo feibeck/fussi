@@ -193,6 +193,16 @@ return array(
                     ),
                 )
             ),
+            'feed' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/feed/recent-matches',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Feed',
+                        'action'     => 'lastMatches'
+                    ),
+                ),
+            ),
         ),
     ),
     'console' => array(
