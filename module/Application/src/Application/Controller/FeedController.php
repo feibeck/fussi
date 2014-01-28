@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Controller\DashboardController
+ * Definition of Application\Controller\FeedController
  *
  * @copyright Copyright (c) 2014 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -36,6 +36,9 @@ class FeedController extends AbstractActionController
         $this->matchFeeder     = $matchFeeder;
     }
 
+    /**
+     * @return ViewModel
+     */
     public function lastMatchesAction()
     {
         $feed = $this->matchFeeder->generate();

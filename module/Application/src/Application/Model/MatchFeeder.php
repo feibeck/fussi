@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of Application\Controller\DashboardController
+ * Definition of Application\Model\MatchFeeder
  *
  * @copyright Copyright (c) 2014 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -17,8 +17,15 @@ use Application\Model\Exceptions\UrlNotFoundException;
 use Application\Model\Repository\MatchRepository;
 use Zend\Feed\Writer\Feed as FeedWriter;
 
+/**
+ * Class MatchFeeder
+ * @package Application\Model
+ */
 class MatchFeeder
 {
+    /**
+     * Feed type to render
+     */
     const FEED_TYPE = 'atom';
 
     /**
@@ -27,7 +34,7 @@ class MatchFeeder
     protected $matchRepository;
 
     /**
-     * @var
+     * @var FeedWriter
      */
     protected $feed;
 
@@ -51,6 +58,9 @@ class MatchFeeder
         $this->matchRepository = $matchRepository;
     }
 
+    /**
+     * @return string
+     */
     public function generate()
     {
         $this->prepareFeed();
@@ -72,6 +82,9 @@ class MatchFeeder
         $this->feed->setDateModified(time());
     }
 
+    /**
+     * @return void
+     */
     private function generateMatchEntries()
     {
         foreach ($this->getMatches() as $match) {
