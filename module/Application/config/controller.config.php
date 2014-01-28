@@ -74,5 +74,18 @@ return array(
                 $em->getRepository('Application\Model\Entity\PointLog')
             );
         },
+        'Application\Controller\Feed' => function(ControllerManager $cm) {
+            $sm = $cm->getServiceLocator();
+            $em = $sm->get('doctrine.entitymanager.orm_default');
+
+            $matchFeeder = new \Application\Model\MatchFeeder(
+                new \Zend\Feed\Writer\Feed,
+                $em->getRepository('Application\Model\Entity\Match')
+            );
+            $matchFeeder->setTitle('Fussi: Recent matches');
+            $matchFeeder->setUrl('http://localhost:8001');
+
+            return new Controller\FeedController($matchFeeder);
+        },
     )
 );
