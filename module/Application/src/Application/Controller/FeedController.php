@@ -50,9 +50,9 @@ class FeedController extends AbstractActionController
      */
     private function renderFeed($feed)
     {
-        $view = new ViewModel(compact('feed'));
-        $view->setTerminal(true);
+        $response = $this->getResponse();
+        $response->setContent($feed);
 
-        return $view;
+        return $response;
     }
 }
