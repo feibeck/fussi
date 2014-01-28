@@ -83,7 +83,9 @@ return array(
                 $em->getRepository('Application\Model\Entity\Match')
             );
             $matchFeeder->setTitle('Fussi: Recent matches');
-            $matchFeeder->setUrl('http://localhost:8001');
+
+            $baseUrl = sprintf('%s%s', 'http://', $_SERVER['HTTP_HOST']);
+            $matchFeeder->setUrl($baseUrl);
 
             return new Controller\FeedController($matchFeeder);
         },
