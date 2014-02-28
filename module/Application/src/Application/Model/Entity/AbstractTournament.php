@@ -163,9 +163,15 @@ abstract class AbstractTournament
         }
     }
 
+    /**
+     * @param Player $player
+     */
     public function addPlayer(Player $player)
     {
-        $this->players->add($player);
+        // prevent from adding a player twice
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+        }
     }
 
     /**

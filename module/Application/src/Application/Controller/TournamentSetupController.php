@@ -13,10 +13,8 @@
 
 namespace Application\Controller;
 
-
-use Application\Model\Entity\AbstractTournament;
+use Application\Model\Entity\Player;
 use Zend\Mvc\Controller\AbstractActionController;
-
 use Application\Form\League as LeagueForm;
 use Application\Form\Tournament as TournamentForm;
 use Application\Form\PlayerToTournament as AddPlayerForm;
@@ -92,6 +90,7 @@ class TournamentSetupController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
 
+        /** @var Tournament $tournament */
         $tournament = $this->tournamentRepository->find($id);
 
         $form = $this->getAddPlayerForm($tournament);
@@ -101,6 +100,8 @@ class TournamentSetupController extends AbstractActionController
             if ($form->isValid()) {
 
                 $playerId = $form->get('player')->getValue();
+
+                /** @var Player $player */
                 $player = $this->playerRepository->find($playerId);
 
                 $tournament->addPlayer($player);
