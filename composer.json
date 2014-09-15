@@ -1,9 +1,9 @@
 {
     "config":{"process-timeout":3000},
-    "minimum-stability": "alpha",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*@dev",
+        "zendframework/zendframework": "~2.2",
         "doctrine/doctrine-orm-module": "dev-master",
         "doctrine/migrations": "dev-master"
     }
