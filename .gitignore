@@ -11,17 +11,8 @@ error.log
 
 atlassian-ide-plugin.xml
 
-vendor/composer
-vendor/.composer
-vendor/autoload.php
-vendor/zendframework
-vendor/bin
-vendor/doctrine
-vendor/symfony
-vendor/zf-commons
+/vendor/
+/public/components/
 
 data/DoctrineORMModule/
 
-public/components/bootstrap-assets
-public/components/jquery
-public/components/html5shiv
