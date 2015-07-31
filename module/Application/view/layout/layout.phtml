@@ -23,8 +23,8 @@ echo $this->doctype();
 
         <!-- Le styles -->
         <?php echo $this->headLink()
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/components/bootstrap/dist/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath() . '/components/bootstrap/dist/css/bootstrap.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/components/html5shiv/dist/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9',))
