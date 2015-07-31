@@ -40,6 +40,8 @@ table.matches.table td.inactive a
     color: #ccc;
 }
 
-table td.right {
+table td.right,
+table th.right
+{
     text-align: right;
 }

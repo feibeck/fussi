@@ -26,7 +26,7 @@ class TwitterBootstrapFormError extends AbstractHelper
 
         if ($form->hasValidated() && !$form->isValid()) {
 
-            $out .= '<div class="alert alert-error">';
+            $out .= '<div class="alert alert-danger" role="alert">';
             $out .= '<strong>Validation problems:</strong> Please check your form input';
             $out .= '</div>';
 

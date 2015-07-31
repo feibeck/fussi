@@ -24,22 +24,23 @@ class TwitterBootstrapFormRow extends AbstractHelper
 
         $messages = $element->getMessages();
 
-        $out = '<div class="control-group';
+        $out = '<div class="form-group';
         if (count($messages)) {
-            $out .= ' error';
+            $out .= ' has-error';
         }
         $out .= '">';
-        $element->setLabelAttributes(array('class' => 'control-label'));
+        $element->setLabelAttributes(array('class' => 'col-sm-2 control-label'));
         $out .= $this->view->formLabel($element);
-        $out .= '<div class="controls">';
+        $out .= '<div class="col-sm-10">';
         if ($element instanceof \Zend\Form\Element\Radio) {
             $element->setLabelAttributes(array('class' => 'radio'));
         }
+        $element->setAttribute('class', 'form-control');
         $out .= $this->view->formElement($element);
         $out .= $this->view->formElementErrors()
-            ->setMessageOpenFormat('<div class="help-inline">')
+            ->setMessageOpenFormat('<span class="help-block">')
             ->setMessageSeparatorString('. ')
-            ->setMessageCloseString('.</div>')
+            ->setMessageCloseString('.</span>')
             ->render($element);
         $out .= '</div>';
         $out .= '</div>';
