@@ -11,50 +11,67 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 ?>
-<h1>List of tournaments</h1>
 
-<div class="btn-group" style="margin-bottom: 10px;">
-    <a href="<?= $this->url('tournament/add-league'); ?>" class="btn">Add league</a>
-    <a href="<?= $this->url('tournament/add-tournament'); ?>" class="btn">Add tournament</a>
+<div class="row">
+
+    <div class="page-header">
+        <h1>List of tournaments</h1>
+    </div>
+
+    <div class="btn-group" style="margin-bottom: 10px;">
+        <a href="<?= $this->url('tournament/add-league'); ?>" class="btn btn-default">Add league</a>
+        <a href="<?= $this->url('tournament/add-tournament'); ?>" class="btn btn-default">Add tournament</a>
+    </div>
+
+    <table class="table table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Active</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($tournaments as $tournament): ?>
+
+            <tr>
+                <td>
+                    <a href="<?= $this->url(
+                        'tournament/show', array('id' => $tournament->getId())) ?>">
+                        <?php echo $tournament->getName(); ?>
+                    </a>
+                </td>
+                <td>
+                    <?php echo $tournament->getType(); ?>
+                </td>
+                <td>
+                    <?php echo ($tournament->isActive() ? 'yes' : 'no'); ?>
+                </td>
+                <td class="right">
+
+                    <div class="btn-group">
+
+                        <a href="<?= $this->url(
+                            'tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-default btn-xs">Show</a>
+
+                        <?php if ($tournament->getType() == 'League'): ?>
+                            <a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn btn-default btn-xs">Players</a>
+                        <?php else: ?>
+                            <a href="<?= $this->url('setup', array('id' => $tournament->getId())) ?>" class="btn btn-default btn-xs">Setup</a>
+                        <?php endif; ?>
+
+                    </div>
+
+                </td>
+            </tr>
+
+            <?php endforeach; ?>
+
+        </tbody>
+
+    </table>
+
 </div>
-
-<table class="table table-striped table-hover">
-
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Active</th>
-        <th></th>
-    </tr>
-
-    <?php foreach ($tournaments as $tournament): ?>
-
-    <tr>
-        <td>
-            <a href="<?= $this->url(
-                'tournament/show', array('id' => $tournament->getId())) ?>">
-                <?php echo $tournament->getName(); ?>
-            </a>
-        </td>
-        <td>
-            <?php echo $tournament->getType(); ?>
-        </td>
-        <td>
-            <?php echo ($tournament->isActive() ? 'yes' : 'no'); ?>
-        </td>
-        <td class="right">
-            <a href="<?= $this->url(
-                'tournament/show', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Show</a>
-
-            <?php if ($tournament->getType() == 'League'): ?>
-                <a href="<?= $this->url('tournament/players', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Players</a>
-            <?php else: ?>
-                <a href="<?= $this->url('setup', array('id' => $tournament->getId())) ?>" class="btn btn-mini">Setup</a>
-            <?php endif; ?>
-
-        </td>
-    </tr>
-
-    <?php endforeach; ?>
-
-</table>

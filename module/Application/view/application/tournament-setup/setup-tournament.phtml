@@ -1,46 +1,60 @@
-<h1>Tournament setup: <?php echo $tournament->getName(); ?></h1>
+<div class="row">
 
-<?php $ready = (count($tournament->getPlayers()) % 2 == 0 && count($tournament->getPlayers()) >= 4); ?>
-
-<?php if (!$ready): ?>
-    <div class="alert">
-        <strong>Player count!</strong> You need an even number of players.
+    <div class="page-header">
+        <h1>Tournament setup: <?php echo $tournament->getName(); ?></h1>
     </div>
-<?php endif; ?>
 
-<?php if ($tournament->isActive()): ?>
-    <div class="alert alert-info">The tournament is currently running</div>
-<?php elseif ($tournament->isFinished()): ?>
-    <div class="alert alert-info">The tournament is finished</div>
-<?php else: ?>
-    <div class="btn-group" style="margin-bottom: 10px;">
-        <?php $url = $this->url('tournament/start', array('id' => $tournament->getId())); ?>
-        <a <?php if ($ready) echo 'href="' . $url . '"'; ?> class="btn<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
-    </div>
-<?php endif; ?>
+    <?php $ready = (count($tournament->getPlayers()) % 2 == 0 && count($tournament->getPlayers()) >= 4); ?>
 
-<h2>Players</h2>
+    <?php if (!$ready): ?>
+        <div class="alert alert-warning">
+            <strong>Player count!</strong> You need an even number of players.
+        </div>
+    <?php endif; ?>
 
-<table class="table table-striped">
+    <?php if ($tournament->isActive()): ?>
+        <div class="alert alert-info">The tournament is currently running</div>
+    <?php elseif ($tournament->isFinished()): ?>
+        <div class="alert alert-info">The tournament is finished</div>
+    <?php else: ?>
+        <div class="btn-group" style="margin-bottom: 10px;">
+            <?php $url = $this->url('tournament/start', array('id' => $tournament->getId())); ?>
+            <a <?php if ($ready) echo 'href="' . $url . '"'; ?> class="btn btn-default<?php if (!$ready) echo ' disabled'; ?>">Start Tournament</a>
+        </div>
+    <?php endif; ?>
 
-    <tr>
-    <th>Name</th>
-    </tr>
+    <h2>Players</h2>
 
-    <?php foreach ($tournament->getPlayers() as $player): ?>
+    <table class="table table-striped table-bordered">
 
-    <tr>
-        <td><?= $player->getName(); ?></td>
-    </tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
 
-    <?php endforeach; ?>
+        <tbody>
+            <?php foreach ($tournament->getPlayers() as $player): ?>
 
-</table>
-<?php if (!$tournament->isActive() && !$tournament->isFinished()): ?>
-<?php
-echo $this->form()->openTag($addPlayerForm);
-echo $this->formRow($addPlayerForm->get('player'));
-echo $this->formSubmit($addPlayerForm->get('submit'));
-echo $this->form()->closeTag();
-?>
-<?php endif; ?>
+            <tr>
+                <td><?= $player->getName(); ?></td>
+            </tr>
+
+            <?php endforeach; ?>
+        </tbody>
+
+    </table>
+
+    <?php if (!$tournament->isActive() && !$tournament->isFinished()): ?>
+
+        <?php echo $this->form()->openTag($addPlayerForm->setAttribute('class', 'form-inline')); ?>
+        <div class="form-group">
+            <?php echo $this->formElement($addPlayerForm->get('player')->setAttribute('class', 'form-control')); ?>
+        </div>
+
+        <?php echo $this->formSubmit($addPlayerForm->get('submit')->setAttribute('class', 'btn btn-default')); ?>
+        <?php echo $this->form()->closeTag(); ?>
+
+    <?php endif; ?>
+
+</div>

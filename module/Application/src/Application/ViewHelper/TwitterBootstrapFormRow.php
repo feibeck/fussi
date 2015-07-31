@@ -29,12 +29,46 @@ class TwitterBootstrapFormRow extends AbstractHelper
             $out .= ' has-error';
         }
         $out .= '">';
-        $element->setLabelAttributes(array('class' => 'col-sm-2 control-label'));
-        $out .= $this->view->formLabel($element);
-        $out .= '<div class="col-sm-10">';
+
         if ($element instanceof \Zend\Form\Element\Radio) {
-            $element->setLabelAttributes(array('class' => 'radio'));
+            $out .= $this->renderRadioElement($element);
+        } else {
+            $out .= $this->renderTextElement($element);
         }
+
+        $out .= '</div>';
+
+        return $out;
+
+    }
+
+    protected function renderRadioElement(Element $element)
+    {
+        $element->setLabelAttributes(array('class' => 'col-sm-2 control-label'));
+        $out = $this->view->formLabel($element);
+        $element->setLabelAttributes(array('class' => ''));
+        $out .= '<div class="col-sm-10"><div class="radio">';
+
+        $helper = $this->view->plugin('formRadio');
+        $helper->setSeparator('</div><div class="radio">');
+
+        $out .= $helper->render($element);
+
+        $out .= '</div></div>';
+        $out .= $this->view->formElementErrors()
+            ->setMessageOpenFormat('<span class="help-block">')
+            ->setMessageSeparatorString('. ')
+            ->setMessageCloseString('.</span>')
+            ->render($element);
+
+        return $out;
+    }
+
+    protected function renderTextElement(Element $element)
+    {
+        $element->setLabelAttributes(array('class' => 'col-sm-2 control-label'));
+        $out = $this->view->formLabel($element);
+        $out .= '<div class="col-sm-10">';
         $element->setAttribute('class', 'form-control');
         $out .= $this->view->formElement($element);
         $out .= $this->view->formElementErrors()
@@ -43,10 +77,8 @@ class TwitterBootstrapFormRow extends AbstractHelper
             ->setMessageCloseString('.</span>')
             ->render($element);
         $out .= '</div>';
-        $out .= '</div>';
 
         return $out;
-
     }
 
 }

@@ -11,27 +11,41 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 ?>
-<h1>Playing in <?= $tournament->getName(); ?></h1>
 
-<table class="table table-striped">
+<div class="row">
 
-    <tr>
-	<th>Name</th>
-    </tr>
+    <div class="page-header">
+        <h1>Playing in <?= $tournament->getName(); ?></h1>
+    </div>
 
-    <?php foreach ($tournament->getPlayers() as $player): ?>
+    <table class="table table-striped table-bordered">
 
-	<tr>
-	    <td><?= $player->getName(); ?></td>
-	</tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
 
-    <?php endforeach; ?>
+        <tbody>
+            <?php foreach ($tournament->getPlayers() as $player): ?>
 
-</table>
+            <tr>
+                <td><?= $player->getName(); ?></td>
+            </tr>
 
-<?php
-echo $this->form()->openTag($addPlayerForm);
-echo $this->formRow($addPlayerForm->get('player'));
-echo $this->formSubmit($addPlayerForm->get('submit'));
-echo $this->form()->closeTag();
-?>
+            <?php endforeach; ?>
+        </tbody>
+
+    </table>
+
+    <h2>Add player to tournament</h2>
+
+    <?php echo $this->form()->openTag($addPlayerForm->setAttribute('class', 'form-inline')); ?>
+    <div class="form-group">
+        <?php echo $this->formElement($addPlayerForm->get('player')->setAttribute('class', 'form-control')); ?>
+    </div>
+
+    <?php echo $this->formSubmit($addPlayerForm->get('submit')->setAttribute('class', 'btn btn-default')); ?>
+    <?php echo $this->form()->closeTag(); ?>
+
+</div>
