@@ -11,7 +11,7 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 ?>
-<table class="table matches">
+<table class="table table-bordered matches">
 
     <tr>
 
@@ -37,7 +37,6 @@
             <th <?php if(!$active) echo "class='inactive'" ?>><?php echo $player1->getName(); ?></th>
 
             <?php for ($column = 0; $column < count($players) - 1; $column++): $player2 = $players[$column]; ?>
-
 
                 <?php if ($column > $row - 1): ?>
                     <td></td>

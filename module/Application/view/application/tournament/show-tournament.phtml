@@ -11,51 +11,58 @@
  * this stuff is worth it, you can buy us a beer in return.
  */
 ?>
-<?php /** @var \Application\Model\Entity\Tournament $tournament */ ?>
-<h1>Tournament: <?php echo $tournament->getName(); ?></h1>
 
-<?php if (!$tournament->isReady()): ?>
+<div class="row">
 
-    <div class="alert">
-        <strong>Not ready!</strong> The tournament has not been started yet!
+    <?php /** @var \Application\Model\Entity\Tournament $tournament */ ?>
+    <div class="page-header">
+        <h1>Tournament: <?php echo $tournament->getName(); ?></h1>
     </div>
 
-<?php else: ?>
+    <?php if (!$tournament->isReady()): ?>
 
-<?php if ($tournament->isFinished()): ?>
-
-        <div class="alert alert-success">
-            <p><strong>Tournament finished!</strong></p>
-            <p>Winner: <?php echo $tournament->getWinner()->getName(); ?></p>
-            <p>Second: <?php echo $tournament->getSecond()->getName(); ?></p>
+        <div class="alert">
+            <strong>Not ready!</strong> The tournament has not been started yet!
         </div>
 
-<?php endif; ?>
+    <?php else: ?>
 
-    <?php foreach ($tournament->getRounds() as $round): ?>
+    <?php if ($tournament->isFinished()): ?>
 
-        <div>
-        <?php foreach ($round->getMatches() as $match): ?>
-            <div style="float: left; width: 150px; border: 1px solid grey; height: 100px; padding: 4px; margin-right: 4px; margin-bottom: 4px;">
-
-                <div><?php echo $match->getTeam1Name(); ?></div>
-                <div><?php echo $match->getTeam2Name(); ?></div>
-
-                <?php if ($match->isPlayed()): ?>
-
-                    <?php echo $match->getPlayedMatch()->getScore(); ?>
-
-                <?php elseif ($match->isReady()): ?>
-
-                    <a class="btn btn-mini" href="<?php echo $this->url('match/planned', array('pid' => $match->getId())); ?>">Enter data</a>
-
-                <?php endif; ?>
-
+            <div class="alert alert-success">
+                <p><strong>Tournament finished!</strong></p>
+                <p>Winner: <?php echo $tournament->getWinner()->getName(); ?></p>
+                <p>Second: <?php echo $tournament->getSecond()->getName(); ?></p>
             </div>
+
+    <?php endif; ?>
+
+        <?php foreach ($tournament->getRounds() as $round): ?>
+
+            <div>
+            <?php foreach ($round->getMatches() as $match): ?>
+                <div style="float: left; width: 150px; border: 1px solid grey; height: 100px; padding: 4px; margin-right: 4px; margin-bottom: 4px;">
+
+                    <div><?php echo $match->getTeam1Name(); ?></div>
+                    <div><?php echo $match->getTeam2Name(); ?></div>
+
+                    <?php if ($match->isPlayed()): ?>
+
+                        <?php echo $match->getPlayedMatch()->getScore(); ?>
+
+                    <?php elseif ($match->isReady()): ?>
+
+                        <a class="btn btn-default btn-xs" href="<?php echo $this->url('match/planned', array('pid' => $match->getId())); ?>">Enter data</a>
+
+                    <?php endif; ?>
+
+                </div>
+            <?php endforeach; ?>
+            </div>
+            <div class="clearfix"></div>
+
         <?php endforeach; ?>
-        </div>
-        <div class="clearfix"></div>
 
-    <?php endforeach; ?>
+    <?php endif; ?>
 
-<?php endif; ?>
+</div>

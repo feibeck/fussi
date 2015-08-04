@@ -14,15 +14,19 @@
 /** @var $matches \Application\Model\Entity\DoubleMatch[] */
 
 ?>
-<table class="table">
 
-    <tr>
-        <th>Date</th>
-        <th>Players</th>
-        <th>Score</th>
-        <th></th>
-    </tr>
+<table class="table table-striped table-bordered">
 
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Players</th>
+            <th>Score</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
     <?php foreach ($matches as $match): ?>
 
         <tr>
@@ -42,10 +46,11 @@
                 <?php echo $this->matchResult($match); ?>
             </td>
             <td>
-                <a class="btn btn-mini" href="<?php echo $this->url('match/edit', array('mid' => $match->getId())); ?>">Edit</a>
+                <a class="btn btn-default btn-xs" href="<?php echo $this->url('match/edit', array('mid' => $match->getId())); ?>">Edit</a>
             </td>
         </tr>
 
     <?php endforeach; ?>
+    </tbody>
 
 </table>

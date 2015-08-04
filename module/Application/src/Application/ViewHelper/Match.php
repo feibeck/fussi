@@ -66,7 +66,7 @@ class Match extends AbstractHelper
                     $content = implode("<br>", $results);
 
                     if ($allow) {
-                        $content .= "<br><br><a href='" . $url . "' class='btn btn-small'>Edit</a>";
+                        $content .= "<br><br><a href='" . $url . "' class='btn btn-xs btn-default'>Edit</a>";
                     }
 
                     $out .= '<span title="' . $title . '" data-content="' . $content . '" class="match btn result">';
@@ -79,7 +79,7 @@ class Match extends AbstractHelper
 
             if (!$ok && $allow) {
                 $url = $this->getView()->url('match/new', array('tid' => $tournament->getId(), 'player1' => $player1->getId(), 'player2' => $player2->getId()));
-                $out .= '<a href="' . $url . '" class="btn btn-small">Edit</a>';
+                $out .= '<a href="' . $url . '" class="btn btn-default btn-xs">Edit</a>';
             }
 
         }
