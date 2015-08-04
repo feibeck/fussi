@@ -98,7 +98,7 @@ class FormGame extends AbstractHelper
         }
 
         return sprintf(
-            '<div class="row"><div class="span5">%s</div></div>',
+            '<div class="row"><div class="col-md-7">%s</div></div>',
             $markup
         );
     }

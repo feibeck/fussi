@@ -21,14 +21,14 @@
 
     <div class="row">
 
-         <div class="span3">
+         <div class="col-md-5">
              <h2>Team 1</h2>
 
              <label>Attack</label> <?php echo $this->formElement($form->get('teamOneAttack')); ?>
              <label>Defence</label> <?php echo $this->formElement($form->get('teamOneDefence')); ?>
          </div>
 
-         <div class="span3">
+         <div class="col-md-5">
              <h2>Team 2</h2>
 
              <label>Attack</label> <?php echo $this->formElement($form->get('teamTwoAttack')); ?>
@@ -39,19 +39,21 @@
 
 <?php endif; ?>
 
+<hr>
+
 <?php
     echo $this->formGame($form->get('games'));
 ?>
 
 <?php if ($tournament->isMatchModeBestOf()): ?>
-    <p><a id="add_game_button" class="btn" href="#">Add game</a></p>
+    <p><a id="add_game_button" class="btn btn-default btn-xs" href="#">Add game</a></p>
 <?php endif; ?>
 
 <?php
 
 
     echo $this->formHidden($form->get('csrf'));
-    echo $this->formElement($form->get('submit'));
+    echo $this->formElement($form->get('submit')->setAttribute("class", "btn btn-default"));
 
     echo $this->form()->closeTag();
 
