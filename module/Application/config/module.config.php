@@ -150,6 +150,15 @@ return array(
                                 'action' => 'view'
                             ),
                         ),
+                    ),
+                    'edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/edit/:id',
+                            'defaults' => array(
+                                'action' => 'edit'
+                            ),
+                        ),
                     )
                 )
             ),

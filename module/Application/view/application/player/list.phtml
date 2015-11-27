@@ -21,12 +21,14 @@
 
     <tr>
         <th>Name</th>
+        <th></th>
     </tr>
 
     <?php foreach ($players as $player): ?>
 
     <tr>
         <td><a href="<?php echo $this->url('player/view', array('id' => $player->getId())); ?>"><?= $player->getName(); ?></a></td>
+        <td><a href="<?php echo $this->url('player/edit', array('id' => $player->getId())); ?>">Edit</a></td>
     </tr>
 
     <?php endforeach; ?>

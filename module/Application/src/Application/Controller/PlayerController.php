@@ -85,6 +85,29 @@ class PlayerController extends AbstractActionController
         );
     }
 
+    public function editAction() {
+        $form = new PlayerForm();
+
+        $id = $this->params()->fromRoute('id');
+        $player = $this->playerRepository->find($id);
+
+        $form->bind($player);
+
+        $form->setInputFilter(new PlayerInputFilter($this->playerRepository));
+
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+                $this->playerRepository->persist($player);
+                return $this->redirect()->toRoute('players');
+            }
+        }
+
+        return array(
+            'form' => $form
+        );
+    }
+
     public function viewAction()
     {
         $id = $this->params()->fromRoute('id');
