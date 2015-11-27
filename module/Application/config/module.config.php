@@ -150,6 +150,15 @@ return array(
                                 'action' => 'view'
                             ),
                         ),
+                    ),
+                    'edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/edit/:id',
+                            'defaults' => array(
+                                'action' => 'edit'
+                            ),
+                        ),
                     )
                 )
             ),
@@ -192,6 +201,16 @@ return array(
                         )
                     ),
                 )
+            ),
+            'feed' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/feed/recent-matches',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Feed',
+                        'action'     => 'lastMatches'
+                    ),
+                ),
             ),
         ),
     ),

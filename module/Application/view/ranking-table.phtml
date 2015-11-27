@@ -19,15 +19,11 @@
         <th><small>Matches</small></th>
         <th><small>Goals</small></th>
     </tr>
-    <?php
-    $i = 0;
-    foreach ($ranking->getRanking($count) as $rank): ?>
+    <?php /** @var \Application\Model\Ranking $ranking */ ?>
+    <?php foreach ($ranking->getRanking($count) as $i => $rank): ?>
         <tr>
-            <td><span class="badge badge-success"><?= ++$i; ?></span></td>
-            <td class="playerName <?php
-                if ($rank->potential >= $tournamentPotential) {
-                    echo "eligible";
-                }?>"><a href="<?php echo $this->url('player/view', array('id' => $rank->getPlayer()->getId())); ?>"><?= $rank->getPlayer()->getName()?></a></td>
+            <td><span class="badge badge-success"><?= $i + 1; ?></span></td>
+            <td class="playerName"><a href="<?php echo $this->url('player/view', array('id' => $rank->getPlayer()->getId())); ?>"><?= $rank->getPlayer()->getName()?></a></td>
             <td><span class="badge badge-warning"><?= $rank->getScore(); ?></span></td>
             <td><span class="badge"><?= $rank->getMatchCount(); ?></span></td>
             <td><span><?= $rank->getGoals(); ?> : <?= $rank->getGoalsAgainst(); ?></span></td>

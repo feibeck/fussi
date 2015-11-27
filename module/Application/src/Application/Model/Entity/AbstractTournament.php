@@ -112,6 +112,17 @@ abstract class AbstractTournament
     }
 
     /**
+     * @param Match        $match
+     * @param PlannedMatch $plannedMatch
+     */
+    abstract public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null);
+
+    /**
+     * @return string
+     */
+    abstract public function getType();
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -143,35 +154,20 @@ abstract class AbstractTournament
         return $this->name;
     }
 
-    /**
-     * @return Player[]
-     */
-    public function getPlayers()
-    {
-        return $this->players->toArray();
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        if ($this instanceof Tournament) {
-            return "Tournament";
-        } else {
-            return "League";
-        }
-    }
-
-    /**
-     * @param Player $player
-     */
     public function addPlayer(Player $player)
     {
         // prevent from adding a player twice
         if (!$this->players->contains($player)) {
             $this->players->add($player);
         }
+    }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayers()
+    {
+        return $this->players->toArray();
     }
 
     /**
@@ -244,14 +240,6 @@ abstract class AbstractTournament
     public function getMaxScore()
     {
         return $this->maxScore;
-    }
-
-    /**
-     * @param Match        $match
-     * @param PlannedMatch $plannedMatch
-     */
-    public function matchPlayed(Match $match, PlannedMatch $plannedMatch = null)
-    {
     }
 
     /**

@@ -44,6 +44,19 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Foo", $this->player->getName());
     }
 
+    public function testPointProperty()
+    {
+        $this->player->setPoints(400);
+        $this->assertEquals(400, $this->player->getPoints());
+    }
+
+    public function testMatchCountProperty()
+    {
+        $this->player->setMatchCount(5);
+        $this->player->incrementMatchCount();
+        $this->assertEquals(6, $this->player->getMatchCount());
+    }
+
     public function testGetArrayCopy()
     {
         $this->player->setId(2);

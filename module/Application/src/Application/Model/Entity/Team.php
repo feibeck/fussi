@@ -81,15 +81,15 @@ class Team
     }
 
     /**
-     * @param \Application\Model\Entity\Player $player1
+     * @param Player $player1
      */
-    public function setPlayer1($player1)
+    public function setPlayer1(Player $player1)
     {
         $this->player1 = $player1;
     }
 
     /**
-     * @return \Application\Model\Entity\Player
+     * @return Player
      */
     public function getPlayer1()
     {
@@ -97,15 +97,15 @@ class Team
     }
 
     /**
-     * @param \Application\Model\Entity\Player $player2
+     * @param Player $player2
      */
-    public function setPlayer2($player2)
+    public function setPlayer2(Player $player2)
     {
         $this->player2 = $player2;
     }
 
     /**
-     * @return \Application\Model\Entity\Player
+     * @return Player
      */
     public function getPlayer2()
     {
@@ -113,15 +113,15 @@ class Team
     }
 
     /**
-     * @param \Application\Model\Entity\Tournament $tournament
+     * @param Tournament $tournament
      */
-    public function setTournament($tournament)
+    public function setTournament(Tournament $tournament)
     {
         $this->tournament = $tournament;
     }
 
     /**
-     * @return \Application\Model\Entity\Tournament
+     * @return Tournament
      */
     public function getTournament()
     {

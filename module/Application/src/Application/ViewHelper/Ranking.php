@@ -41,7 +41,6 @@ class Ranking extends AbstractHelper
      */
     public function __invoke(
         League $tournament,
-        $potential,
         $period,
         $count = 0
     )
@@ -57,7 +56,6 @@ class Ranking extends AbstractHelper
             array(
                 'ranking' => $ranking,
                 'count'   => $count,
-                'tournamentPotential' => $potential,
             )
         );
         $model->setTemplate('ranking-table.phtml');

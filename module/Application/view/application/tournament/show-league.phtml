@@ -23,37 +23,9 @@
 
     <div class="span4">
 
-        <h2>Ranking <span class="icon-info-sign" id="toggleInfo"></span></h2>
+        <h2>Ranking</h2>
 
-        <table id="infoBox">
-            <tr>
-                <th>
-                    Maximum Points
-                </th>
-                <td>
-                    <?php echo $infoMaxPoints; ?>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Maximum Matches
-                </th>
-                <td>
-                    <?php echo $infoMaxMatches; ?>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Current Potential
-                </th>
-                <td>
-                   <?php echo $tournamentPotential; ?>
-                </td>
-            </tr>
-
-        </table>
-
-        <?php echo $this->ranking($tournament, $tournamentPotential, $period); ?>
+        <?php echo $this->ranking($tournament, $period); ?>
 
     </div>
 
@@ -134,10 +106,5 @@
             }
         );
 
-        $('#toggleInfo').click(function(){
-            $('#infoBox').toggle();
-            $('td.playerName.eligible').toggleClass('bold');
-        })
-        $('#infoBox').hide();
     });
 </script>

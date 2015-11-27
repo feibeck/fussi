@@ -116,30 +116,6 @@ class Ranking
     }
 
     /**
-     * @param int $maxMatchesPerPlayer
-     *
-     * @return int
-     */
-    public function getPotential($maxMatchesPerPlayer)
-    {
-        $playersRanking = $this->getRanking();
-        $potential = 0;
-        foreach($playersRanking as $playerid => $rank) {
-            $playerPotential = $rank->getScore() + ($maxMatchesPerPlayer - $rank->getMatchCount()) * 2;
-            if (isset($this->playerRankings[$playerid])) {
-                $this->playerRankings[$playerid]->potential = $playerPotential;
-            }
-            if ($playerPotential > $potential) {
-                $potential = $playerPotential;
-            }
-        }
-        if ($maxMatchesPerPlayer > count($playersRanking)+1) {
-            // when not everyone has a match already
-        }
-        return $potential;
-    }
-
-    /**
      * @param $player
      * @return \Application\Model\PlayerRanking
      */

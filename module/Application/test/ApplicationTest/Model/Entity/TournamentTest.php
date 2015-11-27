@@ -1,6 +1,6 @@
 <?php
 /**
- * Definition of ApplicationTest\Entity\LeagueTest
+ * Definition of ApplicationTest\Entity\TournamentTest
  *
  * @copyright Copyright (c) 2013 The Fußi-Team
  * @license   THE BEER-WARE LICENSE (Revision 42)
@@ -13,23 +13,24 @@
 
 namespace ApplicationTest\Model\Entity;
 
-use Application\Model\Entity\League;
+use Application\Model\Entity\Tournament;
 use ApplicationTest\Model\Entity\Constraint\Tournament as TournamentConstraint;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * @covers Application\Model\Entity\League
+ * @covers Application\Model\Entity\Tournament
  */
-class LeagueTest extends \PHPUnit_Framework_TestCase
+class TournamentTest extends TestCase
 {
 
     /**
-     * @var \Application\Model\Entity\League
+     * @var \Application\Model\Entity\Tournament
      */
     protected $tournament;
 
     public function setUp()
     {
-        $this->tournament = new League();
+        $this->tournament = new Tournament();
     }
 
     public function testGetArrayCopy()
@@ -37,27 +38,14 @@ class LeagueTest extends \PHPUnit_Framework_TestCase
         $this->tournament->setId(1);
         $this->tournament->setName('Foo');
         $this->tournament->setGamesPerMatch(2);
-        $this->tournament->setTeamType(1);
-        $this->tournament->setStart(new \DateTime('1994-04-05'));
         $this->assertEquals(
             array(
-                'id' => 1,
-                'name' => 'Foo',
-                'team-type' => 1,
-                'start-date' => new \DateTime('1994-04-05'),
+                'id'              => 1,
+                'name'            => 'Foo',
                 'games-per-match' => 2,
-                'max-score' => 10
+                'max-score'       => 10
             ),
             $this->tournament->getArrayCopy()
-        );
-    }
-
-    public function testExchangeArrayWithEmptyArray()
-    {
-        $this->tournament->exchangeArray(array());
-        $this->assertThat(
-            $this->tournament,
-            new TournamentConstraint(null, null, 1, new \DateTime(), 0)
         );
     }
 
@@ -68,19 +56,22 @@ class LeagueTest extends \PHPUnit_Framework_TestCase
                 'id' => 42,
                 'name' => 'Foo',
                 'games-per-match' => 2,
-                'start-date' => new \DateTime('1994-05-04'),
-                'team-type' => 1,
+                'max-score' => 7
             )
         );
-        $this->assertThat(
-            $this->tournament,
-            new TournamentConstraint(42, 'Foo', 2, new \DateTime('1994-05-04'), 1)
-        );
+
+        $expected = new Tournament();
+        $expected->setId(42);
+        $expected->setName('Foo');
+        $expected->setGamesPerMatch(2);
+        $expected->setMaxScore(7);
+
+        $this->assertEquals($expected, $this->tournament);
     }
 
     public function testTournamentTypeName()
     {
-        $this->assertEquals('League', $this->tournament->getType());
+        $this->assertEquals('Tournament', $this->tournament->getType());
     }
 
 }
