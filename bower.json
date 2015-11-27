@@ -1,7 +1,7 @@
 {
-    "name": "Fußi",
-    "dependencies": {
-        "bootstrap-assets": "2.3.0",
-        "html5shiv": "latest"
-    }
+  "name": "Fußi",
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "html5shiv": "latest"
+  }
 }
