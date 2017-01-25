@@ -1,0 +1,23 @@
+<div *ngFor="let tournament of tournaments">
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h1 class="panel-title">{{ tournament.name }}</h1>
+        </div>
+
+        <div *ngIf="tournament.type == 'league'">
+            <tournament-ranking [tournament]="tournament"></tournament-ranking>
+        </div>
+
+        <div class="panel-body">
+            <p>The tournament is running</p>
+        </div>
+
+        <div class="panel-footer">
+            <a href="#" class="btn btn-default btn-sm" role="button">Show</a>
+        </div>
+
+    </div>
+
+</div>

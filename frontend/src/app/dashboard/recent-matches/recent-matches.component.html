@@ -1,0 +1,37 @@
+<div class="panel panel-primary">
+
+    <div class="panel-heading">
+        <h1 class="panel-title">Recent Matches</h1>
+    </div>
+
+    <table class="table table-striped">
+
+        <tr *ngFor="let match of matches">
+            <td>{{ match.date }}</td>
+            <td>
+
+                <div *ngIf="match.type === 'single'">
+                    <span [class.label]="match.isTeamOneWinner" [class.label-success]="match.isTeamOneWinner">{{ match.player1.name }}</span>
+                    <span class="muted">vs.</span>
+                    <span [class.label]="match.isTeamTwoWinner" [class.label-success]="match.isTeamTwoWinner">{{ match.player2.name }}</span>
+                </div>
+
+                <div *ngIf="match.type === 'double'">
+                    <span [class.label]="match.isTeamOneWinner" [class.label-success]="match.isTeamOneWinner">{{ match.team1.name }}</span>
+                    <span class="muted">vs.</span>
+                    <span [class.label]="match.isTeamTwoWinner" [class.label-success]="match.isTeamTwoWinner">{{ match.team2.name }}</span>
+                </div>
+
+                <br>
+
+                <small><span class="muted">Tournament:</span> <a href="#">{{ match.tournamentName }}</a></small>
+
+            </td>
+            <td>
+                <match-result [match]="match"></match-result>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
