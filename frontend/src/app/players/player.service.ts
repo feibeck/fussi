@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AsyncSubject, Observable} from 'rxjs';
+import { AsyncSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class PlayerService {

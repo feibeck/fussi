@@ -28,16 +28,16 @@ import { AboutComponent } from './about/about.component';
 import { NoContentComponent } from './no-content/no-content.component';
 
 import '../styles/styles.scss';
-import {FussiNavigation} from "./navigation/navigation";
-import {DashboardComponent} from "./dashboard/dashboard.component";
-import {ActiveTournamentsComponent} from "./dashboard/active-tournaments/active-tournaments.component";
-import {RecentMatchesComponent} from "./dashboard/recent-matches/recent-matches.component";
-import {MatchResultComponent} from "./match-result/match-result.component";
-import {TournamentRankingComponent} from "./dashboard/tournament-ranking/tournament-ranking.component";
-import {RecentMatchService} from "./dashboard/recent-matches/recent-matches.service";
-import {ActiveTournamentsService} from "./dashboard/active-tournaments/active-tournaments.service";
-import {PlayersComponent} from "./players/players.component";
-import {PlayerService} from "./players/player.service";
+import { FussiNavigationComponent } from './navigation/fussi-navigation.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ActiveTournamentsComponent } from './dashboard/active-tournaments/active-tournaments.component';
+import { RecentMatchesComponent } from './dashboard/recent-matches/recent-matches.component';
+import { MatchResultComponent } from './match-result/match-result.component';
+import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
+import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
+import { ActiveTournamentsService } from './dashboard/active-tournaments/active-tournaments.service';
+import { PlayersComponent } from './players/players.component';
+import { PlayerService } from './players/player.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -63,7 +63,7 @@ type StoreType = {
     AppComponent,
     AboutComponent,
     NoContentComponent,
-    FussiNavigation,
+    FussiNavigationComponent,
     DashboardComponent,
     MatchResultComponent,
     ActiveTournamentsComponent,

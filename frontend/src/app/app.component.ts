@@ -24,11 +24,16 @@ import { FussiNavigation } from './navigation/navigation';
         <footer>
             <p><small>
                 Fußi v. (development) -
-                Made with <span style="color: red;">♥</span> by <a href="https://github.com/feibeck/fussi/graphs/contributors">the Fussi team</a>
+                Made with <span style="color: red;">♥</span> by
+                <a href="https://github.com/feibeck/fussi/graphs/contributors">
+                    the Fussi team
+                </a>
                 using
                     <a href="http://framework.zend.com">Zend Framework 2</a>,
                     <a href="http://doctrine-project.org">Doctrine</a>,
-                    <a href="http://twitter.github.com/bootstrap/index.html">Twitter Bootstrap</a>.
+                    <a href="http://twitter.github.com/bootstrap/index.html">
+                        Twitter Bootstrap
+                    </a>.
                 Many thanks to
                     <a href="http://mayflower.de">Mayflower GmbH</a>
                 for sponsoring Mayday time!

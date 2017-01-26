@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'match-result',
@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
 })
 export class MatchResultComponent {
 
-    @Input() match;
+    @Input() public match;
 
 }

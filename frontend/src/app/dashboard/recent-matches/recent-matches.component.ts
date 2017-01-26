@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RecentMatchService} from "./recent-matches.service";
+import { RecentMatchService } from './recent-matches.service';
 
 @Component({
     selector: 'recent-matches',
@@ -10,11 +10,14 @@ export class RecentMatchesComponent implements OnInit {
     public matches = [];
 
     constructor(private recentMatchService: RecentMatchService) {
-
     }
 
-    ngOnInit() {
-        this.recentMatchService.getRecentMatches().subscribe(matches => this.matches = matches);
+    public ngOnInit() {
+        this.recentMatchService.getRecentMatches().subscribe(
+            (matches) => {
+                this.matches = matches;
+            }
+        );
     }
 
 }

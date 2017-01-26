@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActiveTournamentsService} from "./active-tournaments.service";
+import { Component, OnInit } from '@angular/core';
+import { ActiveTournamentsService } from './active-tournaments.service';
 
 @Component({
     selector: 'active-tournaments',
@@ -14,7 +14,11 @@ export class ActiveTournamentsComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.activeTournamentService.getActiveTournaments().subscribe(tournaments => this.tournaments = tournaments);
+        this.activeTournamentService.getActiveTournaments().subscribe(
+            (tournaments) => {
+                this.tournaments = tournaments;
+            }
+        );
     }
 
 }

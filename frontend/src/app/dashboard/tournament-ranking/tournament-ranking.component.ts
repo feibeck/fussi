@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'tournament-ranking',
@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
 })
 export class TournamentRankingComponent {
 
-    @Input() tournament;
+    @Input() public tournament;
 
 }

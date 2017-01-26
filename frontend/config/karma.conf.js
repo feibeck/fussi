@@ -67,7 +67,7 @@ module.exports = function (config) {
       noInfo: true,
       // and use stats to turn off verbose output
       stats: {
-        // options i.e. 
+        // options i.e.
         chunks: false
       }
     },
@@ -100,7 +100,7 @@ module.exports = function (config) {
      * available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
      */
     browsers: [
-      'Chrome'
+      'PhantomJS'
     ],
 
     customLaunchers: {
