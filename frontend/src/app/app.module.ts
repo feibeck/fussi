@@ -24,7 +24,6 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { AboutComponent } from './about/about.component';
 import { NoContentComponent } from './no-content/no-content.component';
 
 import '../styles/styles.scss';
@@ -61,7 +60,6 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
     NoContentComponent,
     FussiNavigationComponent,
     DashboardComponent,
