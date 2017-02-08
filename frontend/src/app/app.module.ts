@@ -32,6 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActiveTournamentsComponent } from './dashboard/active-tournaments/active-tournaments.component';
 import { RecentMatchesComponent } from './dashboard/recent-matches/recent-matches.component';
 import { MatchResultComponent } from './match-result/match-result.component';
+import { MatchPlayerComponent } from './match-player/match-player.component';
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
 import { ActiveTournamentsService } from './dashboard/active-tournaments/active-tournaments.service';
@@ -64,6 +65,7 @@ type StoreType = {
     FussiNavigationComponent,
     DashboardComponent,
     MatchResultComponent,
+    MatchPlayerComponent,
     ActiveTournamentsComponent,
     RecentMatchesComponent,
     TournamentRankingComponent,

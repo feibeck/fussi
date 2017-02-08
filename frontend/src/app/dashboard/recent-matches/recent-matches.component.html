@@ -10,17 +10,7 @@
             <td>{{ match.date }}</td>
             <td>
 
-                <div *ngIf="match.type === 'single'">
-                    <span [class.label]="match.isTeamOneWinner" [class.label-success]="match.isTeamOneWinner">{{ match.player1.name }}</span>
-                    <span class="muted">vs.</span>
-                    <span [class.label]="match.isTeamTwoWinner" [class.label-success]="match.isTeamTwoWinner">{{ match.player2.name }}</span>
-                </div>
-
-                <div *ngIf="match.type === 'double'">
-                    <span [class.label]="match.isTeamOneWinner" [class.label-success]="match.isTeamOneWinner">{{ match.team1.name }}</span>
-                    <span class="muted">vs.</span>
-                    <span [class.label]="match.isTeamTwoWinner" [class.label-success]="match.isTeamTwoWinner">{{ match.team2.name }}</span>
-                </div>
+                <match-player [match]="match"></match-player>
 
                 <br>
 
