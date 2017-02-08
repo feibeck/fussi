@@ -8,8 +8,7 @@ import { PointLog } from './point-log.model';
     selector: 'player-detail',
     templateUrl: './player-detail.component.html'
 })
-export class PlayerDetailComponent implements OnInit
-{
+export class PlayerDetailComponent implements OnInit {
 
     public player: Player;
 
@@ -20,7 +19,7 @@ export class PlayerDetailComponent implements OnInit
         private service: PlayerService
     ) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         this.route.params
             .switchMap((params: Params) => this.service.getPlayer(+params['id']))
             .subscribe((player: Player) => this.player = player);
@@ -30,9 +29,9 @@ export class PlayerDetailComponent implements OnInit
             .subscribe((pointLog: PointLog[]) => this.pointLog = pointLog);
     }
 
-    playersChance(log: PointLog) {
+    public playersChance(log: PointLog) {
 
-        if (log.match.player1.id == this.player.id) {
+        if (log.match.player1.id === this.player.id) {
             return log.chance1;
         } else {
             return log.chance2;
@@ -40,9 +39,9 @@ export class PlayerDetailComponent implements OnInit
 
     }
 
-    playersPoints(log: PointLog) {
+    public playersPoints(log: PointLog) {
 
-        if (log.match.player1.id == this.player.id) {
+        if (log.match.player1.id === this.player.id) {
             return log.newPoints1;
         } else {
             return log.newPoints2;
