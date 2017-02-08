@@ -38,6 +38,7 @@ import { RecentMatchService } from './dashboard/recent-matches/recent-matches.se
 import { ActiveTournamentsService } from './dashboard/active-tournaments/active-tournaments.service';
 import { PlayersComponent } from './players/players.component';
 import { PlayerService } from './players/player.service';
+import { PlayerDetailComponent } from './players/player-detail.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -69,7 +70,8 @@ type StoreType = {
     ActiveTournamentsComponent,
     RecentMatchesComponent,
     TournamentRankingComponent,
-      PlayersComponent
+    PlayersComponent,
+    PlayerDetailComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,

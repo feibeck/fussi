@@ -22,7 +22,7 @@
         <tbody>
 
             <tr *ngFor="let player of players">
-                <td><a href="#">{{ player.name }}</a></td>
+                <td><a [routerLink]="['/player', player.id]">{{ player.name }}</a></td>
                 <td class="right">{{ player.points }}</td>
                 <td class="right">{{ player.matchCount }}</td>
                 <td><a href="#">Edit</a></td>
