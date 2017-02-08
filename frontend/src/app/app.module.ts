@@ -39,7 +39,8 @@ import { ActiveTournamentsService } from './dashboard/active-tournaments/active-
 import { PlayersComponent } from './players/players.component';
 import { PlayerService } from './players/player.service';
 import { PlayerDetailComponent } from './players/player-detail.component';
-import { MockBackend } from "@angular/http/testing";
+import { MockBackend } from '@angular/http/testing';
+import { fakeBackendProvider } from './FakeBackendProvider';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -85,11 +86,7 @@ type StoreType = {
     APP_PROVIDERS,
     BaseRequestOptions,
     MockBackend,
-    {
-      provide: Http,
-      deps: [MockBackend, BaseRequestOptions],
-      useFactory: (backend, options) => { return new Http(backend, options); }
-    }
+    fakeBackendProvider
   ]
 })
 export class AppModule {

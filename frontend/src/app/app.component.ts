@@ -1,15 +1,9 @@
 /*
  * Angular 2 decorators and services
  */
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppState } from './app.service';
 import { FussiNavigation } from './navigation/navigation';
-import {MockBackend} from "@angular/http/testing";
-import {Response, ResponseOptions} from "@angular/http";
 
 /*
  * App Component
@@ -47,25 +41,7 @@ import {Response, ResponseOptions} from "@angular/http";
 })
 export class AppComponent implements OnInit {
 
-    constructor(
-        public appState: AppState,
-        private backend: MockBackend
-    ) {
-
-        this.backend.connections.subscribe( connection => {
-
-            // GET: /tournaments
-            if (connection.request.url === "http://localhost:8080/api/tournaments" && connection.request.method === 0) {
-
-                let response = new Response(new ResponseOptions({
-                    body: '[{"name":"Tournament 1"},{"name":"Tournament 2"},{"name":"Tournament 3"}]'
-                }));
-
-                connection.mockRespond(response);
-            }
-
-        });
-
+    constructor(public appState: AppState) {
     }
 
     public ngOnInit() {
