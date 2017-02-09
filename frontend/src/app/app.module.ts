@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { Http, HttpModule, BaseRequestOptions } from '@angular/http';
 import {
   NgModule,
   ApplicationRef
@@ -39,6 +39,7 @@ import { ActiveTournamentsService } from './dashboard/active-tournaments/active-
 import { PlayersComponent } from './players/players.component';
 import { PlayerService } from './players/player.service';
 import { PlayerDetailComponent } from './players/player-detail.component';
+import { MockBackend } from "@angular/http/testing";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -81,7 +82,14 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    BaseRequestOptions,
+    MockBackend,
+    {
+      provide: Http,
+      deps: [MockBackend, BaseRequestOptions],
+      useFactory: (backend, options) => { return new Http(backend, options); }
+    }
   ]
 })
 export class AppModule {

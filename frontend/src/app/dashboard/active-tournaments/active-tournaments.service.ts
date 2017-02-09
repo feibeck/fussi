@@ -1,27 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, Observable } from 'rxjs';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ActiveTournamentsService {
 
-    public mockTournaments = [
-        {
-            name: 'Tournament 1'
-        },
-        {
-            name: 'Tournament 2'
-        }
-    ];
+    constructor(private http: Http) {
+    }
 
-    public getActiveTournaments(): AsyncSubject<any> {
-
-        let recentMatchSubject: AsyncSubject<any> = new AsyncSubject<any>();
-
-        recentMatchSubject.next(this.mockTournaments);
-        recentMatchSubject.complete();
-
-        return recentMatchSubject;
-
+    public getActiveTournaments(): Observable<Tournament[]> {
+        return this.http
+            .get('http://localhost:8080/api/tournaments')
+            .map(res => {
+                return res.json()
+            });
     }
 
 }

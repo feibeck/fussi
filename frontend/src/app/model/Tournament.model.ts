@@ -1,0 +1,4 @@
+
+interface Tournament {
+    name: string;
+}
