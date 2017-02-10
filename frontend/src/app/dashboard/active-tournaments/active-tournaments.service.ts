@@ -11,8 +11,8 @@ export class ActiveTournamentsService {
     public getActiveTournaments(): Observable<Tournament[]> {
         return this.http
             .get('http://localhost:8080/api/tournaments')
-            .map(res => {
-                return res.json()
+            .map((response) => {
+                return response.json();
             });
     }
 
