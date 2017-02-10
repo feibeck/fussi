@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
+import { Tournament } from '../../model/Tournament.model';
 
 @Injectable()
 export class ActiveTournamentsService {
