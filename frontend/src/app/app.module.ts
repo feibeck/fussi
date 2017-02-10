@@ -41,6 +41,7 @@ import { PlayerService } from './players/player.service';
 import { PlayerDetailComponent } from './players/player-detail.component';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './FakeBackendProvider';
+import { PlayerEditComponent } from './players/player-edit.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -73,7 +74,8 @@ type StoreType = {
     RecentMatchesComponent,
     TournamentRankingComponent,
     PlayersComponent,
-    PlayerDetailComponent
+    PlayerDetailComponent,
+    PlayerEditComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
