@@ -1,16 +1,16 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { BaseRequestOptions, HttpModule, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { ActiveTournamentsService } from './active-tournaments.service';
-import { Tournament } from '../../model/Tournament.model';
+import { TournamentService } from './tournament.service';
+import { Tournament } from '../model/Tournament.model';
 
-describe('ActiveTournamentService', () => {
+describe('TournamentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpModule],
             providers: [
-                ActiveTournamentsService,
+                TournamentService,
                 MockBackend,
                 BaseRequestOptions,
                 {
@@ -27,7 +27,7 @@ describe('ActiveTournamentService', () => {
     describe('getActiveTournaments()', () => {
 
         it('should return an Observable<Tournament[]>',
-            inject([ActiveTournamentsService, MockBackend], (activeTournamentsService, mockBackend) => {
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
 
             const mockResponse: Tournament[] = [
                 {
@@ -44,11 +44,29 @@ describe('ActiveTournamentService', () => {
                 })));
             });
 
-            activeTournamentsService.getActiveTournaments().subscribe((tournaments: Tournament[]) => {
+            tournamentService.getActiveTournaments().subscribe((tournaments: Tournament[]) => {
                 expect(tournaments.length).toBe(2);
                 expect(tournaments[0].name).toEqual('Foo');
                 expect(tournaments[1].name).toEqual('Bar');
             });
+
+        }));
+
+        it('error handling',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    status: 500
+                })));
+            });
+
+            tournamentService.getActiveTournaments().subscribe(
+                (tournaments: Tournament[]) => { },
+                (response: Response) => {
+                    expect(response.status).toBe(500);
+                }
+            );
 
         }));
 

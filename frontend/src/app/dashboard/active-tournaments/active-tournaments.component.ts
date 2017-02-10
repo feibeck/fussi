@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActiveTournamentsService } from './active-tournaments.service';
+import { TournamentService } from '../../service/tournament.service';
 
 @Component({
     selector: 'active-tournaments',
@@ -9,12 +9,12 @@ export class ActiveTournamentsComponent implements OnInit {
 
     public tournaments = [];
 
-    constructor(private activeTournamentService: ActiveTournamentsService) {
+    constructor(private tournamentService: TournamentService) {
 
     }
 
     public ngOnInit() {
-        this.activeTournamentService.getActiveTournaments().subscribe(
+        this.tournamentService.getActiveTournaments().subscribe(
             (tournaments) => {
                 this.tournaments = tournaments;
             }

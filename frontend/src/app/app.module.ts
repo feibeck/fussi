@@ -35,7 +35,7 @@ import { MatchResultComponent } from './match-result/match-result.component';
 import { MatchPlayerComponent } from './match-player/match-player.component';
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
-import { ActiveTournamentsService } from './dashboard/active-tournaments/active-tournaments.service';
+import { TournamentService } from './service/tournament.service';
 import { PlayersComponent } from './players/players.component';
 import { PlayerService } from './players/player.service';
 import { PlayerDetailComponent } from './players/player-detail.component';
@@ -47,7 +47,7 @@ const APP_PROVIDERS = [
     ...APP_RESOLVER_PROVIDERS,
     AppState,
     RecentMatchService,
-    ActiveTournamentsService,
+    TournamentService,
     PlayerService
 ];
 
