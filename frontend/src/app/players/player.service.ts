@@ -32,4 +32,11 @@ export class PlayerService {
             });
     }
 
+    public save(player: Player): Observable<Player> {
+        return this.http.put('http://localhost:8080/api/player', player)
+            .map((response) => {
+                return response.json();
+            });
+    }
+
 }

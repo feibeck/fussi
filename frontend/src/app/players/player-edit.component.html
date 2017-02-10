@@ -1,3 +1,21 @@
-<h1>Edit player</h1>
+<div class="page-header">
+    <h1>Edit player</h1>
+</div>
 
-<p>Name: {{ player.name }}</p>
+<form (ngSubmit)="onSubmit()" #playerForm="ngForm" name="Player" class="form-horizontal" id="Player">
+
+    <div class="form-group" [class.has-error]="!name.valid">
+        <label class="col-sm-2 control-label" for="name">Name</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" required [(ngModel)]="player.name" #name="ngModel">
+            <span [class.help-block]="name.invalid" [hidden]="!name.invalid">
+                Please enter a name
+            </span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input name="submit" type="submit" class="btn btn-primary" value="Speichern" [disabled]="!playerForm.form.valid">
+    </div>
+
+</form>

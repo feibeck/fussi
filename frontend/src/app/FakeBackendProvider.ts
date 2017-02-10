@@ -1,4 +1,4 @@
-import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
+import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { PointLog } from './players/point-log.model';
 
@@ -208,6 +208,37 @@ export let fakeBackendProvider = {
                 let response = new Response(new ResponseOptions({
                     body: JSON.stringify(foundPlayer)
                 }));
+
+                connection.mockRespond(response);
+            }
+
+            if (connection.request.url === 'http://localhost:8080/api/player' && connection.request.method === RequestMethod.Put) {
+
+                let player = JSON.parse(connection.request.getBody());
+                let response;
+
+                if (player.name === 'God') {
+
+                    response = new Response(new ResponseOptions({
+                        body: 'No one is allowed to be god!',
+                        status: 500
+                    }));
+
+                } else {
+
+                    let foundPlayer = players.filter((currentPlayer) => {
+                        return currentPlayer.id === player.id;
+                    }).reduce((_prev, player) => {
+                        return player;
+                    });
+
+                    foundPlayer.name = player.name;
+
+                    response = new Response(new ResponseOptions({
+                        body: JSON.stringify(foundPlayer)
+                    }));
+
+                }
 
                 connection.mockRespond(response);
             }

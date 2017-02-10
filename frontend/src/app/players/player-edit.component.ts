@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
 
@@ -15,7 +15,8 @@ export class PlayerEditComponent implements OnInit {
 
     constructor(
         private playerService: PlayerService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {
     }
 
@@ -23,6 +24,20 @@ export class PlayerEditComponent implements OnInit {
         this.route.params
             .switchMap((params: Params) => this.playerService.getPlayer(+params['id']))
             .subscribe((player) => this.player = player);
+    }
+
+    public onSubmit() {
+
+        this.playerService.save(this.player).subscribe(
+            (player: Player) => {
+                this.player = player;
+                this.router.navigate(['/players']);
+            },
+            (response) => {
+                // TODO: error handling
+            }
+        );
+
     }
 
 }
