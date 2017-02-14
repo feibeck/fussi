@@ -212,35 +212,48 @@ export let fakeBackendProvider = {
                 connection.mockRespond(response);
             }
 
-            if (connection.request.url === 'http://localhost:8080/api/player' && connection.request.method === RequestMethod.Put) {
+            if (connection.request.url === 'http://localhost:8080/api/player'
+                && connection.request.method === RequestMethod.Put) {
 
-                let player = JSON.parse(connection.request.getBody());
+                let requestPlayer = JSON.parse(connection.request.getBody());
                 let response;
 
-                if (player.name === 'God') {
+                if (requestPlayer.name === 'God') {
+
+                    const error = {
+                        errors: [
+                            {
+                                field: 'name',
+                                message: 'No one is allowed to be god'
+                            }
+                        ]
+                    };
 
                     response = new Response(new ResponseOptions({
-                        body: 'No one is allowed to be god!',
-                        status: 500
+                        body: JSON.stringify(error),
+                        status: 422
                     }));
+
+                    connection.mockError(response);
 
                 } else {
 
                     let foundPlayer = players.filter((currentPlayer) => {
-                        return currentPlayer.id === player.id;
+                        return currentPlayer.id === requestPlayer.id;
                     }).reduce((_prev, player) => {
                         return player;
                     });
 
-                    foundPlayer.name = player.name;
+                    foundPlayer.name = requestPlayer.name;
 
                     response = new Response(new ResponseOptions({
                         body: JSON.stringify(foundPlayer)
                     }));
 
+                    connection.mockRespond(response);
+
                 }
 
-                connection.mockRespond(response);
             }
 
         });

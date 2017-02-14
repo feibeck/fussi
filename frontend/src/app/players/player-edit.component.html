@@ -2,20 +2,21 @@
     <h1>Edit player</h1>
 </div>
 
-<form (ngSubmit)="onSubmit()" #playerForm="ngForm" name="Player" class="form-horizontal" id="Player">
+<form [formGroup]="playerForm" (ngSubmit)="onSubmit()" novalidate class="form-horizontal">
 
-    <div class="form-group" [class.has-error]="!name.valid">
+    <div class="form-group" [class.has-error]="playerForm.controls.name?.invalid">
         <label class="col-sm-2 control-label" for="name">Name</label>
         <div class="col-sm-10">
-            <input type="text" name="name" class="form-control" required [(ngModel)]="player.name" #name="ngModel">
-            <span [class.help-block]="name.invalid" [hidden]="!name.invalid">
-                Please enter a name
+            <input type="text" name="name" id="name" class="form-control" formControlName="name">
+            <span [class.help-block]="playerForm.controls.name?.invalid" [hidden]="playerForm.controls.name?.valid">
+                <p *ngIf="playerForm.controls.name?.errors?.required">Name is required</p>
+                <p *ngIf="playerForm.controls.name?.errors?.remote">{{ playerForm.controls.name.errors.remote }}</p>
             </span>
         </div>
     </div>
 
     <div class="form-actions">
-        <input name="submit" type="submit" class="btn btn-primary" value="Speichern" [disabled]="!playerForm.form.valid">
+        <input name="submit" type="submit" class="btn btn-primary" value="Speichern" [disabled]="playerForm.invalid">
     </div>
 
 </form>

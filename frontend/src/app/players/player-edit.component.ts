@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
+import { PlayerSaveError } from './player-save-error.model';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -13,31 +15,65 @@ export class PlayerEditComponent implements OnInit {
 
     public player: Player;
 
+    public playerForm: FormGroup;
+
     constructor(
         private playerService: PlayerService,
         private route: ActivatedRoute,
-        private router: Router
-    ) {
+        private router: Router,
+        private formBuilder: FormBuilder) {
+        this.createForm();
     }
 
     public ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) => this.playerService.getPlayer(+params['id']))
-            .subscribe((player) => this.player = player);
+            .subscribe((player) => this.setPlayer(player));
     }
 
     public onSubmit() {
-
-        this.playerService.save(this.player).subscribe(
+        this.playerService.save(this.prepareSavePlayer()).subscribe(
             (player: Player) => {
-                this.player = player;
                 this.router.navigate(['/players']);
             },
-            (response) => {
-                // TODO: error handling
+            (error: PlayerSaveError) => {
+                if (error.isValidationError()) {
+                    this.setValidationMessages(error.getValidationMessages());
+                } else {
+                    alert(error.getMessage());
+                }
             }
         );
+    }
 
+    private setValidationMessages(messages: Array<{field: string, message: string}>) {
+        for (let message of messages) {
+            this.playerForm.controls[message.field].setErrors({remote: message.message});
+        }
+    }
+
+    private prepareSavePlayer(): Player {
+        const formModel = this.playerForm.value;
+
+        return {
+            id: this.player.id,
+            name: formModel.name as string,
+            points: this.player.points,
+            matchCount: this.player.matchCount
+        };
+    }
+
+    private createForm() {
+        this.playerForm = this.formBuilder.group({
+            name: ['', Validators.required ],
+        });
+    }
+
+    private setPlayer(player: Player) {
+        this.player = player;
+        this.playerForm.setValue({
+            name: player.name
+        });
     }
 
 }
