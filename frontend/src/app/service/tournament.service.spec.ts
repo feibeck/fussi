@@ -62,7 +62,7 @@ describe('TournamentService', () => {
             });
 
             tournamentService.getActiveTournaments().subscribe(
-                (tournaments: Tournament[]) => { },
+                null,
                 (response: Response) => {
                     expect(response.status).toBe(500);
                 }
