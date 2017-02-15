@@ -32,13 +32,7 @@ export class PlayerEditComponent implements OnInit {
                 if (params['id']) {
                     return this.playerService.getPlayer(+params['id']);
                 } else {
-                    let newPlayer = {
-                        id: null,
-                        name: null,
-                        points: null,
-                        matchCount: null
-                    };
-                    return Observable.of(newPlayer);
+                    return Observable.of(new Player(null, null, 0, 0));
                 }
             })
             .subscribe((player) => this.setPlayer(player));
@@ -66,14 +60,9 @@ export class PlayerEditComponent implements OnInit {
     }
 
     private prepareSavePlayer(): Player {
-        const formModel = this.playerForm.value;
-
-        return {
-            id: this.player.id,
-            name: formModel.name as string,
-            points: this.player.points,
-            matchCount: this.player.matchCount
-        };
+        const updatePlayer = this.player.clone();
+        updatePlayer.name = this.playerForm.value.name as string;
+        return updatePlayer;
     }
 
     private createForm() {

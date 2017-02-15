@@ -1,9 +1,10 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { BaseRequestOptions, HttpModule, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { PlayerService } from './player.service';
-import { Player } from './player.model';
+import { JsonPlayer } from './json-player.model';
 import { PlayerSaveError } from './player-save-error.model';
+import { Player } from './player.model';
 
 describe('PlayerService', () => {
 
@@ -27,9 +28,11 @@ describe('PlayerService', () => {
 
     describe('update()', () => {
 
+        const updatePlayer = new Player(1, 'Foo', 0, 0);
+
         it('returns player on success', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            const mockPlayer: Player = {
+            const mockPlayer: JsonPlayer = {
                 id: 1,
                 name: 'Foo',
                 points: 0,
@@ -42,7 +45,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.update({id: 1, name: 'Foo'}).subscribe((player: Player) => {
+            playerService.update(updatePlayer).subscribe((player: JsonPlayer) => {
                 expect(player.id).toBe(1);
                 expect(player.name).toBe('Foo');
                 expect(player.points).toBe(0);
@@ -60,7 +63,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.update({id: 1, name: 'Foo'}).subscribe(
+            playerService.update(updatePlayer).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeFalsy();
@@ -86,7 +89,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.update({id: 1, name: 'Foo'}).subscribe(
+            playerService.update(updatePlayer).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeTruthy();
@@ -104,7 +107,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.update({id: 1, name: 'Foo'}).subscribe(
+            playerService.update(updatePlayer).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeFalsy();

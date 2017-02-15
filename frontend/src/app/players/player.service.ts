@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, Observable } from 'rxjs';
-import { Player } from './player.model';
+import { JsonPlayer } from './json-player.model';
 import { PointLog } from './point-log.model';
 import { Http, Response } from '@angular/http';
 import { PlayerSaveError } from './player-save-error.model';
+import { Player } from './player.model';
 
 @Injectable()
 export class PlayerService {
@@ -30,6 +31,13 @@ export class PlayerService {
         return this.http.get('http://localhost:8080/api/player')
             .map((response) => {
                 return response.json();
+            })
+            .map((jsonPlayerList: JsonPlayer[]) => {
+                const playerList: Player[] = [];
+                for (let jsonPlayer of jsonPlayerList) {
+                    playerList.push(Player.fromJsonPlayer(jsonPlayer));
+                }
+                return playerList;
             });
     }
 
@@ -37,6 +45,9 @@ export class PlayerService {
         return this.http.get('http://localhost:8080/api/player/' + id)
             .map((response) => {
                 return response.json();
+            })
+            .map((jsonPlayer: JsonPlayer) => {
+                return Player.fromJsonPlayer(jsonPlayer);
             });
     }
 
@@ -53,17 +64,23 @@ export class PlayerService {
     }
 
     public update(player: Player): Observable<Player> {
-        return this.http.put('http://localhost:8080/api/player', player)
+        return this.http.put('http://localhost:8080/api/player', player.toJsonPlayer())
             .map((response) => {
                 return response.json();
+            })
+            .map((jsonPlayer: JsonPlayer) => {
+                return Player.fromJsonPlayer(jsonPlayer);
             })
             .catch(PlayerService.handleError);
     }
 
     public create(player: Player): Observable<Player> {
-        return this.http.post('http://localhost:8080/api/player', player)
+        return this.http.post('http://localhost:8080/api/player', player.toJsonPlayer())
             .map((response) => {
                 return response.json();
+            })
+            .map((jsonPlayer: JsonPlayer) => {
+                return Player.fromJsonPlayer(jsonPlayer);
             })
             .catch(PlayerService.handleError);
     }
