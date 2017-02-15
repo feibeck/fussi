@@ -9,7 +9,7 @@ import { PlayerEditComponent } from './players/player-edit.component';
 export const ROUTES: Routes = [
   { path: '',      component: DashboardComponent },
   { path: 'home',  component: DashboardComponent },
-  { path: 'players', component: PlayersComponent },
+  { path: 'player/list', component: PlayersComponent },
   { path: 'player/show/:id', component: PlayerDetailComponent },
   { path: 'player/edit/:id', component: PlayerEditComponent },
   { path: 'player/new', component: PlayerEditComponent },

@@ -26,6 +26,77 @@ describe('PlayerService', () => {
         });
     });
 
+    describe('getPlayerList()', () => {
+
+        it('returns list of players', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            const list = [
+                {
+                    id: 1,
+                    name: 'Foo',
+                    points: 10,
+                    matchCount: 1
+                },
+                {
+                    id: 2,
+                    name: 'Bar',
+                    points: 20,
+                    matchCount: 2
+                }
+            ];
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify(list)
+                })));
+            });
+
+            playerService.getPlayerList().subscribe((players: Player[]) => {
+                expect(players.length).toBe(2);
+                expect(players[0].id).toBe(1);
+                expect(players[1].id).toBe(2);
+            });
+
+        }));
+
+        it('returns error message in case of server error',
+            inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockError(new Response(new ResponseOptions({
+                    status: 500
+                })));
+            });
+
+            playerService.getPlayerList().subscribe(
+                null,
+                (message) => {
+                    expect(message).toBe(PlayerService.listLoadingError);
+                }
+            );
+
+        }));
+
+        it('returns error message in case of invalid json',
+            inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: '[{"id":"1"'
+                })));
+            });
+
+            playerService.getPlayerList().subscribe(
+                null,
+                (message) => {
+                    expect(message).toBe(PlayerService.listLoadingError);
+                }
+            );
+
+        }));
+
+    });
+
     describe('update()', () => {
 
         const updatePlayer = new Player(1, 'Foo', 0, 0);

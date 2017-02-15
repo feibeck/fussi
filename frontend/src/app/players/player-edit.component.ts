@@ -45,7 +45,7 @@ export class PlayerEditComponent implements OnInit {
     public onSubmit() {
         this.playerService.save(this.prepareSavePlayer()).subscribe(
             (player: Player) => {
-                this.router.navigate(['/players']);
+                this.router.navigate(['/player/list']);
             },
             (error: PlayerSaveError) => {
                 if (error.isValidationError()) {

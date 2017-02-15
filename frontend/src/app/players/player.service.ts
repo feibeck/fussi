@@ -9,6 +9,8 @@ import { Player } from './player.model';
 @Injectable()
 export class PlayerService {
 
+    public static listLoadingError = 'Could not load player list';
+
     private static handleError(error: Response | any) {
 
         let playerSaveError: PlayerSaveError;
@@ -27,7 +29,7 @@ export class PlayerService {
     constructor(private http: Http) {
     }
 
-    public getPlayers(): Observable<Player[]> {
+    public getPlayerList(): Observable<Player[]> {
         return this.http.get('http://localhost:8080/api/player')
             .map((response) => {
                 return response.json();
@@ -38,6 +40,9 @@ export class PlayerService {
                     playerList.push(Player.fromJsonPlayer(jsonPlayer));
                 }
                 return playerList;
+            })
+            .catch(() => {
+                return Observable.throw(PlayerService.listLoadingError);
             });
     }
 

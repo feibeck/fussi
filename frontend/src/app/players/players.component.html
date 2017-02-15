@@ -8,7 +8,11 @@
         <a [routerLink]="['/player/new']" class="btn btn-default">Add player</a>
     </div>
 
-    <table class="table table-striped table-bordered">
+    <div class="alert alert-warning" *ngIf="error">
+        {{ errorMessage }}
+    </div>
+
+    <table class="table table-striped table-bordered" *ngIf="!error">
 
         <thead>
         <tr>
@@ -31,5 +35,7 @@
         </tbody>
 
     </table>
+
+    <p *ngIf="players.length === 0 && !error" class="text-center">No players</p>
 
 </div>

@@ -103,7 +103,7 @@ describe('PlayerEditComponent', () => {
             fixture.detectChanges();
 
             expect(playerService.save).toHaveBeenCalledWith(new Player(1, 'Foo', 0, 0));
-            expect(router.navigate).toHaveBeenCalledWith(['/players']);
+            expect(router.navigate).toHaveBeenCalledWith(['/player/list']);
 
         })));
 
@@ -185,7 +185,7 @@ describe('PlayerEditComponent', () => {
             fixture.detectChanges();
 
             expect(playerService.save).toHaveBeenCalledWith(new Player(null, 'Foo', 0, 0));
-            expect(router.navigate).toHaveBeenCalledWith(['/players']);
+            expect(router.navigate).toHaveBeenCalledWith(['/player/list']);
 
         })));
 
