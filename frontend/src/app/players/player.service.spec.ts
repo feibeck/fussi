@@ -25,7 +25,7 @@ describe('PlayerService', () => {
         });
     });
 
-    describe('save()', () => {
+    describe('update()', () => {
 
         it('returns player on success', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
@@ -42,7 +42,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.save().subscribe((player: Player) => {
+            playerService.update({id: 1, name: 'Foo'}).subscribe((player: Player) => {
                 expect(player.id).toBe(1);
                 expect(player.name).toBe('Foo');
                 expect(player.points).toBe(0);
@@ -60,7 +60,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.save().subscribe(
+            playerService.update({id: 1, name: 'Foo'}).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeFalsy();
@@ -86,7 +86,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.save().subscribe(
+            playerService.update({id: 1, name: 'Foo'}).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeTruthy();
@@ -104,7 +104,7 @@ describe('PlayerService', () => {
                 })));
             });
 
-            playerService.save().subscribe(
+            playerService.update({id: 1, name: 'Foo'}).subscribe(
                 null,
                 (error: PlayerSaveError) => {
                     expect(error.isValidationError()).toBeFalsy();

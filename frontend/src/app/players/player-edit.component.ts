@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
 import { PlayerSaveError } from './player-save-error.model';
+import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -27,7 +28,19 @@ export class PlayerEditComponent implements OnInit {
 
     public ngOnInit(): void {
         this.route.params
-            .switchMap((params: Params) => this.playerService.getPlayer(+params['id']))
+            .switchMap((params: Params) => {
+                if (params['id']) {
+                    return this.playerService.getPlayer(+params['id']);
+                } else {
+                    let newPlayer = {
+                        id: null,
+                        name: null,
+                        points: null,
+                        matchCount: null
+                    };
+                    return Observable.of(newPlayer);
+                }
+            })
             .subscribe((player) => this.setPlayer(player));
     }
 

@@ -256,6 +256,85 @@ export let fakeBackendProvider = {
 
             }
 
+            if (connection.request.url === 'http://localhost:8080/api/player'
+                && connection.request.method === RequestMethod.Post) {
+
+                let requestPlayer = JSON.parse(connection.request.getBody());
+                let response;
+
+                if (requestPlayer.name === 'God') {
+
+                    const error = {
+                        errors: [
+                            {
+                                field: 'name',
+                                message: 'No one is allowed to be god'
+                            }
+                        ]
+                    };
+
+                    response = new Response(new ResponseOptions({
+                        body: JSON.stringify(error),
+                        status: 422
+                    }));
+
+                    connection.mockError(response);
+
+                } else {
+
+                    let foundPlayerList = players.filter((currentPlayer) => {
+                        return currentPlayer.name === requestPlayer.name;
+                    });
+                    if (foundPlayerList.length > 0) {
+
+                        let foundPlayer = foundPlayerList[0];
+
+                        const error = {
+                            errors: [
+                                {
+                                    field: 'name',
+                                    message: 'Name is already in use by another player.'
+                                }
+                            ]
+                        };
+
+                        response = new Response(new ResponseOptions({
+                            body: JSON.stringify(error),
+                            status: 422
+                        }));
+
+                        connection.mockError(response);
+
+                    } else {
+
+                        let highestId = players.map((player) => {
+                            return player.id;
+                        }).reduce((prev, current) => {
+                            return prev > current ? prev : current;
+                        });
+
+                        let newPlayer = {
+                            id: highestId + 1,
+                            name: requestPlayer.name,
+                            points: 0,
+                            matchCount: 0
+                        };
+
+                        players.push(newPlayer);
+
+                        response = new Response(new ResponseOptions({
+                            body: JSON.stringify(newPlayer),
+                            status: 201
+                        }));
+
+                        connection.mockRespond(response);
+
+                    }
+
+                }
+
+            }
+
         });
 
         return new Http(backend, options);

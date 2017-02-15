@@ -8,7 +8,7 @@ import { PlayerSaveError } from './player-save-error.model';
 @Injectable()
 export class PlayerService {
 
-    private static handleError (error: Response | any) {
+    private static handleError(error: Response | any) {
 
         let playerSaveError: PlayerSaveError;
 
@@ -49,7 +49,19 @@ export class PlayerService {
     }
 
     public save(player: Player): Observable<Player> {
+        return player.id ? this.update(player) : this.create(player);
+    }
+
+    public update(player: Player): Observable<Player> {
         return this.http.put('http://localhost:8080/api/player', player)
+            .map((response) => {
+                return response.json();
+            })
+            .catch(PlayerService.handleError);
+    }
+
+    public create(player: Player): Observable<Player> {
+        return this.http.post('http://localhost:8080/api/player', player)
             .map((response) => {
                 return response.json();
             })
