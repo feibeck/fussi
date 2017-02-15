@@ -3,6 +3,10 @@
     <h1 *ngIf="!player.id">New player</h1>
 </div>
 
+<div class="alert alert-warning" *ngIf="error">
+    {{ errorMessage }}
+</div>
+
 <form [formGroup]="playerForm" (ngSubmit)="onSubmit()" novalidate class="form-horizontal">
 
     <div class="form-group" [class.has-error]="playerForm.controls.name?.invalid && !playerForm.controls.name?.pristine">

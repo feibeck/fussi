@@ -236,6 +236,14 @@ export let fakeBackendProvider = {
 
                     connection.mockError(response);
 
+                } else if (requestPlayer.name === 'Foo') {
+
+                    response = new Response(new ResponseOptions({
+                        body: "Unknown error",
+                        status: 500
+                    }));
+                    connection.mockError(response);
+
                 } else {
 
                     let foundPlayer = players.filter((currentPlayer) => {

@@ -18,6 +18,10 @@ export class PlayerEditComponent implements OnInit {
 
     public playerForm: FormGroup;
 
+    public error: boolean = false;
+
+    public errorMessage: string = '';
+
     constructor(
         private playerService: PlayerService,
         private route: ActivatedRoute,
@@ -47,7 +51,8 @@ export class PlayerEditComponent implements OnInit {
                 if (error.isValidationError()) {
                     this.setValidationMessages(error.getValidationMessages());
                 } else {
-                    alert(error.getMessage());
+                    this.error = true;
+                    this.errorMessage = error.getMessage();
                 }
             }
         );
