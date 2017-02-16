@@ -1,13 +1,13 @@
 import { async, TestBed, ComponentFixture, fakeAsync, inject, tick } from '@angular/core/testing';
-import { Observable } from 'rxjs';
-import { PlayerService } from './player.service';
-import { Player } from './player.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PointLogService } from './point-log.service';
+import { Observable } from 'rxjs';
+import { PlayerService } from '../service/player.service';
+import { Player } from '../model/player.model';
+import { PointLogService } from '../service/point-log.service';
 import { PlayerDetailComponent } from './player-detail.component';
-import { PointLog } from './point-log.model';
-import { PlayerLoadError } from './player-load-error.model';
-import { SharedModule } from '../shared';
+import { PointLog } from '../model/point-log.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
+import { SharedModule } from '../../shared';
 
 const player = new Player(1, 'Foo', 0, 0);
 

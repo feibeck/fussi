@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PlayerService } from './player.service';
-import { Player } from './player.model';
-import { PlayerSaveError } from './player-save-error.model';
 import { Observable } from 'rxjs';
+import { PlayerService } from '../service/player.service';
+import { Player } from '../model/player.model';
+import { PlayerSaveError } from '../model/player-save-error.model';
 
 import 'rxjs/add/operator/switchMap';
 

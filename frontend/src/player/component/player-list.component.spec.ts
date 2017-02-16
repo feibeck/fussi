@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { async, TestBed, ComponentFixture, inject, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
-import { PlayerService } from './player.service';
-import { Player } from './player.model';
+import { PlayerService } from '../service/player.service';
+import { Player } from '../model/player.model';
 import { PlayerListComponent } from './player-list.component';
-import { PlayerLoadError } from './player-load-error.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
 
 const playerList = [new Player(1, 'Foo', 0, 0), new Player(2, 'Bar', 0, 0)];
 

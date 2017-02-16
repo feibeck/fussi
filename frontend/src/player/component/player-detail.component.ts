@@ -1,10 +1,10 @@
 import { OnInit, Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PlayerService } from './player.service';
-import { Player } from './player.model';
-import { PlayerLoadError } from './player-load-error.model';
-import { PointLogService } from './point-log.service';
-import { PointLog } from './point-log.model';
+import { PlayerService } from '../service/player.service';
+import { Player } from '../model/player.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
+import { PointLogService } from '../service/point-log.service';
+import { PointLog } from '../model/point-log.model';
 
 @Component({
     selector: 'player-detail',

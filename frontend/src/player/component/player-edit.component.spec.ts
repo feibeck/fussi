@@ -2,10 +2,10 @@ import { async, TestBed, ComponentFixture, inject, fakeAsync, tick } from '@angu
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PlayerService } from './player.service';
+import { PlayerService } from '../service/player.service';
 import { PlayerEditComponent } from './player-edit.component';
-import { Player } from './player.model';
-import { PlayerSaveError } from './player-save-error.model';
+import { Player } from '../model/player.model';
+import { PlayerSaveError } from '../model/player-save-error.model';
 
 /* tslint:disable:max-classes-per-file */
 /* Don't want to have the stubs in extra files… */

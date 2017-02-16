@@ -2,9 +2,9 @@ import { TestBed, inject } from '@angular/core/testing';
 import { MockBackend } from '@angular/http/testing';
 import { HttpModule, BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 import { PointLogService } from './point-log.service';
-import { JsonPointLog } from './json-point-log.model';
-import { PointLog } from './point-log.model';
-import { PlayerLoadError } from './player-load-error.model';
+import { JsonPointLog } from '../model/json-point-log.model';
+import { PointLog } from '../model/point-log.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
 
 describe('PointLogService', () => {
 

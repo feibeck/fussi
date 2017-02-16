@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { JsonPlayer } from './json-player.model';
 import { Http, Response } from '@angular/http';
-import { PlayerSaveError } from './player-save-error.model';
-import { Player } from './player.model';
-import { PlayerLoadError } from './player-load-error.model';
+import { Observable } from 'rxjs';
+import { JsonPlayer } from '../model/json-player.model';
+import { PlayerSaveError } from '../model/player-save-error.model';
+import { Player } from '../model/player.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
 
 @Injectable()
 export class PlayerService {

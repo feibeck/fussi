@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
-import { JsonPointLog } from './json-point-log.model';
-import { PlayerLoadError } from './player-load-error.model';
-import { PointLog } from './point-log.model';
+import { JsonPointLog } from '../model/json-point-log.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
+import { PointLog } from '../model/point-log.model';
 
 @Injectable()
 export class PointLogService {

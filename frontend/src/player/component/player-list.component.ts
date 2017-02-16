@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerService } from './player.service';
-import { Player } from './player.model';
-import { PlayerLoadError } from './player-load-error.model';
+import { PlayerService } from '../service/player.service';
+import { Player } from '../model/player.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
 
 @Component({
     selector: 'players',

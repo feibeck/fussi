@@ -2,10 +2,10 @@ import { TestBed, inject } from '@angular/core/testing';
 import { BaseRequestOptions, HttpModule, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { PlayerService } from './player.service';
-import { JsonPlayer } from './json-player.model';
-import { PlayerSaveError } from './player-save-error.model';
-import { Player } from './player.model';
-import { PlayerLoadError } from './player-load-error.model';
+import { JsonPlayer } from '../model/json-player.model';
+import { Player } from '../model/player.model';
+import { PlayerLoadError } from '../model/player-load-error.model';
+import { PlayerSaveError } from '../model/player-save-error.model';
 
 describe('PlayerService', () => {
 
