@@ -201,15 +201,33 @@ export let fakeBackendProvider = {
 
                 let foundPlayer = players.filter((currentPlayer) => {
                     return currentPlayer.id === id;
-                }).reduce((_prev, player) => {
-                    return player;
                 });
 
-                let response = new Response(new ResponseOptions({
-                    body: JSON.stringify(foundPlayer)
-                }));
+                let response;
 
-                connection.mockRespond(response);
+                if (foundPlayer.length > 0) {
+
+                    response = new Response(new ResponseOptions({
+                        body: JSON.stringify(foundPlayer[0])
+                    }));
+                    connection.mockRespond(response);
+
+                } else if (id === 666) {
+
+                    response = new Response(new ResponseOptions({
+                        status: 500
+                    }));
+                    connection.mockError(response);
+
+                } else {
+
+                    response = new Response(new ResponseOptions({
+                        status: 404
+                    }));
+                    connection.mockError(response);
+
+                }
+
             }
 
             if (connection.request.url === 'http://localhost:8080/api/player'
@@ -239,7 +257,7 @@ export let fakeBackendProvider = {
                 } else if (requestPlayer.name === 'Foo') {
 
                     response = new Response(new ResponseOptions({
-                        body: "Unknown error",
+                        body: 'Unknown error',
                         status: 500
                     }));
                     connection.mockError(response);

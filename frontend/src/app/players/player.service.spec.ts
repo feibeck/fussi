@@ -5,6 +5,7 @@ import { PlayerService } from './player.service';
 import { JsonPlayer } from './json-player.model';
 import { PlayerSaveError } from './player-save-error.model';
 import { Player } from './player.model';
+import { PlayerLoadError } from './player-load-error.model';
 
 describe('PlayerService', () => {
 
@@ -24,6 +25,90 @@ describe('PlayerService', () => {
                 }
             ]
         });
+    });
+
+    describe('getPlayer()', () => {
+
+        it('returns a player', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            const playerJson = {
+                id: 1,
+                name: 'Foo',
+                points: 10,
+                matchCount: 1
+            };
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify(playerJson)
+                })));
+            });
+
+            playerService.getPlayer(1).subscribe((player: Player) => {
+                expect(player.id).toBe(1);
+                expect(player.name).toBe('Foo');
+                expect(player.points).toBe(10);
+                expect(player.matchCount).toBe(1);
+            });
+
+        }));
+
+        it('returns not found for unknown player', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockError(new Response(new ResponseOptions({
+                    status: 404
+                })));
+            });
+
+            playerService.getPlayer(1).subscribe(
+                null,
+                (error: PlayerLoadError) => {
+                    expect(error.isNotExistsError()).toBeTruthy();
+                    expect(error.getMessage()).toBe(PlayerLoadError.playerNotExistsError);
+                }
+            );
+
+        }));
+
+        it('returns error message in case of server error',
+            inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockError(new Response(new ResponseOptions({
+                    status: 500
+                })));
+            });
+
+            playerService.getPlayer(1).subscribe(
+                null,
+                (error: PlayerLoadError) => {
+                    expect(error.isGeneralError()).toBeTruthy();
+                    expect(error.getMessage()).toBe(PlayerLoadError.playerLoadingError);
+                }
+            );
+
+        }));
+
+        it('returns error message in case of invalid json',
+            inject([PlayerService, MockBackend], (playerService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: '{"id":"1"'
+                })));
+            });
+
+            playerService.getPlayer(1).subscribe(
+                null,
+                (error: PlayerLoadError) => {
+                    expect(error.isGeneralError()).toBeTruthy();
+                    expect(error.getMessage()).toBe(PlayerLoadError.playerLoadingError);
+                }
+            );
+
+        }));
+
     });
 
     describe('getPlayerList()', () => {
@@ -70,8 +155,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayerList().subscribe(
                 null,
-                (message) => {
-                    expect(message).toBe(PlayerService.listLoadingError);
+                (error: PlayerLoadError) => {
+                    expect(error.isGeneralError()).toBeTruthy();
+                    expect(error.getMessage()).toBe(PlayerLoadError.listLoadingError);
                 }
             );
 
@@ -88,8 +174,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayerList().subscribe(
                 null,
-                (message) => {
-                    expect(message).toBe(PlayerService.listLoadingError);
+                (error: PlayerLoadError) => {
+                    expect(error.isGeneralError()).toBeTruthy();
+                    expect(error.getMessage()).toBe(PlayerLoadError.listLoadingError);
                 }
             );
 

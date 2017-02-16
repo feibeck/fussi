@@ -13,5 +13,7 @@ export const ROUTES: Routes = [
   { path: 'player/show/:id', component: PlayerDetailComponent },
   { path: 'player/edit/:id', component: PlayerEditComponent },
   { path: 'player/new', component: PlayerEditComponent },
+  { path: 'not-found', component: NoContentComponent },
+  { path: 'error', component: NoContentComponent },
   { path: '**',    component: NoContentComponent },
 ];

@@ -5,11 +5,13 @@ import { PointLog } from './point-log.model';
 import { Http, Response } from '@angular/http';
 import { PlayerSaveError } from './player-save-error.model';
 import { Player } from './player.model';
+import { PlayerLoadError } from './player-load-error.model';
 
 @Injectable()
 export class PlayerService {
 
     public static listLoadingError = 'Could not load player list';
+    public static playerLoadingError = 'Could not load player';
 
     private static handleError(error: Response | any) {
 
@@ -42,7 +44,7 @@ export class PlayerService {
                 return playerList;
             })
             .catch(() => {
-                return Observable.throw(PlayerService.listLoadingError);
+                return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.listLoadingError));
             });
     }
 
@@ -53,6 +55,13 @@ export class PlayerService {
             })
             .map((jsonPlayer: JsonPlayer) => {
                 return Player.fromJsonPlayer(jsonPlayer);
+            })
+            .catch((error: Response | any) => {
+                if (error instanceof Response && error.status === 404) {
+                    return Observable.throw(PlayerLoadError.createNotExistsError());
+                } else {
+                    return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.playerLoadingError));
+                }
             });
     }
 
@@ -61,6 +70,9 @@ export class PlayerService {
         return this.http.get('http://localhost:8080/api/player/' + id + '/pointlog')
             .map((response) => {
                 return response.json();
+            })
+            .catch(() => {
+                return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.pointlogLoadingError));
             });
     }
 

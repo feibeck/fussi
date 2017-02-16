@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
+import { PlayerLoadError } from './player-load-error.model';
 
 @Component({
     selector: 'players',
@@ -22,9 +23,9 @@ export class PlayersComponent implements OnInit {
             (players: Player[]) => {
                 this.players = players;
             },
-            (message: string) => {
+            (playerLoadError: PlayerLoadError) => {
                 this.error = true;
-                this.errorMessage = message;
+                this.errorMessage = playerLoadError.getMessage();
             }
         );
     }
