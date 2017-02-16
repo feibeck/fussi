@@ -36,7 +36,7 @@ import { MatchPlayerComponent } from './match-player/match-player.component';
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
 import { TournamentService } from './service/tournament.service';
-import { PlayersComponent } from './players/players.component';
+import { PlayerListComponent } from './players/player-list.component';
 import { PlayerService } from './players/player.service';
 import { PlayerDetailComponent } from './players/player-detail.component';
 import { MockBackend } from '@angular/http/testing';
@@ -75,7 +75,7 @@ type StoreType = {
     ActiveTournamentsComponent,
     RecentMatchesComponent,
     TournamentRankingComponent,
-    PlayersComponent,
+    PlayerListComponent,
     PlayerDetailComponent,
     PlayerEditComponent
   ],

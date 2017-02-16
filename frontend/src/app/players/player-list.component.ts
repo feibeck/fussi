@@ -5,9 +5,9 @@ import { PlayerLoadError } from './player-load-error.model';
 
 @Component({
     selector: 'players',
-    templateUrl: './players.component.html'
+    templateUrl: './player-list.component.html'
 })
-export class PlayersComponent implements OnInit {
+export class PlayerListComponent implements OnInit {
 
     public players: Player[] = [];
 
