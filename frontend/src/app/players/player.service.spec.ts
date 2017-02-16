@@ -276,4 +276,32 @@ describe('PlayerService', () => {
 
     });
 
+    describe('save()', () => {
+
+        it('players with an id will be updated', inject([PlayerService], (playerService) => {
+
+            spyOn(playerService, 'update');
+
+            let player = new Player(1, 'Foo', 1, 0);
+
+            playerService.save(player);
+
+            expect(playerService.update).toHaveBeenCalledWith(player);
+
+        }));
+
+        it('players without an id will be created', inject([PlayerService], (playerService) => {
+
+            spyOn(playerService, 'create');
+
+            let player = new Player(null, 'Foo', 1, 0);
+
+            playerService.save(player);
+
+            expect(playerService.create).toHaveBeenCalledWith(player);
+
+        }));
+
+    });
+
 });
