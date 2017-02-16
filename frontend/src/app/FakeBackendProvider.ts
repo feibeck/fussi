@@ -1,6 +1,6 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { JsonPointLog } from './players/json-point-log.model';
+import { JsonPointLog } from '../player/json-point-log.model';
 
 const latestMatches = [
     {

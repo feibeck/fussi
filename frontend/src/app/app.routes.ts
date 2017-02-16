@@ -2,9 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { NoContentComponent } from './no-content/no-content.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PlayerListComponent } from './players/player-list.component';
-import { PlayerDetailComponent } from './players/player-detail.component';
-import { PlayerEditComponent } from './players/player-edit.component';
+import { PlayerListComponent } from '../player/player-list.component';
+import { PlayerDetailComponent } from '../player/player-detail.component';
+import { PlayerEditComponent } from '../player/player-edit.component';
 
 export const ROUTES: Routes = [
   { path: '',      component: DashboardComponent },

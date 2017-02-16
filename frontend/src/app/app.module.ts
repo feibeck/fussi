@@ -31,27 +31,20 @@ import { FussiNavigationComponent } from './navigation/fussi-navigation.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActiveTournamentsComponent } from './dashboard/active-tournaments/active-tournaments.component';
 import { RecentMatchesComponent } from './dashboard/recent-matches/recent-matches.component';
-import { MatchResultComponent } from './match-result/match-result.component';
-import { MatchPlayerComponent } from './match-player/match-player.component';
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
 import { TournamentService } from './service/tournament.service';
-import { PlayerListComponent } from './players/player-list.component';
-import { PlayerService } from './players/player.service';
-import { PlayerDetailComponent } from './players/player-detail.component';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './FakeBackendProvider';
-import { PlayerEditComponent } from './players/player-edit.component';
-import { PointLogService } from './players/point-log.service';
+import { PlayerModule } from '../player';
+import { SharedModule } from '../shared';
 
 // Application wide providers
 const APP_PROVIDERS = [
     ...APP_RESOLVER_PROVIDERS,
     AppState,
     RecentMatchService,
-    TournamentService,
-    PlayerService,
-    PointLogService
+    TournamentService
 ];
 
 type StoreType = {
@@ -70,21 +63,18 @@ type StoreType = {
     NoContentComponent,
     FussiNavigationComponent,
     DashboardComponent,
-    MatchResultComponent,
-    MatchPlayerComponent,
     ActiveTournamentsComponent,
     RecentMatchesComponent,
-    TournamentRankingComponent,
-    PlayerListComponent,
-    PlayerDetailComponent,
-    PlayerEditComponent
+    TournamentRankingComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    PlayerModule,
+    SharedModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

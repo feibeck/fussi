@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { async, TestBed, ComponentFixture, fakeAsync, inject, tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { PlayerService } from './player.service';
@@ -6,10 +5,9 @@ import { Player } from './player.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PointLogService } from './point-log.service';
 import { PlayerDetailComponent } from './player-detail.component';
-import { MatchPlayerComponent } from '../match-player/match-player.component';
-import { MatchResultComponent } from '../match-result/match-result.component';
 import { PointLog } from './point-log.model';
 import { PlayerLoadError } from './player-load-error.model';
+import { SharedModule } from '../shared';
 
 const player = new Player(1, 'Foo', 0, 0);
 
@@ -48,11 +46,11 @@ describe('PlayerDetailComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [
-                PlayerDetailComponent,
-                MatchPlayerComponent,
-                MatchResultComponent
+                PlayerDetailComponent
             ],
-            imports: [ ],
+            imports: [
+                SharedModule
+            ],
             providers: [
                 {
                     provide: PlayerService,
@@ -108,8 +106,12 @@ describe('PlayerDetailComponent', () => {
         fakeAsync(inject([PlayerService, PointLogService, Router],
             (playerService: PlayerService, pointLogService: PointLogService, router: Router) => {
 
-        spyOn(playerService, 'getPlayer').and.returnValue(Observable.throw(PlayerLoadError.createNotExistsError()));
-        spyOn(pointLogService, 'getPointLog').and.returnValue(Observable.throw(PlayerLoadError.createGeneralError('foo')));
+        spyOn(playerService, 'getPlayer').and.returnValue(
+            Observable.throw(PlayerLoadError.createNotExistsError())
+        );
+        spyOn(pointLogService, 'getPointLog').and.returnValue(
+            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+        );
         spyOn(router, 'navigate');
 
         fixture.detectChanges();
@@ -119,13 +121,16 @@ describe('PlayerDetailComponent', () => {
 
     })));
 
-
     it('shoud redirect to error page on other error',
         fakeAsync(inject([PlayerService, PointLogService, Router],
             (playerService: PlayerService, pointLogService: PointLogService, router: Router) => {
 
-        spyOn(playerService, 'getPlayer').and.returnValue(Observable.throw(PlayerLoadError.createGeneralError('foo')));
-        spyOn(pointLogService, 'getPointLog').and.returnValue(Observable.throw(PlayerLoadError.createGeneralError('foo')));
+        spyOn(playerService, 'getPlayer').and.returnValue(
+            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+        );
+        spyOn(pointLogService, 'getPointLog').and.returnValue(
+            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+        );
         spyOn(router, 'navigate');
 
         fixture.detectChanges();
@@ -139,8 +144,12 @@ describe('PlayerDetailComponent', () => {
         fakeAsync(inject([PlayerService, PointLogService, Router],
             (playerService: PlayerService, pointLogService: PointLogService, router: Router) => {
 
-        spyOn(playerService, 'getPlayer').and.returnValue(Observable.of(player));
-        spyOn(pointLogService, 'getPointLog').and.returnValue(Observable.throw(PlayerLoadError.createGeneralError('foo')));
+        spyOn(playerService, 'getPlayer').and.returnValue(
+            Observable.of(player)
+        );
+        spyOn(pointLogService, 'getPointLog').and.returnValue(
+            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+        );
 
         fixture.detectChanges();
         tick();
