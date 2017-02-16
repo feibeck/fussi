@@ -48,28 +48,11 @@ export class PlayerDetailComponent implements OnInit {
             .subscribe(
                 (pointLog: PointLog[]) => {
                     this.pointLog = pointLog;
+                },
+                () => {
+                    console.log('Error loading Point Log');
                 }
             );
-    }
-
-    public playersChance(log: PointLog) {
-
-        if (log.match.player1.id === this.player.id) {
-            return log.chance1;
-        } else {
-            return log.chance2;
-        }
-
-    }
-
-    public playersPoints(log: PointLog) {
-
-        if (log.match.player1.id === this.player.id) {
-            return log.newPoints1;
-        } else {
-            return log.newPoints2;
-        }
-
     }
 
 }
