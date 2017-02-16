@@ -74,11 +74,7 @@ describe('PlayerService', () => {
         it('returns error message in case of server error',
             inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 500
-                })));
-            });
+            respondWithInvalidServerError(mockBackend);
 
             playerService.getPlayer(1).subscribe(
                 null,
@@ -93,11 +89,7 @@ describe('PlayerService', () => {
         it('returns error message in case of invalid json',
             inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: '{"id":"1"'
-                })));
-            });
+            respondWithInvalidJson(mockBackend);
 
             playerService.getPlayer(1).subscribe(
                 null,
@@ -147,11 +139,7 @@ describe('PlayerService', () => {
         it('returns error message in case of server error',
             inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 500
-                })));
-            });
+            respondWithInvalidServerError(mockBackend);
 
             playerService.getPlayerList().subscribe(
                 null,
@@ -166,11 +154,7 @@ describe('PlayerService', () => {
         it('returns error message in case of invalid json',
             inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: '[{"id":"1"'
-                })));
-            });
+            respondWithInvalidJson(mockBackend);
 
             playerService.getPlayerList().subscribe(
                 null,
@@ -214,12 +198,7 @@ describe('PlayerService', () => {
 
         it('handles internal server error', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 500,
-                    body: 'Internal Server Error'
-                })));
-            });
+            respondWithInvalidServerError(mockBackend);
 
             playerService.update(updatePlayer).subscribe(
                 null,
@@ -231,21 +210,7 @@ describe('PlayerService', () => {
 
         it('handles validation error', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            const responseErrorBody = {
-                errors: [
-                    {
-                        field: 'name',
-                        message: 'Name already exists'
-                    }
-                ]
-            };
-
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 422,
-                    body: JSON.stringify(responseErrorBody)
-                })));
-            });
+            respondWithValidationError(mockBackend);
 
             playerService.update(updatePlayer).subscribe(
                 null,
@@ -258,12 +223,7 @@ describe('PlayerService', () => {
 
         it('handles invalid json in response', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    status: 200,
-                    body: '{"name":"Foo'
-                })));
-            });
+            respondWithInvalidJson(mockBackend);
 
             playerService.update(updatePlayer).subscribe(
                 null,
@@ -306,12 +266,7 @@ describe('PlayerService', () => {
 
         it('handles internal server error', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 500,
-                    body: 'Internal Server Error'
-                })));
-            });
+            respondWithInvalidServerError(mockBackend);
 
             playerService.create(newPlayer).subscribe(
                 null,
@@ -323,21 +278,7 @@ describe('PlayerService', () => {
 
         it('handles validation error', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            const responseErrorBody = {
-                errors: [
-                    {
-                        field: 'name',
-                        message: 'Name already exists'
-                    }
-                ]
-            };
-
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockError(new Response(new ResponseOptions({
-                    status: 422,
-                    body: JSON.stringify(responseErrorBody)
-                })));
-            });
+            respondWithValidationError(mockBackend);
 
             playerService.create(newPlayer).subscribe(
                 null,
@@ -350,12 +291,7 @@ describe('PlayerService', () => {
 
         it('handles invalid json in response', inject([PlayerService, MockBackend], (playerService, mockBackend) => {
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    status: 200,
-                    body: '{"name":"Foo'
-                })));
-            });
+            respondWithInvalidJson(mockBackend);
 
             playerService.create(newPlayer).subscribe(
                 null,
@@ -397,3 +333,39 @@ describe('PlayerService', () => {
     });
 
 });
+
+function respondWithValidationError(mockBackend: MockBackend) {
+    const responseErrorBody = {
+        errors: [
+            {
+                field: 'name',
+                message: 'Name already exists'
+            }
+        ]
+    };
+
+    mockBackend.connections.subscribe((connection) => {
+        connection.mockError(new Response(new ResponseOptions({
+            status: 422,
+            body: JSON.stringify(responseErrorBody)
+        })));
+    });
+}
+
+function respondWithInvalidJson(mockBackend: MockBackend) {
+    mockBackend.connections.subscribe((connection) => {
+        connection.mockRespond(new Response(new ResponseOptions({
+            status: 200,
+            body: '{"name":"Foo'
+        })));
+    });
+}
+
+function respondWithInvalidServerError(mockBackend: MockBackend) {
+    mockBackend.connections.subscribe((connection) => {
+        connection.mockError(new Response(new ResponseOptions({
+            status: 500,
+            body: 'Internal Server Error'
+        })));
+    });
+}
