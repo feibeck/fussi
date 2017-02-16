@@ -1,14 +1,14 @@
 <div class="row" *ngIf="player">
 
     <div class="page-header">
-        <h1>Player {{player.name}}</h1>
+        <h1>Player {{ player.name }}</h1>
     </div>
 
     <dl class="dl-horizontal">
         <dt>Points</dt>
-        <dd>{{player.points}}</dd>
+        <dd>{{ player.points }}</dd>
         <dt>Matches played</dt>
-        <dd>{{player.matchCount}}</dd>
+        <dd>{{ player.matchCount }}</dd>
     </dl>
 
     <table class="table table-striped table-bordered">
@@ -22,16 +22,16 @@
         </tr>
 
         <tr *ngFor="let log of pointLog; let cnt = index">
-            <td class="right">{{pointLog.length - cnt}}</td>
-            <td>{{log.match.date}}</td>
+            <td class="right">{{ pointLog.length - cnt }}</td>
+            <td>{{ log.match.date }}</td>
             <td>
                 <match-player [match]="log.match" [pointLog]="log"></match-player>
             </td>
             <td>
                 <match-result [match]="log.match"></match-result>
             </td>
-            <td class="right">{{playersChance(log)}}</td>
-            <td class="right">{{playersPoints(log)}}</td>
+            <td class="right">{{ log.playersChance(player.id) }}</td>
+            <td class="right">{{ log.playersPoints(player.id) }}</td>
         </tr>
 
     </table>

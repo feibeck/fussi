@@ -1,6 +1,6 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { PointLog } from './players/point-log.model';
+import { JsonPointLog } from './players/json-point-log.model';
 
 const latestMatches = [
     {
@@ -76,7 +76,7 @@ const players = [
     }
 ];
 
-const pointLog: PointLog[] = [
+const pointLog: JsonPointLog[] = [
     {
         currentPoints1: 1000,
         currentPoints2: 1000,

@@ -2,8 +2,9 @@ import { OnInit, Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
-import { PointLog } from './point-log.model';
 import { PlayerLoadError } from './player-load-error.model';
+import { PointLogService } from './point-log.service';
+import { PointLog } from './point-log.model';
 
 @Component({
     selector: 'player-detail',
@@ -17,14 +18,15 @@ export class PlayerDetailComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private service: PlayerService,
-        private router: Router
+        private router: Router,
+        private playerService: PlayerService,
+        private pointLogService: PointLogService
     ) {}
 
     public ngOnInit() {
         this.route.params
             .switchMap((params: Params) => {
-                return this.service.getPlayer(+params['id']);
+                return this.playerService.getPlayer(+params['id']);
             })
             .subscribe(
                 (player: Player) => {
@@ -41,7 +43,7 @@ export class PlayerDetailComponent implements OnInit {
 
         this.route.params
             .switchMap((params: Params) => {
-                return this.service.getPointLog(+params['id']);
+                return this.pointLogService.getPointLog(+params['id']);
             })
             .subscribe(
                 (pointLog: PointLog[]) => {

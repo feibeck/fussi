@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { JsonPlayer } from './json-player.model';
-import { PointLog } from './point-log.model';
 import { Http, Response } from '@angular/http';
 import { PlayerSaveError } from './player-save-error.model';
 import { Player } from './player.model';
@@ -62,17 +61,6 @@ export class PlayerService {
                 } else {
                     return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.playerLoadingError));
                 }
-            });
-    }
-
-    public getPointLog(id: number): Observable<PointLog[]> {
-        let subject = new AsyncSubject<any>();
-        return this.http.get('http://localhost:8080/api/player/' + id + '/pointlog')
-            .map((response) => {
-                return response.json();
-            })
-            .catch(() => {
-                return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.pointlogLoadingError));
             });
     }
 

@@ -42,6 +42,7 @@ import { PlayerDetailComponent } from './players/player-detail.component';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './FakeBackendProvider';
 import { PlayerEditComponent } from './players/player-edit.component';
+import { PointLogService } from './players/point-log.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -49,7 +50,8 @@ const APP_PROVIDERS = [
     AppState,
     RecentMatchService,
     TournamentService,
-    PlayerService
+    PlayerService,
+    PointLogService
 ];
 
 type StoreType = {
