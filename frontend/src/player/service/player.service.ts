@@ -9,9 +9,6 @@ import { PlayerLoadError } from '../model/player-load-error.model';
 @Injectable()
 export class PlayerService {
 
-    public static listLoadingError = 'Could not load player list';
-    public static playerLoadingError = 'Could not load player';
-
     private static handleError(error: Response | any) {
 
         let playerSaveError: PlayerSaveError;
