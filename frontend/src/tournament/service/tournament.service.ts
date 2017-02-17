@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { JsonTournament } from '../model/json-tournament.model';
 import { Tournament } from '../model/tournament.model';
+import { LoadError } from '../../shared/model/load-error.model';
 
 @Injectable()
 export class TournamentService {
@@ -20,6 +21,9 @@ export class TournamentService {
                 return jsonTournaments.map((jsonTournament: JsonTournament) => {
                     return Tournament.fromJsonTournament(jsonTournament);
                 });
+            })
+            .catch(() => {
+                return Observable.throw(LoadError.createGeneralError());
             });
     }
 

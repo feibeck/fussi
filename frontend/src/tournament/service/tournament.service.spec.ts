@@ -4,6 +4,7 @@ import { MockBackend } from '@angular/http/testing';
 import { TournamentService } from './tournament.service';
 import { JsonTournament } from '../model/json-tournament.model';
 import { Tournament } from '../model/tournament.model';
+import { LoadError } from '../../shared/model/load-error.model';
 
 describe('TournamentService', () => {
 
@@ -53,19 +54,37 @@ describe('TournamentService', () => {
 
         }));
 
-        xit('error handling',
+        it('should handle server error',
             inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
 
             mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
+                connection.mockError(new Response(new ResponseOptions({
                     status: 500
                 })));
             });
 
             tournamentService.getActiveTournaments().subscribe(
                 null,
-                (response: Response) => {
-                    expect(response.status).toBe(500);
+                (error: LoadError) => {
+                    expect(error.isGeneralError).toBeTruthy();
+                }
+            );
+
+        }));
+
+        it('should handle invalid json',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: '[{"name":'
+                })));
+            });
+
+            tournamentService.getActiveTournaments().subscribe(
+                null,
+                (error: LoadError) => {
+                    expect(error.isGeneralError).toBeTruthy();
                 }
             );
 
