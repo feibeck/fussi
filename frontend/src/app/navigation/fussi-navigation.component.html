@@ -15,7 +15,7 @@
             <li class="dropdown" [class.open]="tournamentsOpen">
                 <a id="trnmnts" class="dropdown-toggle" data-toggle="dropdown" (click)="tournamentsOpen = !tournamentsOpen">Tournaments <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" tabindex="-1" role="menuitem">Tournaments</a></li>
+                    <li><a [routerLink]="['/tournament/list']" tabindex="-1" role="menuitem">Tournaments</a></li>
                     <li class="divider"></li>
                     <li *ngFor="let tournament of tournaments" role="presentation">
                         <a href="#" tabindex="-1" role="menuitem">{{ tournament.name }}</a>

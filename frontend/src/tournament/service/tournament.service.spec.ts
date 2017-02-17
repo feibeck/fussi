@@ -33,10 +33,17 @@ describe('TournamentService', () => {
 
             const mockResponse: JsonTournament[] = [
                 {
-                    name: 'Foo'
+                    id: 1,
+                    name: 'Foo',
+                    type: 'League',
+                    active: true
                 },
                 {
-                    name: 'Bar'
+                    id: 2,
+                    name: 'Bar',
+                    type: 'League',
+                    active: true
+
                 }
             ];
 
@@ -63,7 +70,6 @@ describe('TournamentService', () => {
                     body: JSON.stringify([])
                 })));
             });
-
 
             let params = new URLSearchParams();
             params.set('foo', 'bar');

@@ -145,6 +145,27 @@ const pointLog: JsonPointLog[] = [
     }
 ];
 
+const tournaments = [
+    {
+        id: 1,
+        name: 'Tournament 1',
+        type: 'League',
+        active: true
+    },
+    {
+        id: 2,
+        name: 'Tournament 2',
+        type: 'League',
+        active: false
+    },
+    {
+        id: 3,
+        name: 'Tournament 3',
+        type: 'Tournament',
+        active: true
+    }
+];
+
 export let fakeBackendProvider = {
     provide: Http,
     deps: [MockBackend, BaseRequestOptions],
@@ -157,7 +178,7 @@ export let fakeBackendProvider = {
                 && connection.request.method === 0) {
 
                 let response = new Response(new ResponseOptions({
-                    body: '[{"name":"Tournament 1"},{"name":"Tournament 2"},{"name":"Tournament 3"}]'
+                    body: JSON.stringify(tournaments)
                 }));
 
                 connection.mockRespond(response);
@@ -168,7 +189,7 @@ export let fakeBackendProvider = {
                 && connection.request.method === 0) {
 
                 let response = new Response(new ResponseOptions({
-                    body: '[{"name":"Tournament 1"},{"name":"Tournament 2"}]'
+                    body: JSON.stringify(tournaments.filter((tournament) => { return tournament.active; }))
                 }));
 
                 connection.mockRespond(response);
