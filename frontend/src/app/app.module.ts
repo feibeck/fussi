@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, BaseRequestOptions } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { ENV_PROVIDERS } from './environment';
@@ -17,10 +17,10 @@ import { RecentMatchesComponent } from './dashboard/recent-matches/recent-matche
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
 import { TournamentService } from './service/tournament.service';
-import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './FakeBackendProvider';
 import { PlayerModule } from '../player';
 import { SharedModule } from '../shared';
+import { FakeBackendModule } from '../fake-backend/fake-backend.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -50,14 +50,12 @@ const APP_PROVIDERS = [
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     PlayerModule,
-    SharedModule
+    SharedModule,
+    FakeBackendModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS,
-    BaseRequestOptions,
-    MockBackend,
-    fakeBackendProvider
+    APP_PROVIDERS
   ]
 })
 export class AppModule {
