@@ -4,7 +4,7 @@ import { MockBackend } from '@angular/http/testing';
 import { PlayerService } from './player.service';
 import { JsonPlayer } from '../model/json-player.model';
 import { Player } from '../model/player.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 import { PlayerSaveError } from '../model/player-save-error.model';
 
 describe('PlayerService', () => {
@@ -63,9 +63,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayer(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isNotExistsError()).toBeTruthy();
-                    expect(error.getMessage()).toBe(PlayerLoadError.playerNotExistsError);
+                    expect(error.getMessage()).toBe(LoadError.defaultNotExistsMessage);
                 }
             );
 
@@ -78,9 +78,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayer(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
-                    expect(error.getMessage()).toBe(PlayerLoadError.playerLoadingError);
+                    expect(error.getMessage()).toBe(LoadError.defaultMessage);
                 }
             );
 
@@ -93,9 +93,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayer(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
-                    expect(error.getMessage()).toBe(PlayerLoadError.playerLoadingError);
+                    expect(error.getMessage()).toBe(LoadError.defaultMessage);
                 }
             );
 
@@ -143,9 +143,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayerList().subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
-                    expect(error.getMessage()).toBe(PlayerLoadError.listLoadingError);
+                    expect(error.getMessage()).toBe(LoadError.defaultMessage);
                 }
             );
 
@@ -158,9 +158,9 @@ describe('PlayerService', () => {
 
             playerService.getPlayerList().subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
-                    expect(error.getMessage()).toBe(PlayerLoadError.listLoadingError);
+                    expect(error.getMessage()).toBe(LoadError.defaultMessage);
                 }
             );
 

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { JsonPlayer } from '../model/json-player.model';
 import { PlayerSaveError } from '../model/player-save-error.model';
 import { Player } from '../model/player.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 
 @Injectable()
 export class PlayerService {
@@ -40,7 +40,7 @@ export class PlayerService {
                 return playerList;
             })
             .catch(() => {
-                return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.listLoadingError));
+                return Observable.throw(LoadError.createGeneralError());
             });
     }
 
@@ -54,9 +54,9 @@ export class PlayerService {
             })
             .catch((error: Response | any) => {
                 if (error instanceof Response && error.status === 404) {
-                    return Observable.throw(PlayerLoadError.createNotExistsError());
+                    return Observable.throw(LoadError.createNotExistsError());
                 } else {
-                    return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.playerLoadingError));
+                    return Observable.throw(LoadError.createGeneralError());
                 }
             });
     }

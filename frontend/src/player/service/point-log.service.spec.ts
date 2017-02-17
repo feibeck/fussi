@@ -4,7 +4,7 @@ import { HttpModule, BaseRequestOptions, Http, Response, ResponseOptions } from 
 import { PointLogService } from './point-log.service';
 import { JsonPointLog } from '../model/json-point-log.model';
 import { PointLog } from '../model/point-log.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 
 describe('PointLogService', () => {
 
@@ -73,7 +73,7 @@ describe('PointLogService', () => {
 
             pointLogService.getPointLog(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
                 }
             );
@@ -89,7 +89,7 @@ describe('PointLogService', () => {
 
             pointLogService.getPointLog(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
                 }
             );
@@ -106,7 +106,7 @@ describe('PointLogService', () => {
 
             pointLogService.getPointLog(1).subscribe(
                 null,
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     expect(error.isGeneralError()).toBeTruthy();
                 }
             );

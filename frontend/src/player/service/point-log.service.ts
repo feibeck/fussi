@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { JsonPointLog } from '../model/json-point-log.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 import { PointLog } from '../model/point-log.model';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class PointLogService {
                 });
             })
             .catch(() => {
-                return Observable.throw(PlayerLoadError.createGeneralError(PlayerLoadError.pointlogLoadingError));
+                return Observable.throw(LoadError.createGeneralError());
             });
     }
 

@@ -6,7 +6,7 @@ import { Player } from '../model/player.model';
 import { PointLogService } from '../service/point-log.service';
 import { PlayerDetailComponent } from './player-detail.component';
 import { PointLog } from '../model/point-log.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 import { SharedModule } from '../../shared';
 
 const player = new Player(1, 'Foo', 0, 0);
@@ -107,10 +107,10 @@ describe('PlayerDetailComponent', () => {
             (playerService: PlayerService, pointLogService: PointLogService, router: Router) => {
 
         spyOn(playerService, 'getPlayer').and.returnValue(
-            Observable.throw(PlayerLoadError.createNotExistsError())
+            Observable.throw(LoadError.createNotExistsError())
         );
         spyOn(pointLogService, 'getPointLog').and.returnValue(
-            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+            Observable.throw(LoadError.createGeneralError('foo'))
         );
         spyOn(router, 'navigate');
 
@@ -126,10 +126,10 @@ describe('PlayerDetailComponent', () => {
             (playerService: PlayerService, pointLogService: PointLogService, router: Router) => {
 
         spyOn(playerService, 'getPlayer').and.returnValue(
-            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+            Observable.throw(LoadError.createGeneralError('foo'))
         );
         spyOn(pointLogService, 'getPointLog').and.returnValue(
-            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+            Observable.throw(LoadError.createGeneralError('foo'))
         );
         spyOn(router, 'navigate');
 
@@ -148,7 +148,7 @@ describe('PlayerDetailComponent', () => {
             Observable.of(player)
         );
         spyOn(pointLogService, 'getPointLog').and.returnValue(
-            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+            Observable.throw(LoadError.createGeneralError('foo'))
         );
 
         fixture.detectChanges();

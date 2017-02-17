@@ -2,7 +2,7 @@ import { OnInit, Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PlayerService } from '../service/player.service';
 import { Player } from '../model/player.model';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 import { PointLogService } from '../service/point-log.service';
 import { PointLog } from '../model/point-log.model';
 
@@ -32,7 +32,7 @@ export class PlayerDetailComponent implements OnInit {
                 (player: Player) => {
                     this.player = player;
                 },
-                (error: PlayerLoadError) => {
+                (error: LoadError) => {
                     if (error.isNotExistsError()) {
                         this.router.navigate(['/not-found'], { skipLocationChange: true });
                     } else {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { PlayerService } from '../service/player.service';
 import { Player } from '../model/player.model';
 import { PlayerListComponent } from './player-list.component';
-import { PlayerLoadError } from '../model/player-load-error.model';
+import { LoadError } from '../../shared/model/load-error.model';
 
 const playerList = [new Player(1, 'Foo', 0, 0), new Player(2, 'Bar', 0, 0)];
 
@@ -81,7 +81,7 @@ describe('PlayerListComponent', () => {
         fakeAsync(inject([PlayerService], (playerService: PlayerService) => {
 
         spyOn(playerService, 'getPlayerList').and.returnValue(
-            Observable.throw(PlayerLoadError.createGeneralError('foo'))
+            Observable.throw(LoadError.createGeneralError('foo'))
         );
 
         fixture.detectChanges();
@@ -90,7 +90,6 @@ describe('PlayerListComponent', () => {
         expect(playerService.getPlayerList).toHaveBeenCalled();
         expect(component.players).toEqual([]);
         expect(component.error).toBeTruthy();
-        expect(component.errorMessage).toBe('foo');
 
     })));
 
