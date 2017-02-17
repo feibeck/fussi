@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
-import { fakeBackendProvider } from './FakeBackendProvider';
-import { BaseRequestOptions } from '@angular/http';
+import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { PlayerDb } from './player-db';
+import { PlayerApi } from './player-api';
+import { PointLogDb } from './point-log-db';
+import { MatchDb } from './match-db';
+import { MatchApi } from './match-api';
+import { TournamentDb } from './tournament-db';
+import { TournamentApi } from './tournament-api';
+import { FakeBackendConfig } from './fake-backend-config';
+import { FakeBackend } from './fake-backend';
 
 @NgModule({
     bootstrap: [ ],
@@ -10,9 +18,24 @@ import { MockBackend } from '@angular/http/testing';
     ],
     exports: [ ],
     providers: [
-        fakeBackendProvider,
+        {
+            provide: Http,
+            deps: [FakeBackend],
+            useFactory: (fakeBackend: FakeBackend) => {
+                return fakeBackend.create();
+            }
+        },
         BaseRequestOptions,
-        MockBackend
+        MockBackend,
+        FakeBackendConfig,
+        PlayerDb,
+        PointLogDb,
+        MatchDb,
+        TournamentDb,
+        MatchApi,
+        PlayerApi,
+        TournamentApi,
+        FakeBackend
     ]
 })
 export class FakeBackendModule {
