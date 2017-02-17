@@ -12,14 +12,17 @@
         <ul class="nav navbar-nav">
 
             <li class=""><a href="#">Home</a></li>
-            <li class="dropdown">
-                <a id="trnmnts" class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments <b class="caret"></b></a>
+            <li class="dropdown" [class.open]="tournamentsOpen">
+                <a id="trnmnts" class="dropdown-toggle" data-toggle="dropdown" (click)="tournamentsOpen = !tournamentsOpen">Tournaments <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#" tabindex="-1" role="menuitem">Tournaments</a></li>
                     <li class="divider"></li>
-                    <!-- List of tournaments coming here -->
+                    <li *ngFor="let tournament of tournaments" role="presentation">
+                        <a href="#" tabindex="-1" role="menuitem">{{ tournament.name }}</a>
+                    </li>
                 </ul>
             </li>
+
             <li class=""><a [routerLink]=" ['./player/list'] " routerLinkActive="active">Players</a></li>
         </ul>
     </div>
