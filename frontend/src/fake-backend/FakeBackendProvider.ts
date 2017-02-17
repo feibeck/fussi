@@ -153,7 +153,8 @@ export let fakeBackendProvider = {
         backend.connections.subscribe((connection: MockConnection) => {
 
             // GET: /tournaments
-            if (connection.request.url === 'http://localhost:8080/api/tournaments' && connection.request.method === 0) {
+            if (connection.request.url === 'http://localhost:8080/api/tournament?state=active'
+                && connection.request.method === 0) {
 
                 let response = new Response(new ResponseOptions({
                     body: '[{"name":"Tournament 1"},{"name":"Tournament 2"},{"name":"Tournament 3"}]'

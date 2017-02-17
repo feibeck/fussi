@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TournamentService } from '../../service/tournament.service';
+import { TournamentService } from '../../../tournament/service/tournament.service';
 
 @Component({
     selector: 'active-tournaments',

@@ -11,13 +11,13 @@ import { ActiveTournamentsComponent } from './dashboard/active-tournaments/activ
 import { RecentMatchesComponent } from './dashboard/recent-matches/recent-matches.component';
 import { TournamentRankingComponent } from './dashboard/tournament-ranking/tournament-ranking.component';
 import { RecentMatchService } from './dashboard/recent-matches/recent-matches.service';
-import { TournamentService } from './service/tournament.service';
 import { PlayerModule } from '../player';
 import { SharedModule } from '../shared';
 import { FakeBackendModule } from '../fake-backend';
 import { ROUTES } from './app.routes';
 
 import '../styles/styles.scss';
+import { TournamentModule } from '../tournament/tournament.module';
 
 @NgModule({
   bootstrap: [
@@ -40,11 +40,11 @@ import '../styles/styles.scss';
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     PlayerModule,
     SharedModule,
-    FakeBackendModule
+    FakeBackendModule,
+    TournamentModule
   ],
   providers: [
-    RecentMatchService,
-    TournamentService
+    RecentMatchService
   ]
 })
 export class AppModule {
