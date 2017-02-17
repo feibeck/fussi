@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs';
 import { JsonTournament } from '../model/json-tournament.model';
 import { Tournament } from '../model/tournament.model';
@@ -12,8 +12,20 @@ export class TournamentService {
     }
 
     public getActiveTournaments(): Observable<Tournament[]> {
+        let params = new URLSearchParams();
+        params.set('state', 'active');
+        return this.getTournaments(params);
+    }
+
+    public getTournaments(searchParams?: URLSearchParams): Observable<Tournament[]> {
+
+        let options: RequestOptionsArgs = {};
+        if (searchParams) {
+            options.search = searchParams;
+        }
+
         return this.http
-            .get('http://localhost:8080/api/tournament?state=active')
+            .get('http://localhost:8080/api/tournament', options)
             .map((response) => {
                 return response.json();
             })

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { BaseRequestOptions, HttpModule, Http, Response, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+import { BaseRequestOptions, HttpModule, Http, Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TournamentService } from './tournament.service';
 import { JsonTournament } from '../model/json-tournament.model';
 import { Tournament } from '../model/tournament.model';
@@ -26,7 +26,7 @@ describe('TournamentService', () => {
         });
     });
 
-    describe('getActiveTournaments()', () => {
+    describe('getTournaments()', () => {
 
         it('should return an Observable<Tournament[]>',
             inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
@@ -46,12 +46,30 @@ describe('TournamentService', () => {
                 })));
             });
 
-            tournamentService.getActiveTournaments().subscribe((tournaments: Tournament[]) => {
+            tournamentService.getTournaments().subscribe((tournaments: Tournament[]) => {
                 expect(tournaments.length).toBe(2);
                 expect(tournaments[0].name).toEqual('Foo');
                 expect(tournaments[1].name).toEqual('Bar');
             });
 
+        }));
+
+        it('should handle query parameters',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                expect(connection.request.url).toBe('http://localhost:8080/api/tournament?foo=bar');
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify([])
+                })));
+            });
+
+
+            let params = new URLSearchParams();
+            params.set('foo', 'bar');
+            tournamentService.getTournaments(params).subscribe((tournaments: Tournament[]) => {
+                expect(tournaments.length).toBe(0);
+            });
         }));
 
         it('should handle server error',
@@ -63,7 +81,7 @@ describe('TournamentService', () => {
                 })));
             });
 
-            tournamentService.getActiveTournaments().subscribe(
+            tournamentService.getTournaments().subscribe(
                 null,
                 (error: LoadError) => {
                     expect(error.isGeneralError).toBeTruthy();
@@ -81,12 +99,29 @@ describe('TournamentService', () => {
                 })));
             });
 
-            tournamentService.getActiveTournaments().subscribe(
+            tournamentService.getTournaments().subscribe(
                 null,
                 (error: LoadError) => {
                     expect(error.isGeneralError).toBeTruthy();
                 }
             );
+
+        }));
+
+    });
+
+    describe('getActiveTournaments()', () => {
+
+        it('should call getTournaments() with right parameters',
+            inject([TournamentService], (tournamentService) => {
+
+            spyOn(tournamentService, 'getTournaments');
+
+            let params = new URLSearchParams();
+            params.set('state', 'active');
+
+            tournamentService.getActiveTournaments();
+            expect(tournamentService.getTournaments).toHaveBeenCalledWith(params);
 
         }));
 
