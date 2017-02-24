@@ -1,0 +1,35 @@
+<div class="row">
+
+    <div class="page-header">
+        <h1>Tournament: {{ tournament.name }}</h1>
+    </div>
+
+    <div class="alert" *ngIf="!tournament.tournamentDetail.ready">
+        <strong>Not ready!</strong> The tournament has not been started yet!
+    </div>
+
+    <div class="alert alert-success" *ngIf="tournament.finished">
+        <p><strong>Tournament finished!</strong></p>
+        <p>Winner: {{ tournament.tournamentDetail.winnerName }}</p>
+        <p>Second: {{ tournament.tournamentDetail.secondName }}</p>
+    </div>
+
+    <div *ngIf="tournament.tournamentDetail.ready">
+        <div *ngFor="let round of tournament.tournamentDetail.rounds" class="clearfix">
+
+            <div *ngFor="let match of round.matches" style="float: left; width: 150px; border: 1px solid grey; height: 100px; padding: 4px; margin-right: 4px; margin-bottom: 4px;">
+
+                <div>{{ match.teamOneName }}</div>
+                <div>{{ match.teanTwoName }}</div>
+
+                <span *ngIf="match.played">{{ match.score }}</span>
+
+
+                <a *ngIf="match.ready && !match.played" class="btn btn-default btn-xs" href="#">Enter data</a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

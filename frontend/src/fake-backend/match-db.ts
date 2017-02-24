@@ -14,6 +14,7 @@ export class MatchDb {
                 name: 'Bar'
             },
             tournamentName: 'Tournament 1',
+            tournamentId: 1,
             isTeamOneWinner: true,
             isTeamTwoWinner: false,
             games: [
@@ -37,6 +38,7 @@ export class MatchDb {
                 name: 'Bar'
             },
             tournamentName: 'Tournament 2',
+            tournamentId: 2,
             isTeamOneWinner: false,
             isTeamTwoWinner: true,
             games: [

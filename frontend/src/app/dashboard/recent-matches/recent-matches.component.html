@@ -14,7 +14,9 @@
 
                 <br>
 
-                <small><span class="muted">Tournament:</span> <a href="#">{{ match.tournamentName }}</a></small>
+                <small><span class="muted">Tournament:</span>
+                    <a [routerLink]="['/tournament/show', match.tournamentId]">{{ match.tournamentName }}</a>
+                </small>
 
             </td>
             <td>

@@ -38,6 +38,11 @@ export class FakeBackend {
                 return this.tournamentApi.list(con);
             }
 
+            // GET: /api/tournament/:id
+            if (con.request.url.match(/\/api\/tournament\/([0-9]+)$/i) && this.isGet(con)) {
+                return this.tournamentApi.get(con);
+            }
+
             // GET: /api/matches
             if (con.request.url.match(/\/api\/matches$/i) && this.isGet(con)) {
                 return this.matchApi.list(con);

@@ -18,7 +18,7 @@
                     <li><a [routerLink]="['/tournament/list']" tabindex="-1" role="menuitem">Tournaments</a></li>
                     <li class="divider"></li>
                     <li *ngFor="let tournament of tournaments" role="presentation">
-                        <a href="#" tabindex="-1" role="menuitem">{{ tournament.name }}</a>
+                        <a [routerLink]="['/tournament/show', tournament.id]" tabindex="-1" role="menuitem">{{ tournament.name }}</a>
                     </li>
                 </ul>
             </li>

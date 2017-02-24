@@ -10,7 +10,7 @@
             <h1 class="panel-title">{{ tournament.name }}</h1>
         </div>
 
-        <div *ngIf="tournament.type == 'league'">
+        <div *ngIf="tournament.type == 'League'">
             <tournament-ranking [tournament]="tournament"></tournament-ranking>
         </div>
 
@@ -19,7 +19,7 @@
         </div>
 
         <div class="panel-footer">
-            <a href="#" class="btn btn-default btn-sm" role="button">Show</a>
+            <a [routerLink]="['/tournament/show', tournament.id]" class="btn btn-default btn-sm" role="button">Show</a>
         </div>
 
     </div>

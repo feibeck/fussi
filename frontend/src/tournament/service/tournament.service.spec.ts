@@ -5,6 +5,7 @@ import { TournamentService } from './tournament.service';
 import { JsonTournament } from '../model/json-tournament.model';
 import { Tournament } from '../model/tournament.model';
 import { LoadError } from '../../shared/model/load-error.model';
+import { TournamentDetail } from '../model/tournament-detail.model';
 
 describe('TournamentService', () => {
 
@@ -128,6 +129,107 @@ describe('TournamentService', () => {
 
             tournamentService.getActiveTournaments();
             expect(tournamentService.getTournaments).toHaveBeenCalledWith(params);
+
+        }));
+
+    });
+
+    describe('getTournamentDetail', () => {
+
+        const tournamentDetail = {
+            id: 3,
+            name: 'Tournament 3',
+            type: 'Tournament',
+            active: true,
+            ready: true,
+            finished: false,
+            winnerName: '',
+            secondName: '',
+            rounds: [
+                {
+                    matches: [
+                        {
+                            id: 1,
+                            teamOneName: 'Flo/Hans',
+                            teamTwoName: 'Peter/Stefan',
+                            played: true,
+                            ready: true,
+                            score: '2 / 0'
+                        },
+                        {
+                            id: 2,
+                            teamOneName: 'Michael/Sebastian',
+                            teamTwoName: 'Simon/Jürgen',
+                            played: false,
+                            ready: true,
+                            score: ''
+                        }
+                    ]
+                },
+                {
+                    matches: [
+                        {
+                            id: 3,
+                            teamOneName: 'Flo/Hans',
+                            teamTwoName: '',
+                            played: false,
+                            ready: false,
+                            score: ''
+                        }
+                    ]
+                },
+            ]
+        };
+
+        it('should return an Observable<TournamentDetail>',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify(tournamentDetail)
+                })));
+            });
+
+            tournamentService.getTournamentDetail().subscribe((tournament: TournamentDetail) => {
+                expect(tournament.id).toBe(3);
+                expect(tournament.name).toBe('Tournament 3');
+            });
+
+        }));
+
+        it('should handle server error',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockError(new Response(new ResponseOptions({
+                    status: 500
+                })));
+            });
+
+            tournamentService.getTournamentDetail().subscribe(
+                null,
+                (error: LoadError) => {
+                    expect(error.isGeneralError).toBeTruthy();
+                }
+            );
+
+        }));
+
+        it('should handle invalid json',
+            inject([TournamentService, MockBackend], (tournamentService, mockBackend) => {
+
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: '[{"name":'
+                })));
+            });
+
+            tournamentService.getTournamentDetail().subscribe(
+                null,
+                (error: LoadError) => {
+                    expect(error.isGeneralError).toBeTruthy();
+                }
+            );
 
         }));
 

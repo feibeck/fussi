@@ -27,7 +27,7 @@
         <tbody>
             <tr *ngFor="let tournament of tournaments">
                 <td>
-                    <a href="#">{{ tournament.name }}</a>
+                    <a [routerLink]="['/tournament/show', tournament.id]">{{ tournament.name }}</a>
                 </td>
                 <td>
                     {{ tournament.type }}
@@ -38,7 +38,7 @@
                 </td>
                 <td class="right">
                     <div class="btn-group">
-                        <a href="#" class="btn btn-default btn-xs">Show</a>
+                        <a [routerLink]="['/tournament/show', tournament.id]" class="btn btn-default btn-xs">Show</a>
                         <a *ngIf="tournament.type == 'League'" href="#" class="btn btn-default btn-xs">Players</a>
                         <a *ngIf="tournament.type != 'League'" href="#" class="btn btn-default btn-xs">Setup</a>
                     </div>
